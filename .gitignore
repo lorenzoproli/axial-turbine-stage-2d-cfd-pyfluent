@@ -22,11 +22,7 @@ server-info*
 AGENTS.md
 CONTEXT.md
 STATUS.md
-.codex/
-.agents/
-.aws/
-.vscode/
-.idea/
+.*/
 
 # Native CFD binaries are supplied separately
 *.cas

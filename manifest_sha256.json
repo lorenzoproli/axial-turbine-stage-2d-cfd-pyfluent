@@ -6,8 +6,8 @@
   },
   {
     "path": ".gitignore",
-    "bytes": 581,
-    "sha256": "fdbe024ae5efe5e97755981e57955ca49032650c947f5647e20cf59dea352d42"
+    "bytes": 546,
+    "sha256": "c653f4b35c01c8e1305975dfd23e93cabb3236bcf372622c366406939b33fcdf"
   },
   {
     "path": "CITATION.cff",
@@ -76,8 +76,8 @@
   },
   {
     "path": "docs/report/axial_turbine_stage_2d_report.pdf",
-    "bytes": 6987164,
-    "sha256": "38c94fa274d9e27acea061a7522b1021713b14e7877d805d02ccfbde22148cc2"
+    "bytes": 6987909,
+    "sha256": "6efdf130c9375281f34d04659d60a8541c0f88847f4f587362ed52e388d8ea2a"
   },
   {
     "path": "docs/report/images/baseline_adapted_mesh.png",
@@ -181,13 +181,13 @@
   },
   {
     "path": "docs/report/main.tex",
-    "bytes": 51133,
-    "sha256": "12770af90db24553eff3d8ef5b3891a3b0078b3267ba7374b15167cc911e7c03"
+    "bytes": 51175,
+    "sha256": "7401d32bb0eee479ef6403220446a79baa63e37fc69768f225303874fb0f3426"
   },
   {
     "path": "docs/report/manifest.json",
-    "bytes": 892,
-    "sha256": "3e856f8df5928f9682ede79f77abfddb03cb4ccf31079e276251cf709277bf3a"
+    "bytes": 928,
+    "sha256": "13ac4810dc173b7dd33cfee9b92b4663167783c1e6f24c01b0747f1f49d91dec"
   },
   {
     "path": "docs/report/README.md",

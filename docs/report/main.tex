@@ -41,14 +41,14 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-This report develops a reproducible ANSYS Fluent/PyFluent workflow for a planar axial turbine stage with a translating rotor and periodic sliding interface. The immutable historical solution, its adapted mesh, and a separate family of three systematic meshes are kept distinct. The workflow verifies native restarts, physical time, rotor position, conservation, actual inner iterations, mesh quality and sampled wall resolution. The systematic meshes contain 54,287, 104,831 and 196,569 active cells and use fresh Hybrid Initialization after restoring the original rotor position. They were calculated for 35, 40 and 35 blade-passing periods, respectively, using 24 MPI processes, 400 steps per period and 30 inner iterations. A new audit directly recomputes accepted native monitor histories. M2-to-M3 mean differences are 0.028-0.138\%, whereas peak-to-peak amplitudes differ by 5.86-7.52\%. The means are weakly sensitive to the last refinement, but nonmonotonic three-mesh trends, remaining cycle-amplitude drift and unresolved timestep sensitivity prevent a general grid-independence or GCI claim. Source frames and a fine-mesh Mach movie retain fixed legends and the real physical clock. The simulated durations and remaining numerical limitations are stated explicitly. This is numerical verification without experimental validation.
+This study presents a reproducible ANSYS Fluent/PyFluent workflow for a planar axial turbine stage with a translating rotor and periodic sliding interface. The immutable historical solution, its adapted mesh, and a separate family of three systematic meshes are kept distinct. The workflow verifies native restarts, physical time, rotor position, conservation, actual inner iterations, mesh quality and sampled wall resolution. The systematic meshes contain 54,287, 104,831 and 196,569 active cells and use fresh Hybrid Initialization after restoring the original rotor position. They were calculated for 35, 40 and 35 blade-passing periods, respectively, using 24 MPI processes, 400 steps per period and 30 inner iterations. Statistics were recomputed directly from the accepted native monitor histories. M2-to-M3 mean differences are 0.028-0.138\%, whereas peak-to-peak amplitudes differ by 5.86-7.52\%. The means are weakly sensitive to the last refinement, but nonmonotonic three-mesh trends, remaining cycle-amplitude drift and unresolved timestep sensitivity prevent a general grid-independence or GCI claim. Source frames and a fine-mesh Mach movie retain fixed legends and the real physical clock. The simulated durations and remaining numerical limitations are stated explicitly. The study provides numerical verification checks; no experimental validation is claimed.
 \end{abstract}
 \keywords{axial turbine stage; rotor-stator interaction; sliding mesh; SST; Hybrid Initialization; PyFluent; mesh sensitivity; numerical verification}
 \tableofcontents
 \clearpage
 \FloatBarrier
 \section{Project objectives and study scope}
-The planar geometry comprises two fluid surfaces, one for the stator and one for the rotor, based on the public SU2 axial\_stage\_2D numerical reference. The manual Fluent project is the historical setup reference. Its existence, elapsed time and residual levels do not establish numerical independence or physical accuracy.\par
+The planar geometry comprises two fluid surfaces, one for the stator and one for the rotor, based on the public SU2 axial\_stage\_2D numerical reference. The original Fluent model provides the historical setup reference. Its existence, elapsed time and residual levels do not establish numerical independence or physical accuracy.\par
 
 Three datasets remain separate: the immutable historical baseline with its AMR history; automated reproduction and iteration/timestep studies on that adapted mesh held fixed; and solutions on three newly generated systematic meshes. The initial 73167-cell mesh and the AMR mesh are not relabelled M1 and M2.\par
 
@@ -57,7 +57,7 @@ Saved-data integrity, periodic settling, timestep sensitivity and spatial sensit
 \FloatBarrier
 \section{Workflow architecture and reproducibility}
 \subsection{Software environment and run isolation}
-The workflow separates Python code from JSON configuration. Native solver setup is inherited from the verified case, rather than reconstructed from nominal SU2 values. The dedicated Python 3.12 environment uses ansys-fluent-core 0.42.2, ansys-api-fluent 0.7.0 and the Fluent 2024 R2 generated settings/TUI API. Actual dependencies are pinned. Hardware audit: Intel Core i9-14900K, 24 physical cores, 32 logical processors and approximately 64 GiB RAM on Windows 11 Pro. The current campaign used 24 verified MPI ranks; no physical-core affinity optimisation is claimed.\par
+The workflow separates Python code from JSON configuration. Native solver setup is inherited from the verified case, rather than reconstructed from nominal SU2 values. The dedicated Python 3.12 environment uses ansys-fluent-core 0.42.2, ansys-api-fluent 0.7.0 and the Fluent 2024 R2 generated settings/TUI API. The tested dependencies are pinned in the environment lock file. Recorded hardware: Intel Core i9-14900K, 24 physical cores, 32 logical processors and approximately 64 GiB RAM on Windows 11 Pro. The systematic mesh campaign used 24 verified MPI ranks; no physical-core affinity optimisation is claimed.\par
 
 \par
 \begin{table}[!htbp]
@@ -69,7 +69,7 @@ The workflow separates Python code from JSON configuration. Native solver setup 
 \toprule
 \textbf{Module / configuration} & \textbf{Responsibility} \\
 \midrule
-\path{workflow/common.py}; \path{workflow/cfd.py} & Input hashes, native launch, settings, monitors and geometry/field exports \\
+\path{workflow/common.py}; \path{workflow/cfd.py} & Portable paths, input integrity, isolated launch and offline entry points \\
 \path{config/hybrid35_campaign_config.json} & Fresh original-position Hybrid campaign, timestep, iterations and per-run limits \\
 Run progress and segment manifests & Accepted monitor segments, actual clock, checkpoints, stop reason and provenance \\
 \path{workflow/assess_hybrid35.py}; verification tables & Cycle, field, conservation, iteration and sampled wall checks \\
@@ -140,7 +140,7 @@ Historical run & dt = 3e-6 s; nominal 30 inner iterations per step \\
 \end{tabularx}
 \end{table}
 \par
-The readable setup audit and complete settings JSON are archived. Values from the SU2 reference are distinguished from settings confirmed in Fluent. Four unused coefficient reference entries are NaN; they are not physical solution fields and are not used by the dimensional monitors. The workflow separately checks finite density, temperature, pressure and Mach fields.\par
+The verified settings are retained in a readable setup record and complete JSON export. SU2 reference values are distinguished from the settings confirmed in Fluent. Density, temperature, pressure and Mach fields are checked for finite values.\par
 
 Native Mach was verified against velocity magnitude divided by sound speed (maximum discrepancy about 1.51e-7). It is the absolute Mach field, rather than relative Mach. Static pressure is absolute because operating pressure is zero. Native blade-wall Y velocity is zero on the stator and -150 m/s on the rotor, confirming that mesh and wall motion are not applied twice.\par
 
@@ -172,7 +172,7 @@ A positive boundary mass flow denotes inward flux. Outlet flow is therefore nega
 \subsection{Historical adaptation and currently fixed topology}
 AMR is disabled in the verified final baseline and all automated flow runs. The adapted topology is historical; it is not evidence of active adaptation or an identified cause of the current settling behaviour.\par
 
-The initial mesh contained 73167 cells. Two adaptations produced 361839 stored cells: 289671 active cells and 72168 inactive AMR parent cells. Active stator and rotor counts are 64112 and 225559. Deleting the AMR criterion did not restore the original mesh. Automatic adaptation and active automatic criteria are absent in the verified baseline and are monitored during new calculations.\par
+The initial mesh contained 73167 cells. Two adaptations produced 361839 stored cells: 289671 active cells and 72168 inactive AMR parent cells. Active stator and rotor counts are 64112 and 225559. Deleting the AMR criterion did not restore the original mesh. Automatic adaptation and active adaptation criteria were absent in the verified baseline and remained disabled during the recorded calculations.\par
 
 The stator fluid zone is fixed. The rotor fluid zone translates in Y. Their nonconformal sliding interface is sliding\_statore\_rotore; the periodic boundaries match within approximately 4.27e-9 m in the baseline geometry audit. Parent zones are recorded separately and are excluded from active-cell statistics. Reproduction keeps this topology and cell count fixed while the rotor mesh moves.\par
 
@@ -318,12 +318,12 @@ All adapted-mesh tests begin from the same verified checkpoint at t=0.010653 s a
 
 T400 resumed from a checkpoint after 120 steps at t=0.0107422751355 s, global step 3671. Five recomputed reports, including domain mass, matched exactly before further advance. Blade coordinates agreed with the checkpoint HDF5 within approximately 1.49e-8 m. Density, energy, turbulence variables, pressure, temperature and velocity retained their native first and second preceding time levels for second-order continuation. These time-history levels are distinct from the mesh identifiers M1 and M2. The restart occurred entirely within excluded settling.\par
 
-Restart monitor segments have separate files and explicit time ranges. Coincident samples are merged only if both values and global steps agree. Fluent may add a restart-step suffix to a monitor filename; files are resolved through a unique native header and their actual paths/hashes are recorded. A fresh interpolation can omit the iteration-0 residual row; the residual parser checks the full 30-iteration countdown rather than subtracting the first printed row incorrectly.\par
+Restart monitor segments have separate files and explicit time ranges. Coincident samples are merged only if both values and global steps agree. Fluent may add a restart-step suffix to a monitor filename; files are resolved through a unique native header and their actual paths/hashes are recorded. Residual logs were checked step by step to confirm the actual inner-iteration count, independently of whether an iteration-zero row was printed.\par
 
 \subsection{Original-position Hybrid initialization}
 Preliminary interpolation and inherited-phase initialization trials were excluded from the systematic-mesh comparison. For the accepted campaign, the original rotor geometry was restored before Hybrid Initialization. This provided a consistent initial geometric phase on all three meshes.\par
 
-For each active mesh, the rotor was restored to the actual geometry of the historical initial t=0 case before setting time and step to zero and applying Fluent Hybrid Initialization. The M3 restoration included a measured Y correction of -0.000900000333786 m. No historical solution data or interpolation field was loaded for initialization. A separate six-step smoke test verified positive fields, motion and restart; the main calculation reread the fresh initialized pair. All active calculations use 24 MPI ranks, dt=T/400=7.439594625e-7 s, 30 actual inner iterations per step and disabled automatic adaptation. Restarts preserve time, rotor geometry and BDF2 history.\par
+For each active mesh, the rotor was restored to the actual geometry of the historical initial t=0 case before setting time and step to zero and applying Fluent Hybrid Initialization. The M3 restoration included a measured Y correction of -0.000900000333786 m. No historical solution data or interpolation field was loaded for initialization. A separate six-step smoke test verified positive fields, motion and restart; the main calculation reread the fresh initialized pair. All systematic-mesh runs used 24 MPI ranks, dt=T/400=7.439594625e-7 s, 30 actual inner iterations per step and disabled automatic adaptation. Restarts preserve time, rotor geometry and BDF2 history.\par
 
 \par
 \begin{figure}[!htbp]
@@ -345,7 +345,7 @@ Three complete blade-passing cycles are compared at the same rotor phase. Cycle 
 \par
 \begin{table}[!htbp]
 \centering
-\caption{Unchanged diagnostic limits. They are not experimental-accuracy or grid-independence tolerances.}
+\caption{Operational diagnostic limits. They are not experimental-accuracy or grid-independence tolerances.}
 \label{tab:8}
 \small\renewcommand{\arraystretch}{1.16}
 \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
@@ -379,7 +379,7 @@ M3 & 196,569 & 35 & 33-35 & Force amplitude: 7.0685\% > 5\% \\
 \end{tabularx}
 \end{table}
 \par
-M3 reached 14000 accepted steps and t=0.010415432475 s. Its force amplitudes in cycles 33, 34 and 35 are 199.4099756, 186.2452157 and 185.6334933 N. The last change is only 0.329532\%, but the previous change is 7.068509\%; the required three-cycle check therefore fails. M2 and M3 remain unconfirmed under the original limits. Failed graphics-replay frames and an earlier unsaved monitor tail are excluded from the accepted main histories.\par
+M3 reached 14000 accepted steps and t=0.010415432475 s. Its force amplitudes in cycles 33, 34 and 35 are 199.4099756, 186.2452157 and 185.6334933 N. The last change is only 0.329532\%, but the previous change is 7.068509\%; the required three-cycle check therefore fails. M2 and M3 remain unconfirmed under the original limits. Only monitor segments bounded by accepted checkpoints are included in these histories.\par
 
 \par
 \begin{figure}[!htbp]
@@ -513,7 +513,7 @@ T200/T400 means differ by less than approximately 0.0191\%, but outlet total-pre
 \end{figure}
 \par
 \subsection{Three-mesh sensitivity verified from accepted native monitors}
-Three-mesh sensitivity was evaluated directly from the accepted native monitor segments. Source hashes, complete step sequences, physical clocks, three-cycle means and cycle amplitudes were checked against the saved analyses. All meshes used T/400 and 30 inner iterations. M1 and M3 were assessed over cycles 33-35, and M2 over cycles 38-40. The windows have equal duration and matching rotor phase, although residual transient differences can remain. The resulting differences therefore describe finite-window mesh sensitivity rather than an isolated spatial discretization error.\par
+Three-mesh sensitivity was evaluated directly from the accepted native monitor segments. Source hashes, complete step sequences, physical clocks, three-cycle means and cycle amplitudes were checked against the saved analyses. All meshes used T/400 and 30 inner iterations. M1 and M3 were assessed over cycles 33-35, and M2 over cycles 38-40. The windows have equal duration and matching rotor phase, although residual transient differences can remain. The resulting differences therefore describe finite-window mesh sensitivity rather than an isolated spatial discretisation error.\par
 
 \begin{equation}
 \delta_{\overline q}=100\frac{|\overline q_c-\overline q_f|}{|\overline q_f|},\qquad
@@ -522,7 +522,7 @@ Three-mesh sensitivity was evaluated directly from the accepted native monitor s
 \par
 \begin{table}[!htbp]
 \centering
-\caption{Direct grid-sensitivity audit. Relative differences use the finer-mesh output as denominator; the phase RMS denominator is its mean cycle peak-to-peak amplitude.}
+\caption{Grid sensitivity computed from native monitor histories. Relative differences use the finer-mesh output as denominator; the phase RMS denominator is its mean cycle peak-to-peak amplitude.}
 \label{tab:14}
 \small\renewcommand{\arraystretch}{1.16}
 \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
@@ -573,7 +573,7 @@ The computed differences quantify sensitivity to refinement. General grid indepe
 \FloatBarrier
 \section{Blade pressure, wall resolution and flow interpretation}
 \subsection{Native wall-face data across the systematic meshes}
-Final-cycle wall averages use five common phase samples, including the closing endpoint, at intervals T/4 on each mesh. The new comparison plots native wall-face values directly against axial position. Pressure and suction sides are not joined by an unverified interpolation, and no pointwise wall-error norm is claimed. The pressure distributions almost overlap at the plotted scale; refinement visibly reduces y+ while all sampled maxima remain below one.\par
+Final-cycle wall averages use five common phase samples, including the closing endpoint, at intervals T/4 on each mesh. Native wall-face values are plotted directly against axial position. Pressure and suction sides are not joined by an unverified interpolation, and no pointwise wall-error norm is claimed. The pressure distributions almost overlap at the plotted scale; refinement visibly reduces y+ while all sampled maxima remain below one.\par
 
 \par
 \begin{figure}[!htbp]
@@ -676,7 +676,7 @@ The four mean quantities differ by at most 0.138\% between M2 and M3, while ampl
 
 \FloatBarrier
 \section{Conclusions}
-The historical baseline and Workbench dependencies are preserved, native restarts and original-position Hybrid starts are traceable, and the systematic family has verified positive-volume mesh-quality and sampled wall-resolution data. The workflow produced accepted monitor histories, conservation audits, English figures and an explicitly scoped Mach movie.\par
+The historical baseline and Workbench dependencies are preserved. Native restarts and original-position Hybrid starts are traceable. All systematic meshes have positive cell volumes, with recorded quality metrics and sampled wall-resolution data. The workflow produced accepted monitor histories, conservation checks, figures and a Mach movie covering the documented interval.\par
 
 The three-grid assessment was based on saved native data. Last-pair means were weakly sensitive to refinement, while amplitudes and phase waveforms retained appreciable mesh sensitivity. Periodic settling on M2/M3 and temporal independence remained unresolved. The reported durations were 35 periods for M1, 40 for M2 and 35 for M3; general spatial independence and an asymptotic GCI were not established.\par
 
@@ -688,7 +688,7 @@ The repository separates flat Python modules in \path{workflow/}, configuration 
 \FloatBarrier
 \begin{thebibliography}{9}
 \addcontentsline{toc}{section}{References}
-\bibitem{su2} S. Vitale, Delft University of Technology. SU2 TestCases: axial\_stage\_2D, configuration dated 28 February 2017, file version 8.5.0 Harrier. \url{https://github.com/su2code/TestCases/tree/master/turbomachinery/axial_stage_2D}. The original source attribution and LGPL 2.1 licence text are retained with the reference material.
+\bibitem{su2} S. Vitale, Delft University of Technology. SU2 axial\_stage\_2D numerical reference, configuration dated 28 February 2017, file version 8.5.0 Harrier. Mesh: \url{https://github.com/su2code/TestCases/tree/master/turbomachinery/axial_stage_2D}. Configurations: \url{https://github.com/su2code/SU2/tree/master/TestCases/turbomachinery/axial_stage_2D}. Original attribution and LGPL 2.1 text accompany the retained sources.
 \bibitem{fluent} ANSYS. Fluent User's Guide, Release 2024 R2. Mesh modification and native mesh-to-mesh interpolation. \url{https://ansyshelp.ansys.com/public/Views/Secured/corp/v242/en/flu_ug/flu_ug_GridModify.html}; \url{https://ansyshelp.ansys.com/public/Views/Secured/corp/v242/en/flu_ug/flu_ug_Grid_to_Grid.html}.
 \bibitem{pyfluent} PyAnsys. Official PyFluent documentation and version-specific generated interfaces for Fluent 2024 R2. \url{https://fluent.docs.pyansys.com/}.
 \bibitem{nasa_grid} NASA NPARC Alliance. Examining Spatial (Grid) Convergence. \url{https://www.grc.nasa.gov/www/wind/valid/tutorial/spatconv.html}.
