@@ -41,8 +41,8 @@
   },
   {
     "path": "config/path_aliases.json",
-    "bytes": 240701,
-    "sha256": "5295a7ced1efc86d38b16560827521547ecb616c6d278d4a1550a92ccae44334"
+    "bytes": 238903,
+    "sha256": "8c84e9f198d6e0f65b1aca5f1e2c9ecd834baf247ad69182accd96faf37a8209"
   },
   {
     "path": "config/README.md",
@@ -71,13 +71,13 @@
   },
   {
     "path": "docs/references.md",
-    "bytes": 2776,
-    "sha256": "9f31ff6fafbf8dfe22df70d09d4145497542c34cdae6d101e9af37ae19925efe"
+    "bytes": 2802,
+    "sha256": "acda828e50cef4be024c30eb90e26dabcef5f3fc915696f20c7350323c4aa13c"
   },
   {
     "path": "docs/report/axial_turbine_stage_2d_report.pdf",
-    "bytes": 6987400,
-    "sha256": "f1d652f9148a7de4e8f039bbce4d29f28cf9e9f4f0d1aecfdbdb8f38ab69b87c"
+    "bytes": 6987422,
+    "sha256": "e8d79c43a4dd3fddcb1d0fb832e26013ad35529dfa706b746e3a3cdfced62f44"
   },
   {
     "path": "docs/report/images/baseline_adapted_mesh.png",
@@ -181,13 +181,13 @@
   },
   {
     "path": "docs/report/main.tex",
-    "bytes": 51273,
-    "sha256": "52826369b2c3527cacd75ee357b2d29f48ed9294ab5372c3ece271375d707412"
+    "bytes": 51991,
+    "sha256": "a5e30f57a41c1e6e866b97a00a2b521e8858c1ada1d6941a5c29789fab9f960c"
   },
   {
     "path": "docs/report/manifest.json",
-    "bytes": 875,
-    "sha256": "6e818d9f8739dfee5c21c32b84978b67e6926847049a99cbef4632b944bfb295"
+    "bytes": 923,
+    "sha256": "17f7d60b991a5274200db9b8348f79f03b81aaea276f9fa370eb6be9ad60bef7"
   },
   {
     "path": "docs/report/README.md",
@@ -203,86 +203,6 @@
     "path": "geometry/axial_stage_surfaces.step",
     "bytes": 171701,
     "sha256": "04964381f316a61ea4012ae8fbd0e720d80d0a072da73a26a5aa5976d0be2cd6"
-  },
-  {
-    "path": "geometry/coordinates/geometry_info.json",
-    "bytes": 1024,
-    "sha256": "8b4eefeb5a53b45187b76050e8e1cb6070b2d69bfb6e47b7339578b941d6b67b"
-  },
-  {
-    "path": "geometry/coordinates/preview_geometry.png",
-    "bytes": 95151,
-    "sha256": "262620418aca550f5c4382a87b555c5d9e9c72e7e57cc90934b98d823d5da053"
-  },
-  {
-    "path": "geometry/coordinates/README.txt",
-    "bytes": 449,
-    "sha256": "719bff1e5e8b678db721191d1b2bee0329b811b01d1034692ec4e951c434cb5e"
-  },
-  {
-    "path": "geometry/coordinates/rotor_inmix.csv",
-    "bytes": 725,
-    "sha256": "08430e13eee0e82c865c293659a7790c5b047c881143b6f2414cfa543c2d2e8e"
-  },
-  {
-    "path": "geometry/coordinates/rotor_outflow.csv",
-    "bytes": 579,
-    "sha256": "9a17090430463560345372c9a69393dd2e5605a01c2243537224b95f40b7b949"
-  },
-  {
-    "path": "geometry/coordinates/rotor_outline_domain.csv",
-    "bytes": 8015,
-    "sha256": "c9c157ac8bf2e09d85243fbbd76f556dd192aadbe3d8eaa12fcc17af0f81be19"
-  },
-  {
-    "path": "geometry/coordinates/rotor_periodic3.csv",
-    "bytes": 3458,
-    "sha256": "6198058477b52319a7def66f9565b9c09ee3ac18ff577d7039ee48f37a9bee8a"
-  },
-  {
-    "path": "geometry/coordinates/rotor_periodic4.csv",
-    "bytes": 3381,
-    "sha256": "cbdc4ddd27d0b7fe931ff59c9a77ccfcb0b126d69a7ed4b6892e4c268a9df76d"
-  },
-  {
-    "path": "geometry/coordinates/rotor_profile.csv",
-    "bytes": 14633,
-    "sha256": "b3b35c0a7e690ea4768e8f4e7965977cbfdea8df5310c1578817b3c0dd59a591"
-  },
-  {
-    "path": "geometry/coordinates/stator_inflow.csv",
-    "bytes": 398,
-    "sha256": "21db8e30605497210ffbb9ebf61ed46545062c18fd88400d8b755e60c21ed985"
-  },
-  {
-    "path": "geometry/coordinates/stator_outline_domain.csv",
-    "bytes": 7158,
-    "sha256": "6ac6e6d45ecde6bd0c2c895c6ffaaf1274937515d9681f52e0de9226cfa8c5b7"
-  },
-  {
-    "path": "geometry/coordinates/stator_outmix.csv",
-    "bytes": 722,
-    "sha256": "d39262db67a37c54cb969722513d4bd3d35c12604c92a9c54ee23ac550bf349f"
-  },
-  {
-    "path": "geometry/coordinates/stator_periodic1.csv",
-    "bytes": 3118,
-    "sha256": "6c32ec002c25c59092fde51521f0ad59cf84ae0c623ea976508b9c1a81446ba7"
-  },
-  {
-    "path": "geometry/coordinates/stator_periodic2.csv",
-    "bytes": 3046,
-    "sha256": "142e9bc36904246100242073fe60c500f83b02ebac3d6d61f63cea8ea9d6b9c6"
-  },
-  {
-    "path": "geometry/coordinates/stator_profile.csv",
-    "bytes": 14509,
-    "sha256": "49a8323edb5054b0a17741e7c96b7a5c860a92719e1a95eabc36cda37bc09371"
-  },
-  {
-    "path": "geometry/coordinates/stator_rotor_domain_2d.geo",
-    "bytes": 111487,
-    "sha256": "f671ed3dafddc4e5ae4af22a5a4fd2a9ee55c9a49bc5216b8dee0c3a43a35e8e"
   },
   {
     "path": "geometry/meshing_inputs/controls_meshing.json",
@@ -301,8 +221,8 @@
   },
   {
     "path": "geometry/README.md",
-    "bytes": 2143,
-    "sha256": "63a55ecb61d83393d296482cbf4df0dd39034a772341596fc0d125db9290a3c2"
+    "bytes": 1700,
+    "sha256": "2c5dc540caec0585567eb077dfdc6c6e357955abf2b609b83c4c370669375048"
   },
   {
     "path": "geometry/reference/COPYING.LGPL-2.1",
@@ -338,16 +258,6 @@
     "path": "geometry/reference/zone_2.cfg",
     "bytes": 979,
     "sha256": "e977201ecbc470fb84b696b5838077bf502157858f465a40a8d5f1111702e0da"
-  },
-  {
-    "path": "geometry/tools/create_clean_step.py",
-    "bytes": 4248,
-    "sha256": "3fcab6931bd904b33cb408f8421f1a1fa953ddc1b5af6d90008a6c92b2abb3f6"
-  },
-  {
-    "path": "geometry/tools/extract_geometry.py",
-    "bytes": 6781,
-    "sha256": "558110bce52234ed98a2f9aa29af5a0e9d4c2b3a4dd377c5465c5774cabbda54"
   },
   {
     "path": "NOTICE.md",

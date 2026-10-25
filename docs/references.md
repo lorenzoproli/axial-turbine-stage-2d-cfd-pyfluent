@@ -8,7 +8,7 @@
 - [SU2 configuration source location](https://github.com/su2code/SU2/tree/master/TestCases/turbomachinery/axial_stage_2D)
 - [Local reference material and original licence](../geometry/reference/)
 
-The Fluent geometry was reconstructed from this numerical reference. SU2 configuration values and the actually verified Fluent settings are distinguished in the report. The reference is not an experimental dataset. Original author headers and the retained LGPL 2.1 text remain with redistributed reference sources; see [NOTICE.md](../NOTICE.md).
+The final Fluent geometry follows this numerical reference. SU2 configuration values and the actually verified Fluent settings are distinguished in the report. The reference is not an experimental dataset. Original author headers and the retained LGPL 2.1 text remain with redistributed reference sources; see [NOTICE.md](../NOTICE.md).
 
 ## Solver and Python interface
 

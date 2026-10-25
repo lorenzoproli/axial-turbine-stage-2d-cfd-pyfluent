@@ -4,12 +4,12 @@
   "pages": 22,
   "PDF": {
     "path": "docs/report/axial_turbine_stage_2d_report.pdf",
-    "bytes": 6987400,
-    "sha256": "f1d652f9148a7de4e8f039bbce4d29f28cf9e9f4f0d1aecfdbdb8f38ab69b87c"
+    "bytes": 6987422,
+    "sha256": "e8d79c43a4dd3fddcb1d0fb832e26013ad35529dfa706b746e3a3cdfced62f44"
   },
   "source": {
     "path": "docs/report/main.tex",
-    "sha256": "52826369b2c3527cacd75ee357b2d29f48ed9294ab5372c3ece271375d707412"
+    "sha256": "a5e30f57a41c1e6e866b97a00a2b521e8858c1ada1d6941a5c29789fab9f960c"
   },
   "compiler_warnings": [],
   "visual_review": "PASSED",
@@ -39,8 +39,8 @@
     22
   ],
   "visual_checks": [
-    "All pages rendered and inspected",
-    "Legible figures, tables and equations",
-    "No clipped content or unresolved references"
+    "All 22 updated pages rendered and inspected",
+    "Clear geometry description without CAD preparation procedure",
+    "Legible figures, tables and equations; no clipped content"
   ]
 }
