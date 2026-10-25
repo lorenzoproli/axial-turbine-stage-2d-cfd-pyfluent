@@ -123,4 +123,4 @@ The 1920 × 1080, 25 FPS movie is encoded offline from the accepted frames. Play
 
 The geometry and numerical reference originate from SU2 TestCases `axial_stage_2D`, attributed to S. Vitale, Delft University of Technology. Original notices and LGPL 2.1 text accompany the reference sources. This project does not redistribute ANSYS software.
 
-No general reuse licence has been assigned to the original workflow and results. Copyright and third-party scope are set out in [NOTICE.md](NOTICE.md). Citation metadata are provided in [CITATION.cff](CITATION.cff).
+Original workflow code is licensed under [MIT](LICENSE). Original report text, figures, selected numerical tables and movie presentation are licensed under [CC BY 4.0](LICENSE-CONTENT), to the extent of the rights held by the project author. SU2 source assets, derived geometry, third-party material and ANSYS software retain their separate terms. See the [licensing guide](docs/licensing.md) and [NOTICE.md](NOTICE.md) for scope and exclusions. Citation metadata are provided in [CITATION.cff](CITATION.cff).

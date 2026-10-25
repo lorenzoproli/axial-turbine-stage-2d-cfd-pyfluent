@@ -4,12 +4,12 @@
   "pages": 22,
   "PDF": {
     "path": "docs/report/axial_turbine_stage_2d_report.pdf",
-    "bytes": 6987050,
-    "sha256": "15f28ab80b75e81195cbb7e02c8b66e89abc834e73bf70bc581d45332832bc11"
+    "bytes": 6987940,
+    "sha256": "6573da66fbd353ca27439d187568ca6c9f6ffbcee58f5b6cdc9e7efbdf730a87"
   },
   "source": {
     "path": "docs/report/main.tex",
-    "sha256": "8f9fee143dcea593fefe191f126e3cef8fd5a67e22ba80862d67a12e859eb046"
+    "sha256": "ed6c423a11226d4e8aed1fbe6e0e70a7709fd8d5dcfd1c8f16a9278c1d8cd466"
   },
   "compiler_warnings": [],
   "visual_review": "PASSED",
@@ -40,9 +40,10 @@
   ],
   "visual_checks": [
     "All 22 newly rendered pages inspected",
-    "Headers, captions, tables and manuscript text are black",
-    "No clipping, overlapping text or missing references found"
+    "Licensing notice and bibliography fit on page 22",
+    "All manuscript text remains black; no clipping or overlap found"
   ],
   "manuscript_text_colour": "black",
-  "nonblack_manuscript_text_operations": 0
+  "nonblack_manuscript_text_operations": 0,
+  "original_content_licence": "CC-BY-4.0; third-party material retains its own terms"
 }

@@ -12,7 +12,7 @@ class DeliveryContractTests(unittest.TestCase):
         spec.loader.exec_module(module)
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary); checkout = base/'project'; checkout.mkdir()
-            content = {'README.md':'public', 'docs/method.md':'method', 'config/model.json':'{}',
+            content = {'README.md':'public', 'LICENSE':'software terms', 'LICENSE-CONTENT':'content terms', 'docs/method.md':'method', 'config/model.json':'{}',
                 '.env':'private placeholder', '.workspace/session.json':'private placeholder',
                 '.git/config':'private placeholder', '.venv/pyvenv.cfg':'runtime placeholder',
                 'config/local_config.json':'private placeholder', 'docs/.private':'private placeholder',
@@ -25,7 +25,7 @@ class DeliveryContractTests(unittest.TestCase):
                     target=base/('with_native.zip' if native else 'source.zip')
                     with contextlib.redirect_stdout(io.StringIO()):module.package(target,native)
                     with zipfile.ZipFile(target) as archive:
-                        expected={'README.md','docs/method.md','config/model.json','ARCHIVE_SHA256.json'}
+                        expected={'README.md','LICENSE','LICENSE-CONTENT','docs/method.md','config/model.json','ARCHIVE_SHA256.json'}
                         if native:expected.add('inputs/reference.cas.h5')
                         self.assertEqual(set(archive.namelist()),expected)
                         for item in json.loads(archive.read('ARCHIVE_SHA256.json')):

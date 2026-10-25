@@ -1,6 +1,7 @@
 cff-version: 1.2.0
 message: "If referring to this study, please cite the workflow and accompanying technical report."
 type: software
+license: MIT
 title: "Axial Turbine Stage 2D CFD with PyFluent"
 abstract: >-
   A transient planar stator-rotor CFD workflow using ANSYS Fluent and PyFluent,

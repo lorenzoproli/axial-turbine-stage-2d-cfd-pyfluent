@@ -1,27 +1,33 @@
-# Copyright and third-party notices
+# Copyright, licensing and third-party notices
 
-Copyright © 2026 Lorenzo Proli for the original workflow, documentation, figures and numerical results, except where a different source or author is identified.
+Copyright (c) 2026 Lorenzo Proli for the original contributions, except where another source or author is identified.
 
-No general redistribution or reuse licence has been assigned to these original contributions. The availability of this repository does not assign the SU2 licence, a commercial-software licence or another project's licence to the complete work.
+## Original software: MIT
 
-## SU2 reference material
+Original Python code in `workflow/`, `tools/` and `tests/`, original workflow configuration in `config/`, and the original meshing-control script/template in `geometry/meshing_inputs/` are licensed under the [MIT License](LICENSE).
 
-The geometry and numerical reference derive from SU2 TestCases `turbomachinery/axial_stage_2D`. The retained configuration headers identify **S. Vitale, Delft University of Technology, 28 February 2017**, with file version 8.5.0 Harrier.
+## Original publication content: CC BY 4.0
 
-Original attribution and the retained GNU LGPL 2.1 text accompany the reference material under `geometry/reference/`. These notices apply to their respective third-party sources and are preserved independently of the original project contributions. Reference configurations are numerical source material, not Fluent results or experimental validation.
+Original report text and LaTeX sources, explanatory documentation, figures, selected numerical tables and the supplied movie are licensed under [Creative Commons Attribution 4.0 International](LICENSE-CONTENT), to the extent of the rights held by the project author. Credit Lorenzo Proli, link to the repository and licence, and identify modifications as required by that licence.
 
-Source links and interpretation are recorded in [docs/references.md](docs/references.md).
+The licences apply to different material; they are not an option to relicense every file under either licence. The [licensing guide](docs/licensing.md) records the scope and exceptions.
 
-## Commercial software
+## SU2 reference and derived geometry
 
-ANSYS Fluent, Workbench, Meshing and related vendor applications are not redistributed. Executing the native workflow requires separately installed, appropriately licensed ANSYS products. No licence to ANSYS software, trademarks, documentation or other vendor material is granted by this repository.
+The numerical reference originates from SU2 `turbomachinery/axial_stage_2D`. Retained configuration headers identify **S. Vitale, Delft University of Technology, 28 February 2017**, file version 8.5.0 Harrier.
 
-Large native project and solver data are maintained separately from the lightweight code/documentation repository. Their availability is not a grant of rights over vendor software.
+The original reference configurations, mesh, author headers and [upstream LGPL 2.1 text](geometry/reference/COPYING.LGPL-2.1) remain together under `geometry/reference/`, with [source URLs and checksums](geometry/reference/source_manifest.json). These source assets and the SU2-derived `geometry/axial_stage_surfaces.step` are excluded from the new MIT and CC BY grants. Retained upstream terms and rights continue to apply; this project does not replace or expand them. The same exclusion applies to underlying third-party geometry represented in figures and video. CC BY covers the original presentation and numerical-analysis contributions, not a new grant over someone else's source material.
 
-## Python dependencies
+## Commercial software and external native data
 
-Third-party packages are installed from their declared sources using the pinned `requirements.txt`. The Python environment, package executables and installed dependency trees are not included in the repository. Each dependency remains subject to its own licence and copyright notices; the project copyright does not replace those terms.
+ANSYS Fluent, Workbench, Meshing and related applications are not redistributed or relicensed. Their names and interfaces identify the tools used. A valid, separately obtained ANSYS installation and licence remain necessary for native execution. No ANSYS software, trademark or vendor-documentation rights are granted by this repository.
+
+Large native collections in local `inputs/` and `runs/`, complete Workbench projects and installed environments are not part of the lightweight Git distribution and are not automatically licensed by the two new files. Separately supplied collections must retain their own provenance and applicable terms.
+
+## Python and encoding dependencies
+
+Dependencies are installed separately from the pinned requirements. Their own licences and bundled-component notices remain applicable; the project MIT and CC BY grants do not replace them. The installed environment, package wheels and FFmpeg executable are not redistributed in this repository. Direct-package licence declarations are summarised in the [licensing guide](docs/licensing.md).
 
 ## Numerical interpretation
 
-The supplied results document the stated model, software versions, inputs and finite simulation intervals. They do not constitute experimental validation or certified engineering data. The specific unresolved numerical findings are retained in [docs/limitations.md](docs/limitations.md) and the technical report.
+The results document the stated model, software versions and finite simulation intervals. Licences do not turn the results into experimental validation, certified engineering data or a warranty of numerical accuracy. Unresolved findings remain explicit in the [limitations](docs/limitations.md) and report.

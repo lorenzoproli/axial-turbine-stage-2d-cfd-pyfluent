@@ -11,8 +11,8 @@
   },
   {
     "path": "CITATION.cff",
-    "bytes": 812,
-    "sha256": "a35365aeeb4069b13da80c6f85a52df3ed5165f3177a854dedd09e9a557e2a8a"
+    "bytes": 825,
+    "sha256": "0c60bb1fd84f46ecb0b9598422277b6b5e3501412273ce5ee3a3f2cf49c9d59b"
   },
   {
     "path": "config/campaign_state.json",
@@ -55,6 +55,11 @@
     "sha256": "fe1bd9b8494b7b919ae3e41d075cff46a20139c01a46b07f4982994604d3a125"
   },
   {
+    "path": "docs/licensing.md",
+    "bytes": 4530,
+    "sha256": "a428240bdda657a5d22d391f54ea5d54f04fca7428fbca6ea6e2627f79df73b4"
+  },
+  {
     "path": "docs/limitations.md",
     "bytes": 4372,
     "sha256": "df389772903dd26215a5e945043ec0ae8e11916cc2e24c3b9f700543aa720957"
@@ -66,8 +71,8 @@
   },
   {
     "path": "docs/README.md",
-    "bytes": 1453,
-    "sha256": "ec2cde1958c025bdf24d0e1a714faada0f247ce3c3206302192f7a8ac6c40cbc"
+    "bytes": 1558,
+    "sha256": "f44d49e4e01bb55bb2423c68add77aa9a49ba778f3882fa5b69f592284bbe82b"
   },
   {
     "path": "docs/references.md",
@@ -76,8 +81,8 @@
   },
   {
     "path": "docs/report/axial_turbine_stage_2d_report.pdf",
-    "bytes": 6987050,
-    "sha256": "15f28ab80b75e81195cbb7e02c8b66e89abc834e73bf70bc581d45332832bc11"
+    "bytes": 6987940,
+    "sha256": "6573da66fbd353ca27439d187568ca6c9f6ffbcee58f5b6cdc9e7efbdf730a87"
   },
   {
     "path": "docs/report/images/baseline_adapted_mesh.png",
@@ -181,13 +186,13 @@
   },
   {
     "path": "docs/report/main.tex",
-    "bytes": 51167,
-    "sha256": "8f9fee143dcea593fefe191f126e3cef8fd5a67e22ba80862d67a12e859eb046"
+    "bytes": 51659,
+    "sha256": "ed6c423a11226d4e8aed1fbe6e0e70a7709fd8d5dcfd1c8f16a9278c1d8cd466"
   },
   {
     "path": "docs/report/manifest.json",
-    "bytes": 995,
-    "sha256": "cf170c11c356291a9c759f3b8a3dad6f2eae6fef83397ab99a779424ea987036"
+    "bytes": 1082,
+    "sha256": "ff8a343f03929b3d0342ddb447f44858b3cbb227707261d0cfcef5dfaa0456f7"
   },
   {
     "path": "docs/report/README.md",
@@ -221,8 +226,8 @@
   },
   {
     "path": "geometry/README.md",
-    "bytes": 1700,
-    "sha256": "2c5dc540caec0585567eb077dfdc6c6e357955abf2b609b83c4c370669375048"
+    "bytes": 2006,
+    "sha256": "f9c94afd9c4c1e1e3b6c7b29647bd5a405baeeb744730c57e6c715959052e207"
   },
   {
     "path": "geometry/reference/COPYING.LGPL-2.1",
@@ -265,14 +270,24 @@
     "sha256": "e977201ecbc470fb84b696b5838077bf502157858f465a40a8d5f1111702e0da"
   },
   {
+    "path": "LICENSE",
+    "bytes": 1091,
+    "sha256": "e083bc3419346b0c16d8e572103bf9dd27072df77818e5a78e2336f88e6d1af2"
+  },
+  {
+    "path": "LICENSE-CONTENT",
+    "bytes": 18657,
+    "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411"
+  },
+  {
     "path": "NOTICE.md",
-    "bytes": 2366,
-    "sha256": "1a5d0ef463c62444d26a66ea4ed43c2ae40be8ca07b5d491f6719cb4e721ce6a"
+    "bytes": 3481,
+    "sha256": "587c3e2433d12956e910f9a2a89f58490bb61b1c3735b0f63da92cc8ab9ff0d1"
   },
   {
     "path": "README.md",
-    "bytes": 8603,
-    "sha256": "260e90a960ab6d5c1e1a2634ac16a12620bc68dedc0650ded6d6a27a19d71cc3"
+    "bytes": 8897,
+    "sha256": "4e91c6bdce8c7647f5a792ea244536545a20480f79c2ed63c21d96a25a923e4f"
   },
   {
     "path": "requirements-lock.txt",
@@ -846,8 +861,8 @@
   },
   {
     "path": "tests/test_delivery_contract.py",
-    "bytes": 6557,
-    "sha256": "9bf60c1c2579d5c37a1c04a2d56ca99e36b68f2cac3871d7372fa0f6b3fdaf5b"
+    "bytes": 6648,
+    "sha256": "cc1b985877487d250655df6a770e1e830f2e4d3600c7585734292bfc9f92efdf"
   },
   {
     "path": "tests/test_native_history_reproduction.py",
@@ -961,8 +976,8 @@
   },
   {
     "path": "workflow/package_project.py",
-    "bytes": 3158,
-    "sha256": "baafb6982a289c12079df9cc2c63ea17135f51b2c71ab37475e4c0d59e484165"
+    "bytes": 3186,
+    "sha256": "a01497efb0f9288159e2c1a7beb8d0c680ddc84cbd1aa8f6dea49ce09c5a52e0"
   },
   {
     "path": "workflow/periodicity_diagnostic.py",

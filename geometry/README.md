@@ -19,3 +19,7 @@ The actual original rotor position is restored before fresh Hybrid Initializatio
 The authoritative systematic meshes are supplied separately as `inputs/meshes/M1_systematic.msh`, `M2_systematic.msh` and `M3_systematic.msh`. The native SpaceClaim geometry and portable Workbench meshing template are local inputs excluded from Git. The historical adapted mesh is a separate dataset.
 
 `workflow/generate_mesh_family.py` uses the supplied geometry, recorded controls and Workbench template. See [reproduction requirements](../docs/reproduction.md) and [mesh-quality results](../results/mesh_quality/README.md).
+
+## Source rights
+
+The SU2 reference and source-derived STEP retain their provenance and applicable upstream terms. They are excluded from the new MIT/CC BY grants for original software and publication contributions. See [licensing scope](../docs/licensing.md) and [third-party notices](../NOTICE.md).

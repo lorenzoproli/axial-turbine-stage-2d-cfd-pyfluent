@@ -4,7 +4,7 @@ import argparse,hashlib,json,zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
 PUBLIC_DIRECTORIES={'config','docs','geometry','results','tests','tools','workflow'}
-PUBLIC_ROOT_FILES={'README.md','NOTICE.md','CITATION.cff','requirements.txt',
+PUBLIC_ROOT_FILES={'README.md','NOTICE.md','CITATION.cff','LICENSE','LICENSE-CONTENT','requirements.txt',
                    'requirements-lock.txt','.gitignore','.gitattributes','manifest_sha256.json'}
 
 def sha(path):
