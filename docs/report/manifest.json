@@ -9,7 +9,7 @@
   },
   "source": {
     "path": "docs/report/main.tex",
-    "sha256": "a5e30f57a41c1e6e866b97a00a2b521e8858c1ada1d6941a5c29789fab9f960c"
+    "sha256": "3546ca295cd981ee63aa3a903e52bf5cc7aae5edf5777eb123beac37a2e9bac0"
   },
   "compiler_warnings": [],
   "visual_review": "PASSED",
