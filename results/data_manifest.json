@@ -1,0 +1,1237 @@
+{
+  "schema_version": 1,
+  "accepted_runs": 8,
+  "native_monitor_statistics_checked": 32,
+  "native_mesh_quality_collections_checked": 4,
+  "units": {
+    "time": "s",
+    "force": "N at 1 m reference depth",
+    "mass_flow": "kg/s",
+    "pressure": "Pa",
+    "phase": "fraction of one blade-passing period",
+    "yplus": "dimensionless"
+  },
+  "inputs": [
+    {
+      "file": "runs/adapted_mesh/ITER30/force_y_rotor-rfile.out",
+      "sha256": "d746d1b855b3f86256f0e2451a8c23dc681a154011fe8f37a35ad10b1375de1c"
+    },
+    {
+      "file": "runs/adapted_mesh/ITER30/mdot_inlet-rfile.out",
+      "sha256": "e7e54c0b81634db68e5aa92330e00dfae1f4e419b3573a52946af9f0f116e559"
+    },
+    {
+      "file": "runs/adapted_mesh/ITER30/mdot_outlet-rfile.out",
+      "sha256": "976c5da490ce082ea76a63594122987539c2a83aaecc2f4d0569b8ead707f38d"
+    },
+    {
+      "file": "runs/adapted_mesh/ITER30/progress.json",
+      "sha256": "fdfa1a594518163f150a10473e5be69904fc0d97211eb299257172c4a2f088df"
+    },
+    {
+      "file": "runs/adapted_mesh/ITER30/pt_outlet-rfile.out",
+      "sha256": "1b62669cc6e54e98fd73e90bfaea8d27a0bdb8b5b792efec8500c6e190aca93b"
+    },
+    {
+      "file": "runs/adapted_mesh/ITER30/resume_24_processes/force_y_rotor-rfile.out",
+      "sha256": "a6e126a1dc78901b19ec5553e3d4fcdc5e875d6b938c3b5e0c91881d222d766d"
+    },
+    {
+      "file": "runs/adapted_mesh/ITER30/resume_24_processes/mdot_inlet-rfile.out",
+      "sha256": "a461c9f1fb80112b25187b30cf027cb32d117ce54b9629acd14137e7909e9c02"
+    },
+    {
+      "file": "runs/adapted_mesh/ITER30/resume_24_processes/mdot_outlet-rfile.out",
+      "sha256": "7f328d87e8564a84e006a6c139dbbdd19ca7c931c682137c12fd8c16b709efb3"
+    },
+    {
+      "file": "runs/adapted_mesh/ITER30/resume_24_processes/pt_outlet-rfile.out",
+      "sha256": "e0b0694135e70bc43b895deecb6efcbd5a5b3d0e3ab84e6f9ac2004dc7b4b330"
+    },
+    {
+      "file": "runs/adapted_mesh/ITER60/force_y_rotor-rfile.out",
+      "sha256": "2b19b489a671862ccdab53a7f72b73f200d88bd6c143bb6366dd2e29a6e4678f"
+    },
+    {
+      "file": "runs/adapted_mesh/ITER60/mdot_inlet-rfile.out",
+      "sha256": "8e15c96fc7173911188468555b601cdbf444d454cf3f605361502fc11012e597"
+    },
+    {
+      "file": "runs/adapted_mesh/ITER60/mdot_outlet-rfile.out",
+      "sha256": "2b4cce7445dbdfb25742c8e89ddba1b9d027886f84866691ddafa4a4c4667ea3"
+    },
+    {
+      "file": "runs/adapted_mesh/ITER60/progress.json",
+      "sha256": "f61390f16e0a674b72a52c65a4809f81f0159834539a6071503e4f57091962fc"
+    },
+    {
+      "file": "runs/adapted_mesh/ITER60/pt_outlet-rfile.out",
+      "sha256": "346d29330d5ec81191e6d9d8a36b22af5cc65728ff48b62bd83a4a2590ddcf76"
+    },
+    {
+      "file": "runs/adapted_mesh/T100/force_y_rotor-rfile.out",
+      "sha256": "e9d39371a284a1581e3a4399b45c22a50ed591d9fa90718e90540acf8c5d4aad"
+    },
+    {
+      "file": "runs/adapted_mesh/T100/mdot_inlet-rfile.out",
+      "sha256": "94b4a7e9b19ddf9af39553f52e40054bc6ebd16258287287d85bda74bcb26970"
+    },
+    {
+      "file": "runs/adapted_mesh/T100/mdot_outlet-rfile.out",
+      "sha256": "d4fdda4f3f45c935c11ac70f682fcb28384fe5f8b034a1a46ccea98004c95c40"
+    },
+    {
+      "file": "runs/adapted_mesh/T100/progress.json",
+      "sha256": "e5758d9f483f623134e39b6a7e5b3cee7fc766e5e6a07cba4643096a07046043"
+    },
+    {
+      "file": "runs/adapted_mesh/T100/pt_outlet-rfile.out",
+      "sha256": "ac624e18c22bc70b3a041f2518f6271750e2b65b91676dc42b5360f05c2e0b34"
+    },
+    {
+      "file": "runs/adapted_mesh/T200/force_y_rotor-rfile.out",
+      "sha256": "898d7efd7a1af6280be186130f7b0c27068583db32f76573174187619edad64f"
+    },
+    {
+      "file": "runs/adapted_mesh/T200/mdot_inlet-rfile.out",
+      "sha256": "fa07d79683fa76f6d7db5cbd65997a7863b372955fd1b19a6ad6088af0c3d8d6"
+    },
+    {
+      "file": "runs/adapted_mesh/T200/mdot_outlet-rfile.out",
+      "sha256": "1ad367ce3533d436d06c55b4e2a85700cb4689232177f5a5ce9b0f4328ac553b"
+    },
+    {
+      "file": "runs/adapted_mesh/T200/progress.json",
+      "sha256": "27a580c821e87fd53b92385d784b0938023c4f07503be4fa5735295960668829"
+    },
+    {
+      "file": "runs/adapted_mesh/T200/pt_outlet-rfile.out",
+      "sha256": "bf03f533725844083302bc81678a1959908fd8ec7d5d55f576ddd7d76e827b8f"
+    },
+    {
+      "file": "runs/adapted_mesh/T400/force_y_rotor-rfile.out",
+      "sha256": "8d906cb0f45dab5c7a96987ca9e9aa3887cf7b6e87300de6ff98707b06ef4576"
+    },
+    {
+      "file": "runs/adapted_mesh/T400/mdot_inlet-rfile.out",
+      "sha256": "3e2dbd428041d68e401b1b2b86f6ca1520f61a30f2130d04cad58996823a9da4"
+    },
+    {
+      "file": "runs/adapted_mesh/T400/mdot_outlet-rfile.out",
+      "sha256": "6d4cfcdd0e02be2bb29361f7f2b264db4d76402d3da5435245ae0059d941fb0d"
+    },
+    {
+      "file": "runs/adapted_mesh/T400/progress.json",
+      "sha256": "7f1912c6772ba09b17b6523c71796ad228face32bedc75873c83a3d0d5556d11"
+    },
+    {
+      "file": "runs/adapted_mesh/T400/pt_outlet-rfile.out",
+      "sha256": "834e47045d8cb8886e543a6831bf118a1bcb6f01ba379da3895d96203903b010"
+    },
+    {
+      "file": "runs/adapted_mesh/T400/segments/20261013_194833_603471/force_y_rotor-rfile.out",
+      "sha256": "b81a4dcf41330893ba2df88c4b0b98b5beda3fe382cb8b1df74cb4c35597f75b"
+    },
+    {
+      "file": "runs/adapted_mesh/T400/segments/20261013_194833_603471/mdot_inlet-rfile.out",
+      "sha256": "ab033ae9437c3ae70d0c1ae365f8ce9edbc9e98d06800798b2269989d89eb8b5"
+    },
+    {
+      "file": "runs/adapted_mesh/T400/segments/20261013_194833_603471/mdot_outlet-rfile.out",
+      "sha256": "e2acb157d69dd97e6670fc147e7260b2a6cbda11a1573f51e92584f53f17c8bd"
+    },
+    {
+      "file": "runs/adapted_mesh/T400/segments/20261013_194833_603471/pt_outlet-rfile.out",
+      "sha256": "55f2341a7ee2274f82bad357b6ee39567623625a3b63f244550cf270a0962863"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/ITER30/analysis.json",
+      "sha256": "129ad5bfc00fb5c6c57c4c40a63719b91d2e8c695c2f454c350ce4f6263b6fd0"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/ITER30/balance_mass_flows.csv",
+      "sha256": "86151b6f9341215765fcecf71b737a0a4e023a89bc881752808fcf257e808b03"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/ITER30/comparison_cycles.csv",
+      "sha256": "774c877b3e7447fb3fb86e53b7d9bf9ecf9732c98ba59ca97f138a140d21f8f7"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/ITER30/profiles_in_phase.csv",
+      "sha256": "dad35080afa2eea254205d94a07e5b90c06ef44d208b68ad0e51260ac9581177"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/ITER30/residuals_summary.json",
+      "sha256": "8fca7d9f83f67c22b4a37ecadf87cba55de0427bc56f14d3c16b9e7239fb9574"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/ITER30/statistics_cycles.csv",
+      "sha256": "84e19fda5ecf38652be2d9200e57c56f166dbd4ff1fe9df750fb3fd9c724e4f3"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/ITER30/statistics_window.csv",
+      "sha256": "9a972ee25225ea9b867d6b55062775db9fd6209422248dec43b54c41c6739a28"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/ITER60/analysis.json",
+      "sha256": "d67f0c7b6ac48206e7f6202de04ae759e697f7fd4cd96d98bdc44f177c5de7ce"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/ITER60/balance_mass_con_storage_cycles.csv",
+      "sha256": "5a9cfecb7d7be2083cade6e832eefd955169be8368d3b860b0cb8ead4e3eb403"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/ITER60/balance_mass_flows.csv",
+      "sha256": "256cdf1dc728dfe311900d7a5cfaff8edc5c1cef497e9355aaa79c2849726833"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/ITER60/comparison_cycles.csv",
+      "sha256": "0d05f4fa0a3ebfc2fb87b6b0008a250ad206f9919a1d155dce6cd48097387140"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/ITER60/profiles_in_phase.csv",
+      "sha256": "cdb61e03894d627514e7fc45c933ca005b3419201dd6a2c38a72b40bad3a9246"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/ITER60/residuals_summary.json",
+      "sha256": "af6b4e44b48ae74500167e365a1488b7b97aee188fa7d1917bf6bec1231f8851"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/ITER60/statistics_cycles.csv",
+      "sha256": "bb39a883ba7edfada5d269f46fc0ec780d033d882d8f6ae81e926ab031d5b0e3"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/ITER60/statistics_window.csv",
+      "sha256": "befc2872f85be532b8f8ff5a12d4ed47883a88dcab44db1cb271db6cd7fd4223"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T100/analysis.json",
+      "sha256": "0aafd58ecc4090b94540fc60a617827c6b758529b23ff2e315b053f26c3deaa3"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T100/balance_mass_con_storage_cycles.csv",
+      "sha256": "d929a18ee754e0202ee861ebe74b7d0ea9b068bc78456279fd1429fb934c86b2"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T100/balance_mass_flows.csv",
+      "sha256": "dd8016cf400d6332f89cef7d071911b07b69e13efe4520b6b9158ddc7e223592"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T100/comparison_cycles.csv",
+      "sha256": "3667356612b262e1c88543fbcb57673ce91aabc733d1ebee554eb484557ca2e1"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T100/cycle_walls/summary_cycle.csv",
+      "sha256": "32ec9e4367e910663ec0f4f02f68040ba619ce1bcecbb300d34f9b900b683a6d"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T100/cycle_walls/wall_rotor_envelope.csv",
+      "sha256": "a67ccc72c7e25dfd568465f2f005e385948dd6dbe7f9ec4a2f6f274b27fd4985"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T100/cycle_walls/wall_stator_envelope.csv",
+      "sha256": "ce07bcd366949c8b463d51377ea9be07551f23c155b07972e14cf374a0c70fcc"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T100/profiles_in_phase.csv",
+      "sha256": "dfc6452ea1fa53510298eb8fa1a18cb2aaab4fe8e1eddeaff98fc2f06c6a7033"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T100/residuals_summary.json",
+      "sha256": "bb15834e9fb198e96322d5578c7c84b2225d8d06150820c4b8e678c1ada3c35a"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T100/statistics_cycles.csv",
+      "sha256": "510cb4015d5774d79cf5dae63bd19f7466772aba9a927db65a2fae2ba75649a8"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T100/statistics_window.csv",
+      "sha256": "7b41e117ba2a4b384a65ad1b1402698cfda224e0bdf6afa0c41d3fde57e12420"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T200/analysis.json",
+      "sha256": "6d9335a97b1fbdce916f655d7d5a3db09e697d9f50b7a6808f1d09d6830258c7"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T200/balance_mass_con_storage_cycles.csv",
+      "sha256": "011ffdb43f51abefc57a49b4c9c84b388ed59b701d06433424058380486d6447"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T200/balance_mass_flows.csv",
+      "sha256": "933877351c63c67ea1cfaeafd30cac10d1b587ed1955108008233b7a608111bf"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T200/comparison_cycles.csv",
+      "sha256": "720ba30da2e483639ab6f8a90db279789e52f50a1fe085f52f8a802ea2502b1f"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T200/cycle_walls/summary_cycle.csv",
+      "sha256": "550cd0570c7e1324f2d41c101eac5d9ede629e9989b1f7944df450d652cca4a1"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T200/cycle_walls/wall_rotor_envelope.csv",
+      "sha256": "5832e43dfd778929ffd9e3e37da1311e57236043118886da440404685373fd07"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T200/cycle_walls/wall_stator_envelope.csv",
+      "sha256": "338791e3bca88a87e47591f57dcdd22e254cae83a87f894fb0d47787faa51fbc"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T200/profiles_in_phase.csv",
+      "sha256": "caaa06fd45db64e177a49815b50c9242982aebecb2f0f52c190c0ac1ea33df66"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T200/residuals_summary.json",
+      "sha256": "2992579441344a5ec62cdc82c3de5ea02fde8341ce2840eaa5693dbca8b815af"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T200/statistics_cycles.csv",
+      "sha256": "c350fb80513bec2ca85841d48bb49d39048770fa925960c85fa2d51cff827825"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T200/statistics_window.csv",
+      "sha256": "a81999ba706728f4ea6815b8563b9e8199b420b8991d83461457f88476c78f76"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T400/analysis.json",
+      "sha256": "6512edd8efe53ae173a2cb56402cdd3097cbfdf6cd3b85782b381764191efac3"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T400/balance_mass_con_storage_cycles.csv",
+      "sha256": "5505b9a30b51796dc729e0727febeb8bac16bf251ae645a808c085a3cb1009f8"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T400/balance_mass_flows.csv",
+      "sha256": "9c913b4842f5b327e335d798065e087c55105b5a906ba34b6770c9e0896262b5"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T400/comparison_cycles.csv",
+      "sha256": "0db3a229bf6f68cd99179ee82a0637a8b6488afa1e5cec097a40f14647b6499a"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T400/cycle_walls/summary_cycle.csv",
+      "sha256": "16fdb596535cf4a6db18854b1041636e3a3c7b31bc28aa38cf0bd09477ad4358"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T400/cycle_walls/wall_rotor_envelope.csv",
+      "sha256": "14ac80cdf280c1334baf232bfaefe3503733ad93680b3ef9940c227f368801a3"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T400/cycle_walls/wall_stator_envelope.csv",
+      "sha256": "5f79dc203dce205e764e714bdfd7f637ba3e9b71efc13a84c40a1890fd0877e5"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T400/profiles_in_phase.csv",
+      "sha256": "de297be5500107381ec690a3f238ed28bf3d68832cf4897ceef9571da0755496"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T400/residuals_summary.json",
+      "sha256": "7c67ab47ff964df9afd26150b8342deaf849543caa6bcd80e7eaf89e635dda8c"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T400/statistics_cycles.csv",
+      "sha256": "481bdf795ca740733877b454372acf703a2d2baa2c32eb4a2e0b0c6424af7daa"
+    },
+    {
+      "file": "runs/analysis/adapted_mesh/T400/statistics_window.csv",
+      "sha256": "de73ee9731bfc5f885e1c3372a5bd588c7db54ab404bec227fcbf034d46b6dee"
+    },
+    {
+      "file": "runs/analysis/sensitivity/grid/assessment.json",
+      "sha256": "ee39f78c0dc580b786ee7e1520baa0fab4e379c91c2803e293cded738e3257c8"
+    },
+    {
+      "file": "runs/analysis/sensitivity/grid/mesh_pair_comparisons.csv",
+      "sha256": "9b4b1cf97cbe50212786a092e535c578df125da81421e78a94edcd7cc94b873b"
+    },
+    {
+      "file": "runs/analysis/sensitivity/grid/phase_profiles_with_cycle_range.csv",
+      "sha256": "7f0d28c2c39efbdb53e574ba58c8b9974c7eb4d48987f5b8de24822b19e912a3"
+    },
+    {
+      "file": "runs/analysis/sensitivity/grid/recomputed_monitor_statistics.csv",
+      "sha256": "a6e83edf5fc3a379e118d5ec58c8e8d6125eec4d56d643d89f6dc5b318ce259f"
+    },
+    {
+      "file": "runs/analysis/sensitivity/grid/three_mesh_trends.csv",
+      "sha256": "140930d5b9caaefe948d86dcadb61a95f45f2307948bddcbd673aab911cc7ede"
+    },
+    {
+      "file": "runs/analysis/sensitivity/inner_iterations/assessment.json",
+      "sha256": "800becd57952f8f5957ccf316f58ee0503f993f76c5e4995b7dec63c2c8268e6"
+    },
+    {
+      "file": "runs/analysis/sensitivity/inner_iterations/comparison_ITER30_ITER60.csv",
+      "sha256": "3a13afa70e01b2ea32ebccf6dde6224e8f3602d1e89741aa326a1e235df113d5"
+    },
+    {
+      "file": "runs/analysis/sensitivity/inner_iterations/comparison_fields_same_phase.csv",
+      "sha256": "50121872cc330e6b085118a91913fb9e0e2e2b1afdcdcf18eddfa74d6ddd6fd3"
+    },
+    {
+      "file": "runs/analysis/sensitivity/timestep/assessment.json",
+      "sha256": "d81dd8730320181a8ee3bc979ec65c2e84624361c76ca982455987264caac2bb"
+    },
+    {
+      "file": "runs/analysis/sensitivity/timestep/check_error_iterative_vs_temporale.csv",
+      "sha256": "7ebf6d4038a4ce2d0c61db2e43ad1e42e7d9f4593fe908721f4c2cbf271d79de"
+    },
+    {
+      "file": "runs/analysis/sensitivity/timestep/comparison_partial_T100_T200.csv",
+      "sha256": "13f6daafe287500868583dc7d3ede1791e94a3530569fab88db6e011d59cec62"
+    },
+    {
+      "file": "runs/analysis/sensitivity/timestep/comparisons_temporal.csv",
+      "sha256": "4f4cd9da727186cabbd7b179e36ba5a23afe2d3ee8584d8ccc95893497f57d63"
+    },
+    {
+      "file": "runs/analysis/sensitivity/timestep/statistics_compared.csv",
+      "sha256": "882377ffcd11dc3332eca8a0ed7131934ef4c200a143caa723e6efe93a905826"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M1/analysis.json",
+      "sha256": "677582ff6e757f2f36c77746cfc671970a218717df8a546a96c0bf5e61ebfce2"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M1/asymptotic_assessment/assessment.json",
+      "sha256": "a33778bd081ba55e11753ec44c52ae5bb51199a4349cd8502c638f2eb398ecd5"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M1/asymptotic_assessment/phase_field_recurrence.csv",
+      "sha256": "6d91a71f4eb8f8529a6e431fcc6dacf37bd5f3150cff8e77d92d29abb7858004"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M1/balance_mass_con_storage_cycles.csv",
+      "sha256": "df426bd1fbcc3e0cd9d239ab112160c3edd29802d3c909027ee7c8a79337b866"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M1/balance_mass_flows.csv",
+      "sha256": "053a1453703670135e3bde68ea5f775a308d6e3ee83e8ce4732cf1826cc7b7ae"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M1/comparison_cycles.csv",
+      "sha256": "b1c7d78ed41048dbb35d63560e4d915dc7514effb9fdf7b184b4d650a548ee3b"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M1/cycle_walls/summary_cycle.csv",
+      "sha256": "fbc3e154955c1260022b9b401685b39081e5d6d5e52e1339eda1eb19f04ef306"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M1/cycle_walls/wall_rotor_envelope.csv",
+      "sha256": "bcfb908482e852ee01bb34436f0ff148e8ac4cce1df29b83c32924668224a7fe"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M1/cycle_walls/wall_stator_envelope.csv",
+      "sha256": "e32acac55ac59d1e13f2ff634952ddca18ac07c27f4e06c53696c85b78d0eaf5"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M1/profiles_in_phase.csv",
+      "sha256": "9c55ee8adcbbd4cea31b87fa317e1d246deb5fc9604232547b46b2960a856637"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M1/residuals_summary.json",
+      "sha256": "f530fc86c5bf59d252429dc2039a2da7bd3894648ad95a6a0184b800e2705d28"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M1/statistics_cycles.csv",
+      "sha256": "61141b59071f04d05a5fddc1dc56fe724a1c9ad0b10d779d1224756cecb7f167"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M1/statistics_window.csv",
+      "sha256": "5805353519f34f94c26f755d1a430c5b6e72bc2a560a3b74e8e6c749892fab4f"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M2/analysis.json",
+      "sha256": "9a8e2fd33b7c24682602585cae20bf7465e7fe048e65c4641853a2b12dc5c521"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M2/asymptotic_assessment/assessment.json",
+      "sha256": "9ec99898478d0cce64942cb0899c9a5a5e68494acabefdf5a23450d1d32cb219"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M2/asymptotic_assessment/phase_field_recurrence.csv",
+      "sha256": "36d90d35fc77f8445f8dba7e2a5fa1d1668fea836332f04b296216b22294dec3"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M2/balance_mass_con_storage_cycles.csv",
+      "sha256": "36f28c13e942bc099d75a45cb74ac85aaab96be9c0424c7030c085a8d62149b9"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M2/balance_mass_flows.csv",
+      "sha256": "3d15edb42a71d3f3d506de4299536a252f71f9b644545add72a82c4621d8211f"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M2/comparison_cycles.csv",
+      "sha256": "deb5dcfb87cd61f02dfc3854a7724120d67c522e5d50b32e42850f730c4fb6a9"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M2/cycle_walls/summary_cycle.csv",
+      "sha256": "e9d7657b2da2c8ac205d12e989d20a82c2488c6eb94c6264344174a77ba96b0e"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M2/cycle_walls/wall_rotor_envelope.csv",
+      "sha256": "1695c4408e8d522b39891485c4391246ec24c0555a6553a863eebe3a5ce54fc8"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M2/cycle_walls/wall_stator_envelope.csv",
+      "sha256": "b4b7ea5c9bdd4fe99ceea1fc60de1f9d63610b065588676b2b62a00a539b999b"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M2/profiles_in_phase.csv",
+      "sha256": "9681bdebad1edac3f0567c7391dbdb5732c6bb5e0d09983d1afa888e5ac91bb1"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M2/residuals_summary.json",
+      "sha256": "bf881a25a02a9353de1b529689f556904e073cea4bfb4a5b06f06c5695c8fb05"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M2/statistics_cycles.csv",
+      "sha256": "32fc6d0ff5b4fce95f19426e78b716b3114288dfc8d8db5159e033db81718852"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M2/statistics_window.csv",
+      "sha256": "c12ff4c9d26772f721315dbc952b53df3edc6a2afcbbcddcaf5d3e678e202c60"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M3/analysis.json",
+      "sha256": "7b7280dde37d230d01b0da5c13f641a7fb20c02126049f8522589bd8a8669eed"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M3/asymptotic_assessment/assessment.json",
+      "sha256": "ca2ccb34c290dc5cad43b8ebd055d7225f40fda1e3de645c91aa174ee7176633"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M3/asymptotic_assessment/phase_field_recurrence.csv",
+      "sha256": "8cbac3c86430eaa2cf813982de6dd2b9875e5d21ac8485f22ebe9c08140206af"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M3/balance_mass_con_storage_cycles.csv",
+      "sha256": "aa317d8c84b3b5e22325cc03b934ba8e9c8f4129660c3a7aed26d80f382b4f34"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M3/balance_mass_flows.csv",
+      "sha256": "d7585a6e615b07962e8c2dd687207ede01cf76ccd0b96b713bc9e121e4c22fbf"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M3/comparison_cycles.csv",
+      "sha256": "636b7311e151caac75d6a8cf8d847c788ddd695c632e742f8fe2f84c21880657"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M3/cycle_walls/summary_cycle.csv",
+      "sha256": "e159b6f779bdd9f7e71d697ac34fcb7990ae2f35705356b975819606b1fe7275"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M3/cycle_walls/wall_rotor_envelope.csv",
+      "sha256": "821cd4ed4990c0c079cc05aedcaed7e6474ff7f677cf4e584102adf46e7464ae"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M3/cycle_walls/wall_stator_envelope.csv",
+      "sha256": "c70c1496bfc448ae33b7a4f1fc6255037c350e62b27b3f2ec92d1863af6c98ab"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M3/profiles_in_phase.csv",
+      "sha256": "e6010bfda815341110a25ea7cf2883dc9bb2f47c7f76ac45de1d159f19e2f8cb"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M3/residuals_summary.json",
+      "sha256": "4dd62ea9fb206e162d58cd4b25207e9e5bc55090c19fef50abba83cbb158b291"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M3/statistics_cycles.csv",
+      "sha256": "33b8c54b6df3fdb61f5b9dd9aa7f4646a6de1cf2aa7e86eb091be1101f813f52"
+    },
+    {
+      "file": "runs/analysis/systematic_mesh/M3/statistics_window.csv",
+      "sha256": "770fb76362a3285bf05911c369578d8618566dbc34e6fd10471a91c0c1219398"
+    },
+    {
+      "file": "runs/mesh_quality/M1/quality_cells.npz",
+      "sha256": "4c60e8e1727e43084eea3528ea3989a805f6203752d64d9902895b37e682a536"
+    },
+    {
+      "file": "runs/mesh_quality/M1/statistics_quality.csv",
+      "sha256": "e355d63728f9862e36f3d1303ded7fdfcda12c824c80c0c1a8b1a29c037775a2"
+    },
+    {
+      "file": "runs/mesh_quality/M2/quality_cells.npz",
+      "sha256": "a4a2c6186332e4bc669085f067eaad4b82334ab4261eb0dd98e82a1c19032aaa"
+    },
+    {
+      "file": "runs/mesh_quality/M2/statistics_quality.csv",
+      "sha256": "023449b360fcfe9ac3978411c8d2e8f9b194d7002031a17bec943f8398dd1fc5"
+    },
+    {
+      "file": "runs/mesh_quality/M3/quality_cells.npz",
+      "sha256": "7a7c3faba7ecd9869b19d7e6a1c9e1f4dd9170a5a106dd20339b234b3ef18863"
+    },
+    {
+      "file": "runs/mesh_quality/M3/statistics_quality.csv",
+      "sha256": "bdb303639d7f4d0600f7c8287db631208ae557e997e9b1187cacb0529d18c216"
+    },
+    {
+      "file": "runs/mesh_quality/baseline/quality_cells.npz",
+      "sha256": "c7126b795d81d8299fafc450d2e21bb4919ba92923d6275bad4453896af2b86e"
+    },
+    {
+      "file": "runs/mesh_quality/baseline/statistics_quality.csv",
+      "sha256": "fba4ef9c9bd58d95e894a22ad0906855dae4612b04ff19b4c8ac61ea2101c7e6"
+    },
+    {
+      "file": "runs/systematic_mesh/M1/force_y_rotor-rfile.out",
+      "sha256": "42f4c873b49198406f54777b1318500053a9a3b7f3617a8b6f9e32a7412993eb"
+    },
+    {
+      "file": "runs/systematic_mesh/M1/mdot_inlet-rfile.out",
+      "sha256": "8afb3e674d794e9ef9c27ed8566defc03b86f2f8b2c5c564dfc96344aa86743b"
+    },
+    {
+      "file": "runs/systematic_mesh/M1/mdot_outlet-rfile.out",
+      "sha256": "62aad5839bf6dbc2f31918dcb2deea2c80ab67b25807e70898266aa0cf5988e3"
+    },
+    {
+      "file": "runs/systematic_mesh/M1/progress.json",
+      "sha256": "025772897a36df2b5427aa80fa6b09390c54a398fa3dbfbf8899b0aa5670d739"
+    },
+    {
+      "file": "runs/systematic_mesh/M1/pt_outlet-rfile.out",
+      "sha256": "595f9af95c39e561cd3cae950579e110af3f3a5fe3a82ab2302d6ed78d35b313"
+    },
+    {
+      "file": "runs/systematic_mesh/M1/segments/20261014_193017_455598/force_y_rotor-rfile.out",
+      "sha256": "2e3b755ac24d1ed812c7a0605e8202376637d11424b94ffd153246f1a9a18e50"
+    },
+    {
+      "file": "runs/systematic_mesh/M1/segments/20261014_193017_455598/mdot_inlet-rfile.out",
+      "sha256": "26686f87a4ea853f474421f64c4d3ae2dc262b70385598f596859e90ebbf0c6a"
+    },
+    {
+      "file": "runs/systematic_mesh/M1/segments/20261014_193017_455598/mdot_outlet-rfile.out",
+      "sha256": "38224f6542826b29382bc9e22fb33be405bddffe1cdf141add8fc809dc265a00"
+    },
+    {
+      "file": "runs/systematic_mesh/M1/segments/20261014_193017_455598/pt_outlet-rfile.out",
+      "sha256": "e50e0b0fd7b5d6439470e6ca5f4685eb1c13cda16f2a15887fd732cb7be2ed3c"
+    },
+    {
+      "file": "runs/systematic_mesh/M1/segments/20261015_111009_032508/force_y_rotor-rfile.out",
+      "sha256": "3a90fc1dec4e40d64a6d050951c8a359f510d0d1cb328b5e4c38007f499fc908"
+    },
+    {
+      "file": "runs/systematic_mesh/M1/segments/20261015_111009_032508/mdot_inlet-rfile.out",
+      "sha256": "d88d5fea6da97bb92cc084e727fdbc74af90a786073ae4e8a9e6fcede67c5fba"
+    },
+    {
+      "file": "runs/systematic_mesh/M1/segments/20261015_111009_032508/mdot_outlet-rfile.out",
+      "sha256": "e086526e9b2d86984accaecf623dd03707f3c07e01efd3dcf251e9f6f5e8c253"
+    },
+    {
+      "file": "runs/systematic_mesh/M1/segments/20261015_111009_032508/pt_outlet-rfile.out",
+      "sha256": "7c1c699c640b53a0833455b8a75e4e9356a156b354d35e8195ca4c231cbbb55a"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/force_y_rotor-rfile.out",
+      "sha256": "fc4bfbf718a4503f342c8302ea8a4b5df96a5a961e80558649f9569490be50cc"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/mdot_inlet-rfile.out",
+      "sha256": "622a241a193c22383295d65c97b82a68f7266f5c7b53ab73caf71549f31c077f"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/mdot_outlet-rfile.out",
+      "sha256": "ce5124422dd55ad753b91895ea0a4d1f68ca125efdaa0db1fca91a49a84a505f"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/progress.json",
+      "sha256": "d213e05192f747cb9e231aa553ac56ad0653c41385c9d355db65bc5b97f076eb"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/pt_outlet-rfile.out",
+      "sha256": "31883035e496026f72d19f99701d3d494e379fea5cc9de2792aa94acce85777a"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/segments/20261015_202438_254531/force_y_rotor-rfile.out",
+      "sha256": "201feb2b6b4a8b18b2832cbc7ef25fc609fec939a18efa7218eb83f2ad6422c8"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/segments/20261015_202438_254531/mdot_inlet-rfile.out",
+      "sha256": "39ce840adfaf71cc4db1ae3004689dd1ff6241c43b466967fec77074e9c59899"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/segments/20261015_202438_254531/mdot_outlet-rfile.out",
+      "sha256": "0f9a2f80b04bca1627f5b0b62ff7a7232e1551f0f47db84193223b1709447501"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/segments/20261015_202438_254531/pt_outlet-rfile.out",
+      "sha256": "ebac6b9d4822a27e68b0ea1cc16ba403146c0a7b6d9665ea1d3d21d05aa00b20"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/segments/20261016_113519_058588/force_y_rotor-rfile.out",
+      "sha256": "7317e34292a49773b8f9be2174bd6b0e66a6c8d321bf3c804497bef00ad0e358"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/segments/20261016_113519_058588/mdot_inlet-rfile.out",
+      "sha256": "a9442ddded573e0e59e15e490f99c114dd5cc967fbc12757bdad54e56e638f32"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/segments/20261016_113519_058588/mdot_outlet-rfile.out",
+      "sha256": "6722bcb87b522e09ca967da486a7ba19b1ec0f7ebbbe4337b5f891635e44fc1f"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/segments/20261016_113519_058588/pt_outlet-rfile.out",
+      "sha256": "c977962256dad481c2c572633457bdc9a430dbdba0fdcd196df5601ddd5c6afc"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/segments/20261016_150523_096667/force_y_rotor-rfile.out",
+      "sha256": "36d102afc8e579663af52f1b66e2b58e86ad28eb18f7625fa23722fa5876e402"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/segments/20261016_150523_096667/mdot_inlet-rfile.out",
+      "sha256": "63dc965200b75998da211b566cf3c03e9410899842040df65dfa5c3dd8082999"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/segments/20261016_150523_096667/mdot_outlet-rfile.out",
+      "sha256": "363aaf6043237b9a2d5092ad8a35440f13b82cca6a6e905ebd72d59b349ecfbe"
+    },
+    {
+      "file": "runs/systematic_mesh/M2/segments/20261016_150523_096667/pt_outlet-rfile.out",
+      "sha256": "75086ca259eef7ce5edfefbb235e310dc4c00acf6c6f5bb7b7211ced8fe3a01c"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/force_y_rotor-rfile.out",
+      "sha256": "0afe32aff703a9807a728af1214427f7f01c72dde0fcc94477d4179fc66fd3fd"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/mdot_inlet-rfile.out",
+      "sha256": "eab09bdd5864b960f3a7d1e77835d380c9a74248a1cd8a246d28c9f601db8c43"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/mdot_outlet-rfile.out",
+      "sha256": "79fe5d25cfbcce4879009c90df17b2d71f10645985bdc101ef0bab3ad4207b81"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/progress.json",
+      "sha256": "5414f5aeb57eb6da53209ebb416ffe9ba02f276ed81f9b57c9e5be2f0b3c6915"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/pt_outlet-rfile.out",
+      "sha256": "44c493c597b77c7d06dc592f5e8f442ae9fb8c5ec9ccd1c903eca74be00a9bc6"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/segments/20261016_164400_496886/force_y_rotor-rfile.out",
+      "sha256": "3f461f2de5e26b2febb671833d78aa8f87be611eabf9cd352850ef4d270b4ee4"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/segments/20261016_164400_496886/mdot_inlet-rfile.out",
+      "sha256": "067b6e64d6aa12bdca0c49443bd321860be0732a09b1d394c4da4ba97849d6fa"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/segments/20261016_164400_496886/mdot_outlet-rfile.out",
+      "sha256": "3008029fba3adf922ce8241c53f3a33740753d582f6bf74fe1bfcbf06c2c843a"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/segments/20261016_164400_496886/pt_outlet-rfile.out",
+      "sha256": "071b4a23ea9f1fcbc004562e18df4542c823969052070efbbd774fc8a7efce0a"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/segments/20261016_201104_357084/force_y_rotor-rfile.out",
+      "sha256": "480e8c371afac9fdb2f804ab44c106521fe1d635c51aab0973bf92e9b3ede8d6"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/segments/20261016_201104_357084/mdot_inlet-rfile.out",
+      "sha256": "486273febaaf67180c609ea131e06fbb1451f984796e2534270b00aaf8417e92"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/segments/20261016_201104_357084/mdot_outlet-rfile.out",
+      "sha256": "baf82db5c068581fb2987afc9ecc5cf07a3c05bfadeab6d31ddb09c8ca646055"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/segments/20261016_201104_357084/pt_outlet-rfile.out",
+      "sha256": "698f77be52cf82dd9d91d4a89371a7f2406d14d2d3392eb6574610bfeea3ac70"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/segments/20261017_091055_967996/force_y_rotor-rfile.out",
+      "sha256": "a8a38e9d7b62dcf7deed3f0e5dc9046e8d0e9ea63c9519131f1e108070d7ae41"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/segments/20261017_091055_967996/mdot_inlet-rfile.out",
+      "sha256": "030bc49ecd2dafc0267f60eb075c30c2f28e28248c071234ba51cbcb4a05e637"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/segments/20261017_091055_967996/mdot_outlet-rfile.out",
+      "sha256": "cc92623810b12ce62b6c5cd3f03e09536b8cc4981000771f3e8e1127cdcb84fa"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/segments/20261017_091055_967996/pt_outlet-rfile.out",
+      "sha256": "f0a42dc9094ffc0bef9f8493923361d81508d72997c498ccb50c1741d4ca6320"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/segments/20261017_185505_216111/force_y_rotor-rfile.out",
+      "sha256": "15de3aecb038b4d74d4d70e91dce8d37d9336a6dd0eb911854ab6d631ae0ec40"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/segments/20261017_185505_216111/mdot_inlet-rfile.out",
+      "sha256": "01dff9733f1c5a34e4395be5979c1b118c20868e46abdadc7d673c97816f7604"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/segments/20261017_185505_216111/mdot_outlet-rfile.out",
+      "sha256": "491f771af6486b339754766f45c7c89259e90633e9622d3ace173b0f7c2109bc"
+    },
+    {
+      "file": "runs/systematic_mesh/M3/segments/20261017_185505_216111/pt_outlet-rfile.out",
+      "sha256": "b3cc7678d5f598160caf71e10c38c9c8918f66690cbc730c72988dfb7dffadd0"
+    }
+  ],
+  "outputs": [
+    {
+      "file": "adapted_mesh/ITER30/window_statistics.csv",
+      "rows": 4,
+      "sha256": "054ccb74aa3cc41def441c8d0f1581c946fc697cbdd640f43c8858a875865083"
+    },
+    {
+      "file": "adapted_mesh/ITER30/cycle_statistics.csv",
+      "rows": 12,
+      "sha256": "d5ddb568fe10d2d497a3a16de8a1a79b61b27eec8944148a08be4619caad8355"
+    },
+    {
+      "file": "adapted_mesh/ITER30/cycle_recurrence.csv",
+      "rows": 8,
+      "sha256": "8a4d105dfa8619afdfe6533926db31cc5699a2a123ecd6373a700f1479461b39"
+    },
+    {
+      "file": "adapted_mesh/ITER30/phase_profiles.csv",
+      "rows": 4812,
+      "sha256": "06b64b0d22501e6f80cfc72b532a19b29be38312becf7eb3df4a2a9f4dee6901"
+    },
+    {
+      "file": "adapted_mesh/ITER30/cycle_mass_flux.csv",
+      "rows": 3,
+      "sha256": "99d50f21aad8ba8a598d7ced2663f7194bbaea7ce3c71f0ba80f2fade5c45d7f"
+    },
+    {
+      "file": "adapted_mesh/ITER30/assessment.json",
+      "sha256": "1febc13849169a18466c35197545975065f56e13c2982855e774ec6b39954397"
+    },
+    {
+      "file": "adapted_mesh/ITER60/window_statistics.csv",
+      "rows": 4,
+      "sha256": "7fdc99d214871d7fe31d455f36c632e099c2e57490060a0a9c754f03f82486ba"
+    },
+    {
+      "file": "adapted_mesh/ITER60/cycle_statistics.csv",
+      "rows": 12,
+      "sha256": "7934233505c75d6cb65561054d1b4d47faf97a682bd3e49aaec87f0d84dbc81c"
+    },
+    {
+      "file": "adapted_mesh/ITER60/cycle_recurrence.csv",
+      "rows": 8,
+      "sha256": "9228fc9903c1f382ec8f9ef7afefb9875b84c69db034163e89d304d0700e3d17"
+    },
+    {
+      "file": "adapted_mesh/ITER60/phase_profiles.csv",
+      "rows": 4812,
+      "sha256": "daffc21c5c86c0aac7d5adc4259349bdd51db35b5da4bf6ae194b61450427e69"
+    },
+    {
+      "file": "adapted_mesh/ITER60/cycle_mass_flux.csv",
+      "rows": 3,
+      "sha256": "c4a2843950072ee35255341fcc553bdac7d3f640ee8951c2cb84d2b792811354"
+    },
+    {
+      "file": "adapted_mesh/ITER60/cycle_mass_conservation.csv",
+      "rows": 3,
+      "sha256": "b566d892df1f13e3d9b3f7b37c289d2d330bc5069a2727a71676da317e3331c1"
+    },
+    {
+      "file": "adapted_mesh/ITER60/assessment.json",
+      "sha256": "8d3b8e4dea73952b8bdd1ccc8f6a8d52916d8dedc4ada15445eef2e077c9d8e8"
+    },
+    {
+      "file": "adapted_mesh/T100/window_statistics.csv",
+      "rows": 4,
+      "sha256": "3828df8dc781ef55ae1b2e8a5a4046db61dd072457229450d4001584ad7f42ee"
+    },
+    {
+      "file": "adapted_mesh/T100/cycle_statistics.csv",
+      "rows": 12,
+      "sha256": "90e77c33ffd3ea39dba7913387588606c075debf973d4d6734ab7b1ece187148"
+    },
+    {
+      "file": "adapted_mesh/T100/cycle_recurrence.csv",
+      "rows": 8,
+      "sha256": "413127231cd59ecb4b6940f94760d06df81ec7b6283941bceaee84cac69b0192"
+    },
+    {
+      "file": "adapted_mesh/T100/phase_profiles.csv",
+      "rows": 4812,
+      "sha256": "4df04b84aa4134e4d07b7f88fda538b6717bd0ff825a14b1393f16e57c2a7cac"
+    },
+    {
+      "file": "adapted_mesh/T100/cycle_mass_flux.csv",
+      "rows": 3,
+      "sha256": "baf048f0ce08d5d0a57881f5605506566e90bf6755a0e5aee2e823f553211711"
+    },
+    {
+      "file": "adapted_mesh/T100/cycle_mass_conservation.csv",
+      "rows": 3,
+      "sha256": "e549187704b45d9f82b70e6ecebd24f59f44bc23e48b12b843a88da8c84502d1"
+    },
+    {
+      "file": "adapted_mesh/T100/sampled_wall_resolution.csv",
+      "rows": 2,
+      "sha256": "9b5d4b319d545a3f01f3757aadb4d91fd5fb0a45ebf1b42d42d37995154634ad"
+    },
+    {
+      "file": "adapted_mesh/T100/stator_wall_envelope.csv",
+      "rows": 1778,
+      "sha256": "9d647181c9b6534d513160c8ba765f162167f520333b612743c4ffe9b258ebae"
+    },
+    {
+      "file": "adapted_mesh/T100/rotor_wall_envelope.csv",
+      "rows": 2003,
+      "sha256": "1129afa0bd8f02fcbf9131234ea23426d5f044f2734e17132996d20fea9204ed"
+    },
+    {
+      "file": "adapted_mesh/T100/assessment.json",
+      "sha256": "7f297050589df69a6095cf9c106ec371052fa85445657852e9913b022c4adc78"
+    },
+    {
+      "file": "adapted_mesh/T200/window_statistics.csv",
+      "rows": 4,
+      "sha256": "a83f9c9421461f35a9c598a24c1e3bd89693fbf8c49285619d98eeb09f6528f9"
+    },
+    {
+      "file": "adapted_mesh/T200/cycle_statistics.csv",
+      "rows": 12,
+      "sha256": "fac3a5e92cf2bcf563563dd963992c8aad957b2273d392a8b7eccfa8c86516cf"
+    },
+    {
+      "file": "adapted_mesh/T200/cycle_recurrence.csv",
+      "rows": 8,
+      "sha256": "6de703e75193be4bbad0e225ae0d5910bb307ca87b263b40cf91fcd6594df440"
+    },
+    {
+      "file": "adapted_mesh/T200/phase_profiles.csv",
+      "rows": 4812,
+      "sha256": "25a6fb4694d8d8e2b1d5f8cb38d3ed2659c5a9443f59dd68ff95c9152d37fa85"
+    },
+    {
+      "file": "adapted_mesh/T200/cycle_mass_flux.csv",
+      "rows": 3,
+      "sha256": "d67935a5984ad863f1807295c535c2956443550d9e074bb72efbeff4ba99e589"
+    },
+    {
+      "file": "adapted_mesh/T200/cycle_mass_conservation.csv",
+      "rows": 3,
+      "sha256": "fe9572f7c4a40494ced15887183793078bbf60243a438703a1fe12826116cbdd"
+    },
+    {
+      "file": "adapted_mesh/T200/sampled_wall_resolution.csv",
+      "rows": 2,
+      "sha256": "9b7ca2b98d52e2cade3b10caa5f7c590cbc4ca078eb745967b0c151aef8c9481"
+    },
+    {
+      "file": "adapted_mesh/T200/stator_wall_envelope.csv",
+      "rows": 1778,
+      "sha256": "3cd1ab19f6e68a49f8711843d3084ba6d52faede38b770b6d30c9e4b2e027ddf"
+    },
+    {
+      "file": "adapted_mesh/T200/rotor_wall_envelope.csv",
+      "rows": 2003,
+      "sha256": "c7169c115fbb9b251311f5733ecfafcd9f64e72cfbdc74b1c7c19cb6e9913855"
+    },
+    {
+      "file": "adapted_mesh/T200/assessment.json",
+      "sha256": "3b858f9985f72062a5e6322977012c1402ed669a81ba208d3111268dcb0d8d54"
+    },
+    {
+      "file": "adapted_mesh/T400/window_statistics.csv",
+      "rows": 4,
+      "sha256": "d66b0e3f4f0712328447e7a8141b336990628909633bf370dffa4c73ba42c6c6"
+    },
+    {
+      "file": "adapted_mesh/T400/cycle_statistics.csv",
+      "rows": 12,
+      "sha256": "7120f86210fa0b4ced46ea0a1da7d0b6c80d8b6550b67bd8d8639f7c5ea65f7c"
+    },
+    {
+      "file": "adapted_mesh/T400/cycle_recurrence.csv",
+      "rows": 8,
+      "sha256": "8401fb44edb453bd54afdf76bca5aa49bf7b53495e84a7d381b7e2c5cac2babf"
+    },
+    {
+      "file": "adapted_mesh/T400/phase_profiles.csv",
+      "rows": 4812,
+      "sha256": "4c4a60158cde49b6b542d4f20ca8671e3241f86626c534c2078fe570141a1769"
+    },
+    {
+      "file": "adapted_mesh/T400/cycle_mass_flux.csv",
+      "rows": 3,
+      "sha256": "9f465ffbe67c4a49fa2a52b244a4758b8b82896adbb1f872863e71037c1b9669"
+    },
+    {
+      "file": "adapted_mesh/T400/cycle_mass_conservation.csv",
+      "rows": 3,
+      "sha256": "e3b050dcd6cb60b6ac4ce5beed529ce5d8db03948bfb48abdf458a541b13238d"
+    },
+    {
+      "file": "adapted_mesh/T400/sampled_wall_resolution.csv",
+      "rows": 2,
+      "sha256": "2936ca2be2d5e36d1a491b50f0c4a533d5193932735cbbd175472a2c50bfdd2c"
+    },
+    {
+      "file": "adapted_mesh/T400/stator_wall_envelope.csv",
+      "rows": 1778,
+      "sha256": "0f2d38b089aa8c68684352df1c8a2f389154a4a30faf2e1796d12ea3719c8027"
+    },
+    {
+      "file": "adapted_mesh/T400/rotor_wall_envelope.csv",
+      "rows": 2003,
+      "sha256": "7280b42dec1963667f4d14c30fe0bfdfd815a3461574545f7b4a44ea14c2ff98"
+    },
+    {
+      "file": "adapted_mesh/T400/assessment.json",
+      "sha256": "f4ad3d48bdf014deb70a9555ddc2456398e75fb3b518e99adf8aa076c7265dcc"
+    },
+    {
+      "file": "systematic_mesh/M1/window_statistics.csv",
+      "rows": 4,
+      "sha256": "033527df0fa27b0f7ae255d504ed04e66d9d4a430b2257ab79b40428147b2b42"
+    },
+    {
+      "file": "systematic_mesh/M1/cycle_statistics.csv",
+      "rows": 12,
+      "sha256": "7aedfdad3430dee86a35ad970e555e0b5dd77959863bcb7c223d0af12684c099"
+    },
+    {
+      "file": "systematic_mesh/M1/cycle_recurrence.csv",
+      "rows": 8,
+      "sha256": "a9c64559e289371e9304d9db7a655026f03a4a815a3cb76b46435112637fbf97"
+    },
+    {
+      "file": "systematic_mesh/M1/phase_profiles.csv",
+      "rows": 4812,
+      "sha256": "2024687c2683f03b79b76bdbda80826d389f2f5635b55dd1960f935898f477c4"
+    },
+    {
+      "file": "systematic_mesh/M1/cycle_mass_flux.csv",
+      "rows": 3,
+      "sha256": "de8928f898c4cb2a54f12923162a1568a081ae6b6e2edfc836c32992d1cdf7d3"
+    },
+    {
+      "file": "systematic_mesh/M1/cycle_mass_conservation.csv",
+      "rows": 3,
+      "sha256": "34ea972bc7ae9cecab612b45afa3a8d665166e41ea15008b2613324f691aee41"
+    },
+    {
+      "file": "systematic_mesh/M1/phase_field_recurrence.csv",
+      "rows": 64,
+      "sha256": "da300f90e62ed999f1bae77dd28efa86a98b92bed4e4c7f3f47cd1a754cff92c"
+    },
+    {
+      "file": "systematic_mesh/M1/sampled_wall_resolution.csv",
+      "rows": 2,
+      "sha256": "a43f4c5498336f82353510bfb46f68690b56623bc2c53bd9819f25b180b7e4c0"
+    },
+    {
+      "file": "systematic_mesh/M1/stator_wall_envelope.csv",
+      "rows": 680,
+      "sha256": "9ab910c4a2763f1cb7127df07f0a4be95faf51233d80d9f0effacbc520c6c70c"
+    },
+    {
+      "file": "systematic_mesh/M1/rotor_wall_envelope.csv",
+      "rows": 695,
+      "sha256": "6bfc5a687b75f8151aaba17d9d12ea531a1f512cb161edaa2266d6c1eb3a902f"
+    },
+    {
+      "file": "systematic_mesh/M1/assessment.json",
+      "sha256": "2a2100c20a284ce92f82b145c7c9bb13bb9804ccc6f55a41942f8dceb1d54564"
+    },
+    {
+      "file": "systematic_mesh/M2/window_statistics.csv",
+      "rows": 4,
+      "sha256": "e5c6a2ec93008d39da8d51ceb49267c84d5389e2e98ba4ef2d734079a958c5aa"
+    },
+    {
+      "file": "systematic_mesh/M2/cycle_statistics.csv",
+      "rows": 12,
+      "sha256": "c6bef82796111e298e686cbd18064b979d81fadca8d7ad58b257b3e26249f093"
+    },
+    {
+      "file": "systematic_mesh/M2/cycle_recurrence.csv",
+      "rows": 8,
+      "sha256": "f24f4eb5923cf1b8d7a11176f41fccdfd31df4c8932fd5977670b712486f37ef"
+    },
+    {
+      "file": "systematic_mesh/M2/phase_profiles.csv",
+      "rows": 4812,
+      "sha256": "8c9693d33a2bf752b96fb102e605c95d0fda65dc77dd1461b2b8e62be06539a7"
+    },
+    {
+      "file": "systematic_mesh/M2/cycle_mass_flux.csv",
+      "rows": 3,
+      "sha256": "b9a7b4431785f83bcf97fc95d70fde23b92b12c13523cfafdc44d71bbbe2fa50"
+    },
+    {
+      "file": "systematic_mesh/M2/cycle_mass_conservation.csv",
+      "rows": 3,
+      "sha256": "d12ebb58d9cf7dd15bc62a70d361d2a9a979482fd7499bf39e5e496f130b56d0"
+    },
+    {
+      "file": "systematic_mesh/M2/phase_field_recurrence.csv",
+      "rows": 64,
+      "sha256": "d39228016090cbb1a261d20372bc46c6abd91239f0bd2f1f3567296a928ea488"
+    },
+    {
+      "file": "systematic_mesh/M2/sampled_wall_resolution.csv",
+      "rows": 2,
+      "sha256": "3fc0347dc39aa5b4922f5c28c338037fce37f9f4b521944e2e9b76e0c3e29d7c"
+    },
+    {
+      "file": "systematic_mesh/M2/stator_wall_envelope.csv",
+      "rows": 960,
+      "sha256": "63996bccb2c6e1ff800cbbee7b08028b7a32f835d1abf1fe0b7d2a796e60cbcc"
+    },
+    {
+      "file": "systematic_mesh/M2/rotor_wall_envelope.csv",
+      "rows": 1002,
+      "sha256": "dd319b019b95b942f573667aea844e4d1c46279817a916e2cc2497217e62c8b9"
+    },
+    {
+      "file": "systematic_mesh/M2/assessment.json",
+      "sha256": "b0af99a88bc90092c411974d74968e24303bdebada3ae3f1379d95c9e67765ac"
+    },
+    {
+      "file": "systematic_mesh/M3/window_statistics.csv",
+      "rows": 4,
+      "sha256": "6614cf4c74786056990aef5fbd28898f64c0002a7ebbe917de006894bc670ae0"
+    },
+    {
+      "file": "systematic_mesh/M3/cycle_statistics.csv",
+      "rows": 12,
+      "sha256": "6cf73f4c8cce92073a66670d8c68a549418714e794e14a5f61799a08269cc72f"
+    },
+    {
+      "file": "systematic_mesh/M3/cycle_recurrence.csv",
+      "rows": 8,
+      "sha256": "b7f3ed4359737889a6fbe1f7b3a5926c0ee756cc6f1b504331cc11a3af5a8da0"
+    },
+    {
+      "file": "systematic_mesh/M3/phase_profiles.csv",
+      "rows": 4812,
+      "sha256": "dc7ca7be83d3a062a4db00d0aef135d88c580078c4f0c40d93914dbb4b63541e"
+    },
+    {
+      "file": "systematic_mesh/M3/cycle_mass_flux.csv",
+      "rows": 3,
+      "sha256": "4540c70f8a9b4adc9e458082fcc512e493277d8c41d8af12d37b4e8622203cce"
+    },
+    {
+      "file": "systematic_mesh/M3/cycle_mass_conservation.csv",
+      "rows": 3,
+      "sha256": "b44f529b3c7609bd27f3f8e2386847582bc98c46ba13fceb0dedf6966cc6da4f"
+    },
+    {
+      "file": "systematic_mesh/M3/phase_field_recurrence.csv",
+      "rows": 64,
+      "sha256": "43ef55eb0d78c77cfb9a37216cb3f4c2b11aa7b63571747367e32fc64dc3d4c9"
+    },
+    {
+      "file": "systematic_mesh/M3/sampled_wall_resolution.csv",
+      "rows": 2,
+      "sha256": "812004a75d141666fb3e31d15e47ceea858b25c61d18f1e5dd8a3d44bdfc7f8b"
+    },
+    {
+      "file": "systematic_mesh/M3/stator_wall_envelope.csv",
+      "rows": 1327,
+      "sha256": "58ef98c7588d0c8f706c7ae2a15e1a55bfdca7dcc4cfb8b569c2898ad1733959"
+    },
+    {
+      "file": "systematic_mesh/M3/rotor_wall_envelope.csv",
+      "rows": 1385,
+      "sha256": "47cc798500fc94c06295af521afa83dc15c0b41623509c358e5664216325a22c"
+    },
+    {
+      "file": "systematic_mesh/M3/assessment.json",
+      "sha256": "689ace6b06430976c6974ca43c80dc679e685d59134c20f7e26f85736e8732a7"
+    },
+    {
+      "file": "run_summary.csv",
+      "rows": 8,
+      "sha256": "2ee82862692a796b09e268c7f7f89c23dd7da64487c144c29e01aa2b33e404f3"
+    },
+    {
+      "file": "mesh_quality/baseline_zone_quantiles.csv",
+      "rows": 10,
+      "sha256": "7263aabd136d4069ab494c94d03b992c2c33d99a3e22e9cba6602b5d805abcb5"
+    },
+    {
+      "file": "mesh_quality/M1_zone_quantiles.csv",
+      "rows": 10,
+      "sha256": "7d084b0009e2c3183d4098e5a7b7fe2fc906cf24270d91968924c2edb67758e9"
+    },
+    {
+      "file": "mesh_quality/M2_zone_quantiles.csv",
+      "rows": 10,
+      "sha256": "9f35f6eca742d467c4a2bb8be88b340dd1ab8cbbb103b561c85afe91691321a8"
+    },
+    {
+      "file": "mesh_quality/M3_zone_quantiles.csv",
+      "rows": 10,
+      "sha256": "1752d68f0d13143e53d9710f622c7fda1fede37a3dd1f69a23bb752f6adff85a"
+    },
+    {
+      "file": "mesh_quality/summary.csv",
+      "rows": 4,
+      "sha256": "861e4639428cc1eba6874758c494f6225530f8fe08d7eda300aaf3d5b251da8e"
+    },
+    {
+      "file": "mesh_quality/diagnostic_threshold_counts.csv",
+      "rows": 40,
+      "sha256": "7663e5b3fce81868ccc411794ee409abd42e8362bdc82523231e93b53f9acf59"
+    },
+    {
+      "file": "sensitivity/inner_iteration_comparison.csv",
+      "rows": 4,
+      "sha256": "b807d7b43428b1bf77d17f2dfde6c8fc98c0e7210b6702652eb49a2f53f45e12"
+    },
+    {
+      "file": "sensitivity/inner_iteration_phase_fields.csv",
+      "rows": 8,
+      "sha256": "be11ee46e89faedc9c93338102733a0cb81eeefc2dba54461fcaf78c5b87bbb5"
+    },
+    {
+      "file": "sensitivity/timestep_comparison.csv",
+      "rows": 8,
+      "sha256": "2205a3465c3992f7ea27e400a0fe8ee6341aa4e2f49c7bb3e3720aaa3be0af34"
+    },
+    {
+      "file": "sensitivity/timestep_iteration_error_comparison.csv",
+      "rows": 8,
+      "sha256": "ea36173467ee635f8c99a62e4074876c4493c68dee5701d2ecfed2876bf2342e"
+    },
+    {
+      "file": "sensitivity/grid_mesh_pair_comparisons.csv",
+      "rows": 8,
+      "sha256": "9d1457c72ccab770fbfa2e30c8ac97a1842c3afc2790176c932d5574ac2fc1d6"
+    },
+    {
+      "file": "sensitivity/grid_recomputed_monitor_statistics.csv",
+      "rows": 12,
+      "sha256": "cca93a9ea2498971645a59aeeadb41f5b39be983767ce3e1a0878c50ef5d1dfd"
+    },
+    {
+      "file": "sensitivity/grid_phase_profiles_with_cycle_range.csv",
+      "rows": 4812,
+      "sha256": "d513e336654d31d5a26529ce544ca0c55414d882807df5143077f0683b743a81"
+    },
+    {
+      "file": "sensitivity/grid_three_mesh_trends.csv",
+      "rows": 8,
+      "sha256": "0e2acd12d560578df0bbf0f60958d0d38ab77b9111a5e88638c9af2b28de5c22"
+    },
+    {
+      "file": "sensitivity/assessment.json",
+      "sha256": "d5b47a6f537e306e040e224e1936631f7a609e2b1c289156b9b87dfde8fa029e"
+    }
+  ]
+}

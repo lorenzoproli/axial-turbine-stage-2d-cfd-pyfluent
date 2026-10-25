@@ -1,0 +1,3 @@
+run_id,wall,faces,time_samples,start_time_s,end_time_s,sampled_yplus_min,sampled_yplus_max,face_count_fraction_below_one_at_all_samples
+T100,stator_blade,1778,5,0.012140918925,0.01243850271,0.015697143971920013,0.8408850431442261,1.0
+T100,rotor_blade,2003,5,0.012140918925,0.01243850271,0.0247676782310009,0.5255131721496582,1.0

@@ -1,0 +1,38 @@
+import json,traceback
+try:
+    cfg=json.loads(__CONFIG_LITERAL__)
+    baseline=json.loads(__CONTROLS_LITERAL__)
+    model=ExtAPI.DataModel.Project.Model
+    mesh=model.Mesh
+    mesh.ElementSize=Quantity(str(cfg["element_size_m"])+" [m]")
+    mesh.MinimumSize=Quantity(str(cfg["curvature_min_size_m"])+" [m]")
+    mesh.CurvatureNormalAngle=Quantity(str(cfg["curvature_angle_deg"])+" [deg]")
+    changes=[]
+    source={x["ObjectId"]:x for x in baseline["controls"]}
+    for obj in mesh.Children:
+        src=source.get(str(obj.ObjectId))
+        if not src:raise Exception("Control object ID changed: "+str(obj.ObjectId))
+        typ=str(obj.GetType().FullName)
+        if typ.endswith(".Sizing"):
+            subtype=next(p["value"] for p in src["properties"] if p["name"]=="SubType")
+            if subtype=="1":
+                obj.NumberOfDivisions=max(2,int(round(int(src["NumberOfDivisions"])/cfg["dimension_scale"])))
+                changes.append({"name":str(obj.Name),"number_of_divisions":int(obj.NumberOfDivisions)})
+            else:
+                original=float(src["ElementSize"].split()[0])
+                obj.ElementSize=Quantity(str(original*cfg["dimension_scale"])+" [m]")
+                changes.append({"name":str(obj.Name),"element_size":str(obj.ElementSize)})
+        elif typ.endswith(".Inflation"):
+            obj.FirstLayerHeight=Quantity(str(cfg["first_layer_height_m"])+" [m]")
+            obj.MaximumLayers=cfg["layers"]
+            obj.GrowthRate=cfg["inflation_growth"]
+            changes.append({"name":str(obj.Name),"first_layer_height":str(obj.FirstLayerHeight),"maximum_layers":int(obj.MaximumLayers),"growth_rate":float(obj.GrowthRate)})
+    mesh.ClearGeneratedData()
+    mesh.GenerateMesh()
+    if not hasattr(mesh.InternalObject,"WriteFluentInputFile"):raise Exception("WriteFluentInputFile unavailable")
+    mesh.InternalObject.WriteFluentInputFile(cfg["export_mesh"])
+    result={"status":"MESH_GENERATED_DIRECT_EXPORT","id":cfg["id"],"elements":int(mesh.Elements),"nodes":int(mesh.Nodes),"global_size":str(mesh.ElementSize),"minimum_size":str(mesh.MinimumSize),"curvature_angle":str(mesh.CurvatureNormalAngle),"controls":changes}
+    open(cfg["receipt"],"w").write(json.dumps(result,indent=2))
+except:
+    open(cfg["error_file"],"w").write(traceback.format_exc())
+    raise

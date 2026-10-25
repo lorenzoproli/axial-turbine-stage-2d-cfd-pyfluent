@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If referring to this study, please cite the workflow and accompanying technical report."
+type: software
+title: "Axial Turbine Stage 2D CFD with PyFluent"
+abstract: >-
+  A transient planar stator-rotor CFD workflow using ANSYS Fluent and PyFluent,
+  with preserved historical reference data, fixed adapted-mesh comparisons,
+  three systematic meshes, original-position Hybrid Initialization,
+  cycle-resolved numerical sensitivity checks and fixed-scale Mach visualisation.
+authors:
+  - family-names: Proli
+    given-names: Lorenzo
+repository-code: "https://github.com/lorenzoproli/axial-turbine-stage-2d-cfd-pyfluent"
+keywords:
+  - computational fluid dynamics
+  - axial turbine
+  - rotor-stator interaction
+  - PyFluent
+  - sliding mesh
+  - unsteady RANS
+  - numerical verification

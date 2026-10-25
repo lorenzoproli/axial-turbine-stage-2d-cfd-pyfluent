@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "run_id": "M3_HYBRID35",
+  "dataset": "systematic_mesh",
+  "active_cells": 196569,
+  "timestep_s": 7.439594625e-07,
+  "inner_iterations": 30,
+  "mpi_processes": 24,
+  "accepted_steps": 14000,
+  "final_time_s": 0.01041543247499999,
+  "integration_duration_s": 0.01041543247499999,
+  "periods_from_hybrid": 35,
+  "statistics_start_s": 0.00952268112,
+  "statistics_end_s": 0.010415432475,
+  "statistics_periods": 3,
+  "operational_monitor_checks_passed": false,
+  "checks": {
+    "cycle_means": true,
+    "cycle_amplitudes": false,
+    "phase_waveforms": true,
+    "boundary_mass_flux": true
+  },
+  "diagnostic_limits": {
+    "mean_change_percent": 0.5,
+    "amplitude_change_percent": 5,
+    "phase_rms_percent_of_amplitude": 10,
+    "boundary_mass_flux_percent": 0.5
+  },
+  "reference_depth_m": 1,
+  "physical_validation": false,
+  "grid_independence_established": false,
+  "timestep_independence_established": false,
+  "native_monitor_statistics_recomputed": true,
+  "residual_history": {
+    "steps_available": 14000,
+    "minimum_inner_iterations": 30,
+    "maximum_inner_iterations": 30
+  },
+  "additional_checks": {
+    "three_cycle_monitor_periodicity": false,
+    "phase_field_recurrence": true,
+    "integrated_mass_conservation_including_storage": true,
+    "actual_inner_iterations": true,
+    "sampled_yplus_below_one": true
+  },
+  "maximum_field_relative_rms_percent": 0.2374367944614326,
+  "maximum_integral_mass_defect_percent": 1.5544253807583697e-05,
+  "field_relative_rms_limit_percent": 0.5,
+  "integral_mass_defect_limit_percent": 0.01
+}

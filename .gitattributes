@@ -1,0 +1,5 @@
+# Preserve exact bytes across platforms for SHA256 verification.
+* -text
+*.png binary
+*.pdf binary
+*.mp4 binary

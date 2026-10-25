@@ -1,0 +1,29 @@
+{
+  "revision": "mach_fixed_1p2_metadata_retry_20261016",
+  "fields": [
+    "mach-number"
+  ],
+  "CFD_steps_between_frames": 10,
+  "samples_per_period": 40,
+  "dt_s": 7.439594625e-07,
+  "start_from_actual_t0": true,
+  "include_nonlooping_final_endpoint": true,
+  "FPS": 25,
+  "width_px": 1920,
+  "height_px": 1080,
+  "scheme_transport": true,
+  "fixed_Mach_range": [
+    0.0,
+    1.2
+  ],
+  "range_basis": "Fixed Mach 0-1.2 display range for field contrast; native values are retained. Values above 1.2 saturate the upper colour with display-cap annotation and per-frame extrema.",
+  "per_PNG_colour_bar_geometry_check": true,
+  "scientific_phase_samples_per_period": 4,
+  "required_comparison_periods": 3,
+  "numerical_monitors_every_CFD_step": true,
+  "checkpoint_interval_periods": 1,
+  "save_dense_numeric_fields": false,
+  "note": "The accepted delivered movie covers steps 2000-14000. A complete startup reconstruction is unavailable; the native source indices distinguish accepted frames from separate replay attempts.",
+  "output_subdirectory": "from_t0_mach_1p2_20261016",
+  "out_of_range_policy": "saturate_with_disclosure"
+}

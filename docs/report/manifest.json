@@ -1,0 +1,46 @@
+{
+  "language": "English",
+  "author": "Lorenzo Proli",
+  "pages": 22,
+  "PDF": {
+    "path": "docs/report/axial_turbine_stage_2d_report.pdf",
+    "bytes": 6987400,
+    "sha256": "f1d652f9148a7de4e8f039bbce4d29f28cf9e9f4f0d1aecfdbdb8f38ab69b87c"
+  },
+  "source": {
+    "path": "docs/report/main.tex",
+    "sha256": "52826369b2c3527cacd75ee357b2d29f48ed9294ab5372c3ece271375d707412"
+  },
+  "compiler_warnings": [],
+  "visual_review": "PASSED",
+  "rendered_pages": 22,
+  "reviewed_page_numbers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22
+  ],
+  "visual_checks": [
+    "All pages rendered and inspected",
+    "Legible figures, tables and equations",
+    "No clipped content or unresolved references"
+  ]
+}

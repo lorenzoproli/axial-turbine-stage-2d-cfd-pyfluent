@@ -1,0 +1,47 @@
+{
+  "utc": "2026-10-13T16:27:22.276178+00:00",
+  "source_archive_relative": "inputs/workbench/mesh_family_template.wbpz",
+  "geometry_relative": "geometry/axial_stage_surfaces.step",
+  "family": [
+    {
+      "id": "M1",
+      "element_size_m": 0.0014,
+      "curvature_min_size_m": 2.8e-05,
+      "curvature_angle_deg": 14.0,
+      "first_layer_height_m": 1e-06,
+      "layers": 29,
+      "inflation_growth": 1.1978426945588847,
+      "inflation_total_thickness_m": 0.0009439621664406894,
+      "geometry_source_sha256": "04964381f316a61ea4012ae8fbd0e720d80d0a072da73a26a5aa5976d0be2cd6",
+      "dimension_scale": 1.4,
+      "target_cells": null
+    },
+    {
+      "id": "M2",
+      "element_size_m": 0.001,
+      "curvature_min_size_m": 2e-05,
+      "curvature_angle_deg": 10.0,
+      "first_layer_height_m": 7.142857142857143e-07,
+      "layers": 41,
+      "inflation_growth": 1.1349210117961812,
+      "inflation_total_thickness_m": 0.0009439621664406894,
+      "geometry_source_sha256": "04964381f316a61ea4012ae8fbd0e720d80d0a072da73a26a5aa5976d0be2cd6",
+      "dimension_scale": 1.0,
+      "target_cells": null
+    },
+    {
+      "id": "M3",
+      "element_size_m": 0.0007142857142857143,
+      "curvature_min_size_m": 1.4285714285714287e-05,
+      "curvature_angle_deg": 7.142857142857143,
+      "first_layer_height_m": 5.102040816326531e-07,
+      "layers": 57,
+      "inflation_growth": 1.0950439230759956,
+      "inflation_total_thickness_m": 0.0009439621664406894,
+      "geometry_source_sha256": "04964381f316a61ea4012ae8fbd0e720d80d0a072da73a26a5aa5976d0be2cd6",
+      "dimension_scale": 0.7142857142857143,
+      "target_cells": null
+    }
+  ],
+  "source_note": "Recorded sizing controls applied to the separate portable meshing archive."
+}

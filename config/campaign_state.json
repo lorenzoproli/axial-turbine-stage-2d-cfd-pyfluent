@@ -1,0 +1,23 @@
+{
+  "state": "COMPLETED_FINITE_DURATION_CAMPAIGN",
+  "campaign_closed": true,
+  "solver_launches_enabled": false,
+  "reference_period_s": 0.000297583785,
+  "runs": [
+    {
+      "id": "M1_HYBRID35",
+      "periods": 35,
+      "steps": 14000
+    },
+    {
+      "id": "M2_HYBRID35",
+      "periods": 40,
+      "steps": 16000
+    },
+    {
+      "id": "M3_HYBRID35",
+      "periods": 35,
+      "steps": 14000
+    }
+  ]
+}

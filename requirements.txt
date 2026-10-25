@@ -1,0 +1,9 @@
+ansys-fluent-core==0.42.2
+ansys-api-fluent==0.7.0
+numpy==2.3.3
+scipy==1.16.3
+matplotlib==3.10.7
+h5py==3.16.0
+imageio-ffmpeg==0.6.0
+pypdf==6.10.0
+Pillow==11.3.0

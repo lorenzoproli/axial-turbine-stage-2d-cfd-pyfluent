@@ -1,0 +1,87 @@
+{
+  "method": "Fluent native PNG and Solution Animation Playback",
+  "enabled_runs": [
+    "M2",
+    "M3"
+  ],
+  "width_px": 1920,
+  "height_px": 1080,
+  "fps": 25,
+  "samples_per_period": 100,
+  "minimum_repeats": 9,
+  "fixed_ranges": {
+    "mach": [
+      0.0,
+      1.2
+    ],
+    "pressure": [
+      80000.0,
+      180000.0
+    ]
+  },
+  "pressure_reference": "Absolute static pressure in Pa; operating pressure 0 Pa",
+  "mach_reference": "Absolute Mach number",
+  "camera": {
+    "centre_m": [
+      0.2,
+      -0.14
+    ],
+    "height_m": 0.13391270325,
+    "visible_pitches": 3,
+    "projection": "XY orthographic"
+  },
+  "range_policy": "Fixed ranges bracket the verified baseline window with margin. Each native capture rejects values outside the fixed range. No frame autoscaling. Window extrema are recorded for final verification.",
+  "legend_layout": {
+    "revision": "explicit_window_layout_20261016",
+    "recreate_native_objects": true,
+    "recreate_capture_windows": true,
+    "main": {
+      "border": false,
+      "bottom": -0.75,
+      "left": -1.0,
+      "right": 1.0,
+      "top": 1.0,
+      "visible": true
+    },
+    "scale": {
+      "border": false,
+      "bottom": -0.75,
+      "clear": true,
+      "font_size": 0.023,
+      "left": -1.0,
+      "margin": 0.1,
+      "right": -0.7,
+      "top": 1.0,
+      "visible": true
+    },
+    "text": {
+      "visible": true,
+      "application": false,
+      "date": false,
+      "bottom": -1.0,
+      "left": -1.0,
+      "right": 1.0,
+      "top": -0.75
+    },
+    "contour_colormap_position": 1,
+    "pixel_rectangle_tolerance": 1,
+    "expected_pixel_rectangles": {
+      "mach": [
+        57,
+        140,
+        126,
+        940
+      ],
+      "pressure": [
+        57,
+        140,
+        126,
+        940
+      ]
+    }
+  },
+  "documentation": [
+    "https://ansyshelp.ansys.com/public/Views/Secured/corp/v242/en/flu_ug/flu_ug_sec_solve_animate.html",
+    "https://ansyshelp.ansys.com/public/Views/Secured/corp/v242/en/flu_ug/flu_ug_sec_graphics_view.html"
+  ]
+}

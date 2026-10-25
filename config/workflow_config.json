@@ -1,0 +1,72 @@
+{
+  "fluent": {
+    "version": "24.2",
+    "dimension": 2,
+    "precision": "double",
+    "processor_count": 24
+  },
+  "reference": {
+    "pitch_m": 0.04463756775,
+    "rotor_velocity_y_m_s": -150,
+    "period_s": 0.000297583785,
+    "depth_2d_m": 1
+  },
+  "campaign": {
+    "checkpoint": "inputs/common_checkpoint/checkpoint.cas.h5",
+    "warmup_periods": 3,
+    "average_periods": 3,
+    "batch_steps": 20,
+    "checkpoint_steps": 100,
+    "runs": [
+      {
+        "id": "ITER30",
+        "dt_s": 3e-06,
+        "max_iter": 30
+      },
+      {
+        "id": "ITER60",
+        "dt_s": 3e-06,
+        "max_iter": 60
+      },
+      {
+        "id": "T100",
+        "dt_s": 2.97583785e-06,
+        "max_iter": 30
+      },
+      {
+        "id": "T200",
+        "dt_s": 1.487918925e-06,
+        "max_iter": 30
+      },
+      {
+        "id": "T400",
+        "dt_s": 7.439594625e-07,
+        "max_iter": 30
+      }
+    ],
+    "iteration_choice_evidence": "runs/analysis/sensitivity/inner_iterations/assessment.json"
+  },
+  "safety": {
+    "min_free_disk_GiB": 5,
+    "max_run_hours": 6,
+    "max_mach_diagnostic": 5,
+    "require_positive_density_temperature_pressure": true
+  },
+  "periodicity_diagnostic_proposal": {
+    "mean_change_percent": 0.5,
+    "amplitude_change_percent": 5,
+    "phase_rms_percent_amplitude": 10,
+    "mean_mass_flux_imbalance_percent": 0.5
+  },
+  "render": {
+    "width_px": 1920,
+    "height_px": 1080,
+    "fps": 25,
+    "visible_passages": 3,
+    "samples_per_period": 100,
+    "physical_time_digits": 12,
+    "fixed_color_ranges_from_window": true,
+    "periodic_copies_per_row": 9,
+    "camera_mode": "fixed_three_pitch_crop"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "run_id": "ITER30",
+  "dataset": "adapted_mesh",
+  "active_cells": 289671,
+  "timestep_s": 3e-06,
+  "inner_iterations": 30,
+  "mpi_processes": 24,
+  "accepted_steps": 596,
+  "final_time_s": 0.01244099999999998,
+  "integration_duration_s": 0.0017879999999999806,
+  "periods_from_hybrid": null,
+  "statistics_start_s": 0.011545751355,
+  "statistics_end_s": 0.012438502709999999,
+  "statistics_periods": 3,
+  "operational_monitor_checks_passed": true,
+  "checks": {
+    "cycle_means": true,
+    "cycle_amplitudes": true,
+    "phase_waveforms": true,
+    "boundary_mass_flux": true
+  },
+  "diagnostic_limits": {
+    "mean_change_percent": 0.5,
+    "amplitude_change_percent": 5,
+    "phase_rms_percent_of_amplitude": 10,
+    "boundary_mass_flux_percent": 0.5
+  },
+  "reference_depth_m": 1,
+  "physical_validation": false,
+  "grid_independence_established": false,
+  "timestep_independence_established": false,
+  "native_monitor_statistics_recomputed": true,
+  "residual_history": {
+    "steps_available": 356,
+    "minimum_inner_iterations": 30,
+    "maximum_inner_iterations": 30
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "inner_iterations": {
+    "within_recorded_diagnostic_limits": true,
+    "adopted_iterations": 30,
+    "mean_difference_limit_percent": 0.1,
+    "amplitude_difference_limit_percent": 2,
+    "phase_rms_limit_percent_of_amplitude": 2,
+    "applicable_mesh": "historical_adapted_mesh"
+  },
+  "timestep": {
+    "T200_T400_within_recorded_limits": false,
+    "adopted_systematic_campaign_timestep_s": 7.439594625e-07,
+    "mean_difference_limit_percent": 0.1,
+    "amplitude_difference_limit_percent": 2,
+    "phase_rms_limit_percent_of_amplitude": 2,
+    "independence_established": false
+  },
+  "grid": {
+    "fine_pair_maximum_mean_difference_percent": 0.13766036269925924,
+    "fine_pair_amplitude_difference_percent_range": [
+      5.863296108887859,
+      7.518492051723918
+    ],
+    "indicative_2d_cellcount_refinement_ratios": [
+      1.389622838394519,
+      1.3693442731460899
+    ],
+    "independence_established": false,
+    "observed_order": null,
+    "GCI": null
+  },
+  "physical_validation": false
+}

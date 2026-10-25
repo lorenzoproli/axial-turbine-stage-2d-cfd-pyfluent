@@ -1,0 +1,1414 @@
+{
+  "controls": [
+    {
+      "ObjectId": "65", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "SubValue", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Method", 
+          "name": "Value", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Element Order", 
+          "name": "ElementMidsideNodes", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Free Face Mesh Type", 
+          "name": "SweepShape", 
+          "value": "1"
+        }
+      ], 
+      "name": "Quadrilateral Dominant Method", 
+      "CurvatureNormalAngle": "0 [deg]", 
+      "LocationIds": [
+        2014, 
+        2032
+      ], 
+      "type": "Ansys.ACT.Automation.Mechanical.MeshControls.AutomaticMethod"
+    }, 
+    {
+      "ElementSize": "0.00015 [m]", 
+      "CaptureProximity": "False", 
+      "LocationIds": [
+        2013, 
+        2012, 
+        2030, 
+        2031
+      ], 
+      "NumberOfDivisions": "1", 
+      "ObjectId": "67", 
+      "CurvatureNormalAngle": "0 [deg]", 
+      "CaptureCurvature": "False", 
+      "type": "Ansys.ACT.Automation.Mechanical.MeshControls.Sizing", 
+      "name": "Edge Sizing", 
+      "Behavior": "Soft", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "SubValue", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Type", 
+          "name": "SubType", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Element Size", 
+          "name": "ESize", 
+          "value": "0.00015"
+        }, 
+        {
+          "caption": "Growth Rate", 
+          "name": "SizingTransition", 
+          "value": "0.0"
+        }, 
+        {
+          "caption": "Capture Curvature", 
+          "name": "UseCurvatureSize", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Curvature Normal Angle", 
+          "name": "SizingCurvatureAngle", 
+          "value": "0.0"
+        }, 
+        {
+          "caption": "Local Min Size", 
+          "name": "LocalMinSize", 
+          "value": "0.0"
+        }, 
+        {
+          "caption": "Capture Proximity", 
+          "name": "UseProximitySize", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Bias Type", 
+          "name": "SweepBiasType", 
+          "value": "4"
+        }
+      ], 
+      "GrowthRate": "0.0"
+    }, 
+    {
+      "InflationOption": "1", 
+      "MaximumThickness": "0 [m]", 
+      "LocationIds": [
+        2005
+      ], 
+      "ObjectId": "70", 
+      "type": "Ansys.ACT.Automation.Mechanical.MeshControls.Inflation", 
+      "name": "Inflation_statore", 
+      "InflationAlgorithm": "1", 
+      "MaximumLayers": "25", 
+      "TransitionRatio": "0.0", 
+      "FirstLayerHeight": "2E-06 [m]", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "SubValue", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Boundary Scoping Method", 
+          "name": "BoundaryDefineBy", 
+          "value": "1"
+        }, 
+        {
+          "caption": "Boundary", 
+          "name": "BoundaryComponentSelection", 
+          "value": "49"
+        }, 
+        {
+          "caption": "Inflation Option", 
+          "name": "InflationOption", 
+          "value": "1"
+        }, 
+        {
+          "caption": "First Layer Height", 
+          "name": "FirstLayerHeight", 
+          "value": "2e-06"
+        }, 
+        {
+          "caption": "Maximum Layers", 
+          "name": "MaximumLayers", 
+          "value": "25"
+        }, 
+        {
+          "caption": "Growth Rate", 
+          "name": "ExpansionFactor", 
+          "value": "1.2"
+        }, 
+        {
+          "caption": "Inflation Algorithm", 
+          "name": "InflationAlgorithm", 
+          "value": "1"
+        }
+      ], 
+      "BoundaryLocationIds": [
+        2012, 
+        2013
+      ], 
+      "GrowthRate": "1.2"
+    }, 
+    {
+      "InflationOption": "1", 
+      "MaximumThickness": "0 [m]", 
+      "LocationIds": [
+        2023
+      ], 
+      "ObjectId": "73", 
+      "type": "Ansys.ACT.Automation.Mechanical.MeshControls.Inflation", 
+      "name": "Inflation_rotore", 
+      "InflationAlgorithm": "1", 
+      "MaximumLayers": "25", 
+      "TransitionRatio": "0.0", 
+      "FirstLayerHeight": "2E-06 [m]", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "SubValue", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Boundary Scoping Method", 
+          "name": "BoundaryDefineBy", 
+          "value": "1"
+        }, 
+        {
+          "caption": "Boundary", 
+          "name": "BoundaryComponentSelection", 
+          "value": "51"
+        }, 
+        {
+          "caption": "Inflation Option", 
+          "name": "InflationOption", 
+          "value": "1"
+        }, 
+        {
+          "caption": "First Layer Height", 
+          "name": "FirstLayerHeight", 
+          "value": "2e-06"
+        }, 
+        {
+          "caption": "Maximum Layers", 
+          "name": "MaximumLayers", 
+          "value": "25"
+        }, 
+        {
+          "caption": "Growth Rate", 
+          "name": "ExpansionFactor", 
+          "value": "1.2"
+        }, 
+        {
+          "caption": "Inflation Algorithm", 
+          "name": "InflationAlgorithm", 
+          "value": "1"
+        }
+      ], 
+      "BoundaryLocationIds": [
+        2030, 
+        2031
+      ], 
+      "GrowthRate": "1.2"
+    }, 
+    {
+      "ElementSize": "0 [m]", 
+      "CaptureProximity": "False", 
+      "LocationIds": [
+        2009, 
+        2011
+      ], 
+      "NumberOfDivisions": "150", 
+      "ObjectId": "77", 
+      "CurvatureNormalAngle": "0 [deg]", 
+      "CaptureCurvature": "False", 
+      "type": "Ansys.ACT.Automation.Mechanical.MeshControls.Sizing", 
+      "name": "Edge Sizing division 1", 
+      "Behavior": "Hard", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "SubValue", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Type", 
+          "name": "SubType", 
+          "value": "1"
+        }, 
+        {
+          "caption": "Number of Divisions", 
+          "name": "NDiv", 
+          "value": "150"
+        }, 
+        {
+          "caption": "Behavior", 
+          "name": "SizingType", 
+          "value": "1"
+        }, 
+        {
+          "caption": "Capture Curvature", 
+          "name": "UseCurvatureSize", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Capture Proximity", 
+          "name": "UseProximitySize", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Bias Type", 
+          "name": "SweepBiasType", 
+          "value": "4"
+        }
+      ], 
+      "GrowthRate": "0.0"
+    }, 
+    {
+      "ElementSize": "56 [m]", 
+      "CaptureProximity": "False", 
+      "LocationIds": [
+        2008, 
+        2006
+      ], 
+      "NumberOfDivisions": "56", 
+      "ObjectId": "79", 
+      "CurvatureNormalAngle": "0 [deg]", 
+      "CaptureCurvature": "False", 
+      "type": "Ansys.ACT.Automation.Mechanical.MeshControls.Sizing", 
+      "name": "Edge Sizing division 2", 
+      "Behavior": "Hard", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "SubValue", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Type", 
+          "name": "SubType", 
+          "value": "1"
+        }, 
+        {
+          "caption": "Number of Divisions", 
+          "name": "NDiv", 
+          "value": "56"
+        }, 
+        {
+          "caption": "Behavior", 
+          "name": "SizingType", 
+          "value": "1"
+        }, 
+        {
+          "caption": "Capture Curvature", 
+          "name": "UseCurvatureSize", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Capture Proximity", 
+          "name": "UseProximitySize", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Bias Type", 
+          "name": "SweepBiasType", 
+          "value": "4"
+        }
+      ], 
+      "GrowthRate": "0.0"
+    }, 
+    {
+      "ElementSize": "0 [m]", 
+      "CaptureProximity": "False", 
+      "LocationIds": [
+        2026, 
+        2024
+      ], 
+      "NumberOfDivisions": "132", 
+      "ObjectId": "81", 
+      "CurvatureNormalAngle": "0 [deg]", 
+      "CaptureCurvature": "False", 
+      "type": "Ansys.ACT.Automation.Mechanical.MeshControls.Sizing", 
+      "name": "Edge Sizing division 3", 
+      "Behavior": "Hard", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "SubValue", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Type", 
+          "name": "SubType", 
+          "value": "1"
+        }, 
+        {
+          "caption": "Number of Divisions", 
+          "name": "NDiv", 
+          "value": "132"
+        }, 
+        {
+          "caption": "Behavior", 
+          "name": "SizingType", 
+          "value": "1"
+        }, 
+        {
+          "caption": "Capture Curvature", 
+          "name": "UseCurvatureSize", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Capture Proximity", 
+          "name": "UseProximitySize", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Bias Type", 
+          "name": "SweepBiasType", 
+          "value": "4"
+        }
+      ], 
+      "GrowthRate": "0.0"
+    }, 
+    {
+      "ElementSize": "0 [m]", 
+      "CaptureProximity": "False", 
+      "LocationIds": [
+        2027, 
+        2029
+      ], 
+      "NumberOfDivisions": "84", 
+      "ObjectId": "83", 
+      "CurvatureNormalAngle": "0 [deg]", 
+      "CaptureCurvature": "False", 
+      "type": "Ansys.ACT.Automation.Mechanical.MeshControls.Sizing", 
+      "name": "Edge Sizing division 4", 
+      "Behavior": "Hard", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "SubValue", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Type", 
+          "name": "SubType", 
+          "value": "1"
+        }, 
+        {
+          "caption": "Number of Divisions", 
+          "name": "NDiv", 
+          "value": "84"
+        }, 
+        {
+          "caption": "Behavior", 
+          "name": "SizingType", 
+          "value": "1"
+        }, 
+        {
+          "caption": "Capture Curvature", 
+          "name": "UseCurvatureSize", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Capture Proximity", 
+          "name": "UseProximitySize", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Bias Type", 
+          "name": "SweepBiasType", 
+          "value": "4"
+        }
+      ], 
+      "GrowthRate": "0.0"
+    }
+  ], 
+  "named_selections": [
+    {
+      "ObjectId": "45", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Send to Solver", 
+          "name": "SendToSolver", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Protected", 
+          "name": "ProtectedTopology", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Visible", 
+          "name": "Visible", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Program Controlled Inflation", 
+          "name": "IncludePCInflation", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Type", 
+          "name": "ImportedFromCAD", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Total Selection", 
+          "name": "NumInSelection", 
+          "value": "1"
+        }, 
+        {
+          "caption": "Length", 
+          "name": "LengthOfEdges", 
+          "value": "0.04463756775"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "NumSuppressedItems", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Used by Mesh Worksheet", 
+          "name": "WorksheetMeshing", 
+          "value": "0"
+        }
+      ], 
+      "name": "inlet", 
+      "LocationIds": [
+        2010
+      ], 
+      "type": "Ansys.ACT.Automation.Mechanical.NamedSelection"
+    }, 
+    {
+      "ObjectId": "47", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Send to Solver", 
+          "name": "SendToSolver", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Protected", 
+          "name": "ProtectedTopology", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Visible", 
+          "name": "Visible", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Program Controlled Inflation", 
+          "name": "IncludePCInflation", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Type", 
+          "name": "ImportedFromCAD", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Total Selection", 
+          "name": "NumInSelection", 
+          "value": "1"
+        }, 
+        {
+          "caption": "Length", 
+          "name": "LengthOfEdges", 
+          "value": "0.04463756775"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "NumSuppressedItems", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Used by Mesh Worksheet", 
+          "name": "WorksheetMeshing", 
+          "value": "0"
+        }
+      ], 
+      "name": "outlet", 
+      "LocationIds": [
+        2025
+      ], 
+      "type": "Ansys.ACT.Automation.Mechanical.NamedSelection"
+    }, 
+    {
+      "ObjectId": "49", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Send to Solver", 
+          "name": "SendToSolver", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Protected", 
+          "name": "ProtectedTopology", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Visible", 
+          "name": "Visible", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Program Controlled Inflation", 
+          "name": "IncludePCInflation", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Type", 
+          "name": "ImportedFromCAD", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Total Selection", 
+          "name": "NumInSelection", 
+          "value": "2"
+        }, 
+        {
+          "caption": "Length", 
+          "name": "LengthOfEdges", 
+          "value": "0.143107187372"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "NumSuppressedItems", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Used by Mesh Worksheet", 
+          "name": "WorksheetMeshing", 
+          "value": "0"
+        }
+      ], 
+      "name": "wall_statore", 
+      "LocationIds": [
+        2012, 
+        2013
+      ], 
+      "type": "Ansys.ACT.Automation.Mechanical.NamedSelection"
+    }, 
+    {
+      "ObjectId": "51", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Send to Solver", 
+          "name": "SendToSolver", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Protected", 
+          "name": "ProtectedTopology", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Visible", 
+          "name": "Visible", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Program Controlled Inflation", 
+          "name": "IncludePCInflation", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Type", 
+          "name": "ImportedFromCAD", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Total Selection", 
+          "name": "NumInSelection", 
+          "value": "2"
+        }, 
+        {
+          "caption": "Length", 
+          "name": "LengthOfEdges", 
+          "value": "0.149045916652"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "NumSuppressedItems", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Used by Mesh Worksheet", 
+          "name": "WorksheetMeshing", 
+          "value": "0"
+        }
+      ], 
+      "name": "wall_rotore", 
+      "LocationIds": [
+        2030, 
+        2031
+      ], 
+      "type": "Ansys.ACT.Automation.Mechanical.NamedSelection"
+    }, 
+    {
+      "ObjectId": "53", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Send to Solver", 
+          "name": "SendToSolver", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Protected", 
+          "name": "ProtectedTopology", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Visible", 
+          "name": "Visible", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Program Controlled Inflation", 
+          "name": "IncludePCInflation", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Type", 
+          "name": "ImportedFromCAD", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Total Selection", 
+          "name": "NumInSelection", 
+          "value": "2"
+        }, 
+        {
+          "caption": "Length", 
+          "name": "LengthOfEdges", 
+          "value": "0.205137569431"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "NumSuppressedItems", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Used by Mesh Worksheet", 
+          "name": "WorksheetMeshing", 
+          "value": "0"
+        }
+      ], 
+      "name": "periodic_statore_top", 
+      "LocationIds": [
+        2009, 
+        2008
+      ], 
+      "type": "Ansys.ACT.Automation.Mechanical.NamedSelection"
+    }, 
+    {
+      "ObjectId": "55", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Send to Solver", 
+          "name": "SendToSolver", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Protected", 
+          "name": "ProtectedTopology", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Visible", 
+          "name": "Visible", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Program Controlled Inflation", 
+          "name": "IncludePCInflation", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Type", 
+          "name": "ImportedFromCAD", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Total Selection", 
+          "name": "NumInSelection", 
+          "value": "2"
+        }, 
+        {
+          "caption": "Length", 
+          "name": "LengthOfEdges", 
+          "value": "0.205137569431"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "NumSuppressedItems", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Used by Mesh Worksheet", 
+          "name": "WorksheetMeshing", 
+          "value": "0"
+        }
+      ], 
+      "name": "periodic_statore_bottom", 
+      "LocationIds": [
+        2011, 
+        2006
+      ], 
+      "type": "Ansys.ACT.Automation.Mechanical.NamedSelection"
+    }, 
+    {
+      "ObjectId": "57", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Send to Solver", 
+          "name": "SendToSolver", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Protected", 
+          "name": "ProtectedTopology", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Visible", 
+          "name": "Visible", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Program Controlled Inflation", 
+          "name": "IncludePCInflation", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Type", 
+          "name": "ImportedFromCAD", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Total Selection", 
+          "name": "NumInSelection", 
+          "value": "1"
+        }, 
+        {
+          "caption": "Length", 
+          "name": "LengthOfEdges", 
+          "value": "0.04463756775"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "NumSuppressedItems", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Used by Mesh Worksheet", 
+          "name": "WorksheetMeshing", 
+          "value": "0"
+        }
+      ], 
+      "name": "interface_statore", 
+      "LocationIds": [
+        2007
+      ], 
+      "type": "Ansys.ACT.Automation.Mechanical.NamedSelection"
+    }, 
+    {
+      "ObjectId": "59", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Send to Solver", 
+          "name": "SendToSolver", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Protected", 
+          "name": "ProtectedTopology", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Visible", 
+          "name": "Visible", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Program Controlled Inflation", 
+          "name": "IncludePCInflation", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Type", 
+          "name": "ImportedFromCAD", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Total Selection", 
+          "name": "NumInSelection", 
+          "value": "1"
+        }, 
+        {
+          "caption": "Length", 
+          "name": "LengthOfEdges", 
+          "value": "0.04463756775"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "NumSuppressedItems", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Used by Mesh Worksheet", 
+          "name": "WorksheetMeshing", 
+          "value": "0"
+        }
+      ], 
+      "name": "interface_rotore", 
+      "LocationIds": [
+        2028
+      ], 
+      "type": "Ansys.ACT.Automation.Mechanical.NamedSelection"
+    }, 
+    {
+      "ObjectId": "61", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Send to Solver", 
+          "name": "SendToSolver", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Protected", 
+          "name": "ProtectedTopology", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Visible", 
+          "name": "Visible", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Program Controlled Inflation", 
+          "name": "IncludePCInflation", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Type", 
+          "name": "ImportedFromCAD", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Total Selection", 
+          "name": "NumInSelection", 
+          "value": "2"
+        }, 
+        {
+          "caption": "Length", 
+          "name": "LengthOfEdges", 
+          "value": "0.215859158324"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "NumSuppressedItems", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Used by Mesh Worksheet", 
+          "name": "WorksheetMeshing", 
+          "value": "0"
+        }
+      ], 
+      "name": "periodic_rotore_top", 
+      "LocationIds": [
+        2027, 
+        2026
+      ], 
+      "type": "Ansys.ACT.Automation.Mechanical.NamedSelection"
+    }, 
+    {
+      "ObjectId": "63", 
+      "properties": [
+        {
+          "caption": "Scoping Method", 
+          "name": "GeometryDefineBy", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Geometry", 
+          "name": "GeometrySelection", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Send to Solver", 
+          "name": "SendToSolver", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Protected", 
+          "name": "ProtectedTopology", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Visible", 
+          "name": "Visible", 
+          "value": "65535"
+        }, 
+        {
+          "caption": "Program Controlled Inflation", 
+          "name": "IncludePCInflation", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Type", 
+          "name": "ImportedFromCAD", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Total Selection", 
+          "name": "NumInSelection", 
+          "value": "2"
+        }, 
+        {
+          "caption": "Length", 
+          "name": "LengthOfEdges", 
+          "value": "0.215859158324"
+        }, 
+        {
+          "caption": "Suppressed", 
+          "name": "NumSuppressedItems", 
+          "value": "0"
+        }, 
+        {
+          "caption": "Used by Mesh Worksheet", 
+          "name": "WorksheetMeshing", 
+          "value": "0"
+        }
+      ], 
+      "name": "periodic_rotore_bottom", 
+      "LocationIds": [
+        2029, 
+        2024
+      ], 
+      "type": "Ansys.ACT.Automation.Mechanical.NamedSelection"
+    }
+  ], 
+  "global_mesh": {
+    "ElementSize": "0.001 [m]", 
+    "Nodes": "74607", 
+    "CaptureProximity": "False", 
+    "InflationOption": "2", 
+    "MaximumThickness": "0 [m]", 
+    "ObjectId": "14", 
+    "type": "Ansys.ACT.Automation.Mechanical.MeshControls.Mesh", 
+    "CaptureCurvature": "True", 
+    "CurvatureNormalAngle": "10 [deg]", 
+    "name": "Mesh", 
+    "InflationAlgorithm": "1", 
+    "Elements": "73167", 
+    "MinimumSize": "2E-05 [m]", 
+    "MaximumLayers": "2", 
+    "TransitionRatio": "0.272", 
+    "FirstLayerHeight": "0 [m]", 
+    "properties": [
+      {
+        "caption": "Display Style", 
+        "name": "DisplayStyle", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Physics Preference", 
+        "name": "PhysicsPreference", 
+        "value": "2"
+      }, 
+      {
+        "caption": "Solver Preference", 
+        "name": "SolverPreference", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Element Size", 
+        "name": "MaxFaceElementSize", 
+        "value": "0.001"
+      }, 
+      {
+        "caption": "Export Format", 
+        "name": "FluentExportMeshType", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Export Preview Surface Mesh", 
+        "name": "FluentExportFilterMeshOption", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Use Adaptive Sizing", 
+        "name": "UseAdaptiveSize", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Growth Rate", 
+        "name": "TransitionS3F", 
+        "value": "0.0"
+      }, 
+      {
+        "caption": "Mesh Defeaturing", 
+        "name": "AutoMeshDefeaturing", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Capture Curvature", 
+        "name": "UseCurvatureSize", 
+        "value": "65535"
+      }, 
+      {
+        "caption": "Curvature Min Size", 
+        "name": "MinSizeSF", 
+        "value": "2e-05"
+      }, 
+      {
+        "caption": "Curvature Normal Angle", 
+        "name": "SpanningAngleSF", 
+        "value": "10.0"
+      }, 
+      {
+        "caption": "Capture Proximity", 
+        "name": "UseProximitySize", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Bounding Box Diagonal", 
+        "name": "BoundingBoxDiagonal", 
+        "value": "0.395881041671"
+      }, 
+      {
+        "caption": "Average Surface Area", 
+        "name": "AverageSurfaceArea", 
+        "value": "0.00802842797704"
+      }, 
+      {
+        "caption": "Minimum Edge Length", 
+        "name": "MinEdgeSize", 
+        "value": "0.04463756775"
+      }, 
+      {
+        "caption": "Check Mesh Quality", 
+        "name": "UseCustomQualityLimit", 
+        "value": "2"
+      }, 
+      {
+        "caption": "Target Skewness", 
+        "name": "TargetSkewness", 
+        "value": "0.85"
+      }, 
+      {
+        "caption": "Smoothing", 
+        "name": "SmoothingOption", 
+        "value": "2"
+      }, 
+      {
+        "caption": "Mesh Metric", 
+        "name": "MeshMetric", 
+        "value": "1"
+      }, 
+      {
+        "caption": "Min", 
+        "name": "MeshMetricMin", 
+        "value": "0.0261557595464"
+      }, 
+      {
+        "caption": "Max", 
+        "name": "MeshMetricMax", 
+        "value": "0.999999999999"
+      }, 
+      {
+        "caption": "Average", 
+        "name": "MeshMetricAverage", 
+        "value": "0.564776196421"
+      }, 
+      {
+        "caption": "Standard Deviation", 
+        "name": "MeshMetricSTDV", 
+        "value": "0.390463794637"
+      }, 
+      {
+        "caption": "Use Automatic Inflation", 
+        "name": "AutomaticInflation", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Inflation Option", 
+        "name": "InflationOption", 
+        "value": "2"
+      }, 
+      {
+        "caption": "Transition Ratio", 
+        "name": "TransitionRatio", 
+        "value": "0.272"
+      }, 
+      {
+        "caption": "Maximum Layers", 
+        "name": "MaximumLayers", 
+        "value": "2"
+      }, 
+      {
+        "caption": "Growth Rate", 
+        "name": "ExpansionFactor", 
+        "value": "1.2"
+      }, 
+      {
+        "caption": "Inflation Algorithm", 
+        "name": "InflationAlgorithm", 
+        "value": "1"
+      }, 
+      {
+        "caption": "View Advanced Options", 
+        "name": "AdvancedInflationOptions", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Mesh Based Connection", 
+        "name": "UseScaffolding", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Number of CPUs for Parallel Part Meshing", 
+        "name": "NumCpuPartMeshing", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Straight Sided Elements", 
+        "name": "StraightSideElement", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Rigid Body Behavior", 
+        "name": "RigidBodyBehavior", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Triangle Surface Mesher", 
+        "name": "TriangleSurfaceMesh", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Topology Checking", 
+        "name": "MeshTopologyChecks", 
+        "value": "1"
+      }, 
+      {
+        "caption": "Use Sheet Thickness for Pinch", 
+        "name": "PinchUseSheetThickness", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Pinch Tolerance", 
+        "name": "PinchTolerance", 
+        "value": "0.0"
+      }, 
+      {
+        "caption": "Generate Pinch on Refresh", 
+        "name": "PinchGenerateOnRefresh", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Sheet Loop Removal", 
+        "name": "SheetHoleRemoval", 
+        "value": "0"
+      }, 
+      {
+        "caption": "Nodes", 
+        "name": "Nodes", 
+        "value": "74607"
+      }, 
+      {
+        "caption": "Elements", 
+        "name": "Elements", 
+        "value": "73167"
+      }, 
+      {
+        "caption": "Show Detailed Statistics", 
+        "name": "ShowDetailedStatistics", 
+        "value": "0"
+      }
+    ], 
+    "GrowthRate": "1.2"
+  }
+}

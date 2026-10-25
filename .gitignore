@@ -1,0 +1,49 @@
+# Local native data and commercial project inputs
+/inputs/
+/runs/
+
+# Runtime environments and reproducible build intermediates
+.venv*/
+.build/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+*.log
+*.tmp
+*.lock
+server-info*
+
+# Local configuration and workspace metadata
+/path_map.json
+/local_config.json
+.env
+.env.*
+AGENTS.md
+CONTEXT.md
+STATUS.md
+.codex/
+.agents/
+.aws/
+.vscode/
+.idea/
+
+# Native CFD binaries are supplied separately
+*.cas
+*.dat
+*.cas.h5
+*.dat.h5
+*.msh
+*.msh.h5
+*.wbpj
+*.wbpz
+*.scdoc
+*.npz
+
+# LaTeX intermediates
+*.aux
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz

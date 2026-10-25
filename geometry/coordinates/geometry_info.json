@@ -1,0 +1,52 @@
+{
+  "rotor_translation_y_m": -0.022759702525,
+  "pitch_m": 0.04463756775,
+  "csv_geo_units": "metres",
+  "dxf_units": "millimetres",
+  "rows": [
+    {
+      "row": "statore",
+      "points": 429,
+      "blade_area_m2": 0.0005173688146476161,
+      "domain_area_m2": 0.007694942162882343,
+      "bounding_box_m": [
+        [
+          0.142966424031,
+          -0.050653715604
+        ],
+        [
+          0.186997860586,
+          1.99127e-07
+        ]
+      ],
+      "boundary_markers": [
+        "inflow",
+        "outmix",
+        "periodic1",
+        "periodic2"
+      ]
+    },
+    {
+      "row": "rotore",
+      "points": 432,
+      "blade_area_m2": 0.0006110127141952721,
+      "domain_area_m2": 0.008360649934650839,
+      "bounding_box_m": [
+        [
+          0.201999802,
+          -0.045078571938
+        ],
+        [
+          0.255972578,
+          -0.002038684101
+        ]
+      ],
+      "boundary_markers": [
+        "inmix",
+        "outflow",
+        "periodic3",
+        "periodic4"
+      ]
+    }
+  ]
+}

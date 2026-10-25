@@ -1,0 +1,3 @@
+run_id,wall,faces,time_samples,start_time_s,end_time_s,sampled_yplus_min,sampled_yplus_max,face_count_fraction_below_one_at_all_samples
+M2_HYBRID35,stator_blade,960,5,0.01160576761499999,0.01190335139999999,0.012929851189255714,0.4624738395214081,1.0
+M2_HYBRID35,rotor_blade,1002,5,0.01160576761499999,0.01190335139999999,0.007101649884134531,0.3744771480560303,1.0
