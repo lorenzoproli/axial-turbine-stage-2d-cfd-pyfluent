@@ -1,7 +1,7 @@
 """English physical-time histories and storage-inclusive mass-balance plots."""
 from common import *
 from monitor_paths import monitor_path
-from monitor_analysis import read_monitor, merge_series, NAMES
+from monitor_analysis import read_monitor, merge_series, accepted_monitor_segments, NAMES
 from english_labels import install, translate
 install()
 import numpy as np
@@ -11,9 +11,7 @@ def plot(run_id):
     d = case_directory(run_id)
     meta = json.loads((d / 'progress.json').read_text())
     assert meta['passi_completati'] == meta['passi_pianificati'], 'Use a completed, closed data window'
-    directories = meta.get('monitor_segments', [dict(directory=str(d), from_s=None, to_s=None)])
-    if run_id == 'ITER30':
-        directories = [dict(directory=str(d), from_s=None, to_s=None), dict(directory=str(d / 'ripresa_24_processi'), from_s=None, to_s=None)]
+    directories = accepted_monitor_segments(meta, d)
     values = {}
     sources = []
     for name in NAMES:

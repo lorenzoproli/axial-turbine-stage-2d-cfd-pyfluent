@@ -38,10 +38,24 @@ def verify_native():
 def main(write=False,native=False):
     report=ROOT/'docs/report';record=json.loads((report/'manifest.json').read_text(encoding='utf-8'))
     if sha(report/'axial_turbine_stage_2d_report.pdf')!=record['PDF']['sha256']:raise ValueError('Report PDF checksum mismatch')
+    if sha(report/'main.tex')!=record['source']['sha256']:raise ValueError('Report source differs from reviewed manuscript')
+    if record.get('visual_review')!='PASSED':raise ValueError('Report visual review is incomplete')
+    results=ROOT/'results'
+    data=json.loads((results/'data_manifest.json').read_text(encoding='utf-8'))
+    for row in data['outputs']:
+        path=(results/row['file']).resolve()
+        if not path.is_relative_to(results) or not path.is_file() or sha(path)!=row['sha256']:
+            raise ValueError('Scientific table checksum mismatch: '+row['file'])
+    video=json.loads((results/'videos/video_manifest.json').read_text(encoding='utf-8'))
+    if sha(results/'videos'/video['file'])!=video['sha256']:raise ValueError('Selected movie checksum mismatch')
+    if sha(results/'videos'/video['source_frame_index'])!=video['source_frame_index_sha256']:raise ValueError('Movie source index mismatch')
     if write:
         rows=[dict(path=p.relative_to(ROOT).as_posix(),bytes=p.stat().st_size,sha256=sha(p)) for p in source_files() if p!=MANIFEST]
         MANIFEST.write_text(json.dumps(rows,indent=2)+'\n',encoding='utf-8')
     rows=json.loads(MANIFEST.read_text(encoding='utf-8'))
+    actual={p.relative_to(ROOT).as_posix() for p in source_files() if p!=MANIFEST}
+    declared={row['path'] for row in rows}
+    if actual!=declared:raise ValueError('Publication inventory differs: '+str(sorted(actual^declared)))
     for row in rows:
         path=ROOT/row['path']
         if not path.resolve().is_relative_to(ROOT) or not path.is_file():raise ValueError(row['path'])

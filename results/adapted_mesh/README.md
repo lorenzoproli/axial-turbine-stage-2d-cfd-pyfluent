@@ -10,6 +10,8 @@ These five runs retain the historical adapted topology: 289,671 active cells, wi
 | T200 | 1.487918925e-6 | 30 | 1,200 | 0.01243850271 |
 | T400 | 7.439594625e-7 | 30 | 2,400 | 0.01243850271 |
 
+ITER30 used 8 MPI processes for its first 240 accepted settling steps, then 24 for the remaining 356 steps. All final comparison statistics use its 24-process segment.
+
 The common comparison window is 0.011545751355–0.01243850271 s: three complete blade-passing periods after the excluded post-change settling interval. ITER30/ITER60 integrate slightly beyond the window endpoint; the statistical window remains phase matched.
 
 Each run contains `window_statistics.csv`, `cycle_statistics.csv`, `cycle_recurrence.csv`, `phase_profiles.csv`, `cycle_mass_flux.csv` and a normalised `assessment.json`. Storage-inclusive mass-conservation tables are provided where the domain-mass monitor is available. ITER30 has no equivalent storage-inclusive table, and its retained residual history covers 356 of the 596 accepted steps; the assessment reports this coverage rather than asserting a full residual record.

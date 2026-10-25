@@ -809,7 +809,7 @@
     },
     {
       "file": "adapted_mesh/ITER30/assessment.json",
-      "sha256": "1febc13849169a18466c35197545975065f56e13c2982855e774ec6b39954397"
+      "sha256": "f3dd829a62e026e5602851d53947d671248d7715b603b6607b6372391b2dfdfc"
     },
     {
       "file": "adapted_mesh/ITER60/window_statistics.csv",
@@ -843,7 +843,7 @@
     },
     {
       "file": "adapted_mesh/ITER60/assessment.json",
-      "sha256": "8d3b8e4dea73952b8bdd1ccc8f6a8d52916d8dedc4ada15445eef2e077c9d8e8"
+      "sha256": "23e162a722e56cacc0b699d4518b0a77be4b285d53d0cf0215f483828c3e20cf"
     },
     {
       "file": "adapted_mesh/T100/window_statistics.csv",
@@ -892,7 +892,7 @@
     },
     {
       "file": "adapted_mesh/T100/assessment.json",
-      "sha256": "7f297050589df69a6095cf9c106ec371052fa85445657852e9913b022c4adc78"
+      "sha256": "e9d79992978e94c37ea5ecfbb07ff20a37f8bbfc00d56e4850601572d0a6ef75"
     },
     {
       "file": "adapted_mesh/T200/window_statistics.csv",
@@ -941,7 +941,7 @@
     },
     {
       "file": "adapted_mesh/T200/assessment.json",
-      "sha256": "3b858f9985f72062a5e6322977012c1402ed669a81ba208d3111268dcb0d8d54"
+      "sha256": "4fe80b6692a2cc2be26306b36650a55af4338e201a75a394c05c0bc85aaa2390"
     },
     {
       "file": "adapted_mesh/T400/window_statistics.csv",
@@ -990,7 +990,7 @@
     },
     {
       "file": "adapted_mesh/T400/assessment.json",
-      "sha256": "f4ad3d48bdf014deb70a9555ddc2456398e75fb3b518e99adf8aa076c7265dcc"
+      "sha256": "b4b91ae204bf1905f2047cc77d396b12bdd653ac883efbcb6b622859d1645020"
     },
     {
       "file": "systematic_mesh/M1/window_statistics.csv",
@@ -1044,7 +1044,7 @@
     },
     {
       "file": "systematic_mesh/M1/assessment.json",
-      "sha256": "2a2100c20a284ce92f82b145c7c9bb13bb9804ccc6f55a41942f8dceb1d54564"
+      "sha256": "9aaff87672e4d5b3e1279fa902a87e09a25e1c580206e3a624442e28a159117a"
     },
     {
       "file": "systematic_mesh/M2/window_statistics.csv",
@@ -1098,7 +1098,7 @@
     },
     {
       "file": "systematic_mesh/M2/assessment.json",
-      "sha256": "b0af99a88bc90092c411974d74968e24303bdebada3ae3f1379d95c9e67765ac"
+      "sha256": "f7e887bbdd3e8ccdca2f5747f1ecd6a0e55940d6e6594ef61914a1438038bdc3"
     },
     {
       "file": "systematic_mesh/M3/window_statistics.csv",
@@ -1152,12 +1152,12 @@
     },
     {
       "file": "systematic_mesh/M3/assessment.json",
-      "sha256": "689ace6b06430976c6974ca43c80dc679e685d59134c20f7e26f85736e8732a7"
+      "sha256": "7ab44145f4fdd1226de520bd9ec934a1bf44d9668ea8d5f1c9a32032bc1daf43"
     },
     {
       "file": "run_summary.csv",
       "rows": 8,
-      "sha256": "2ee82862692a796b09e268c7f7f89c23dd7da64487c144c29e01aa2b33e404f3"
+      "sha256": "0101fa748a3cbda9ea938ea576eeaf36d70f04759438f36ab2cd99a4c6edc956"
     },
     {
       "file": "mesh_quality/baseline_zone_quantiles.csv",

@@ -2,9 +2,9 @@
 
 ## What is supplied
 
-The repository contains the Python workflow, recorded configurations, reference geometry material, selected numerical evidence, figures, movies and an editable report. Complete native Fluent/Workbench input and result collections are maintained separately because of their size and software-specific dependencies.
+The repository contains the Python workflow, recorded configurations, reference geometry material, selected numerical evidence, figures, the selected Mach movie and an editable report. Complete native Fluent/Workbench input and result collections are maintained separately because of their size and software-specific dependencies.
 
-Three operations have different requirements:
+The following operations have different requirements:
 
 | Operation | Required material | Starts Fluent? |
 |---|---|---|
@@ -21,7 +21,7 @@ A missing native input is a missing dependency. It must not be substituted with 
 - ANSYS Fluent 2024 R2, double-precision planar 2D.
 - PyFluent `ansys-fluent-core==0.42.2` and `ansys-api-fluent==0.7.0`.
 - Exact analysis/rendering dependencies in the root `requirements.txt`.
-- 24 MPI processes per solver calculation. The recorded machine has an Intel Core i9-14900K and approximately 64 GiB RAM; no core-affinity optimisation is claimed.
+- 24 MPI processes for the systematic campaign and the final adapted-mesh segments. ITER30 used 8 processes for its first 240 accepted settling steps and 24 for the remaining 356 steps. The recorded machine has an Intel Core i9-14900K and approximately 64 GiB RAM; no core-affinity optimisation is claimed.
 - ANSYS Workbench/Meshing are additionally required to reproduce the recorded commercial meshing procedure.
 
 ## Create an environment
@@ -42,7 +42,7 @@ The Python environment and commercial applications are not redistributed. A vali
 .\.venv\Scripts\python.exe workflow\cfd.py status
 ```
 
-The integrity command checks supplied content. Add `--native` to verify the separately supplied native case/data collection. Status values come from saved records. They do not establish that a solver process is currently running or that the recorded MPI count is a live process measurement.
+The integrity command checks the complete selected-file inventory, reviewed report source/PDF, numerical-table hashes and movie hash. Add `--native` to verify the separately supplied native case/data collection. With local native data, status values come from saved records. In a source-only clone, status reads the published eight-run summary. They do not establish that a solver process is currently running or that the recorded MPI count is a live process measurement.
 
 ## Supply native inputs
 
@@ -68,9 +68,20 @@ For a supplied M3 native run collection:
 
 Other accepted identifiers are `ITER30`, `ITER60`, `T100`, `T200`, `T400`, `M1_HYBRID35` and `M2_HYBRID35`. The legacy `HYBRID35` suffix is a stable run identifier: M2 actually reached 40 periods. Actual final step/time and the run summary determine duration.
 
-Analysis can write derived outputs. Use a separate work copy when reproducing a published result. Confirm the source segment boundaries before comparing a regenerated table with the report; accepted restart segments and final statistical windows are essential inputs.
+Analysis writes derived outputs under `runs/analysis/` and figure outputs under `results/figures/`. Use a separate work copy when reproducing a published result. The legacy ITER30 analysis automatically joins its original and 24-process restart monitors at the recorded accepted boundary. Confirm the source segment boundaries before comparing a regenerated table with the report; accepted restart segments and final statistical windows are essential inputs.
 
 Full native-data regeneration from a clone alone has not been demonstrated. The separately maintained data and ANSYS dependencies must first be restored and verified. Archived dense animation frames are required for re-encoding the delivered movie; a final checkpoint alone cannot reconstruct a transient sequence.
+
+## Offline verification coverage
+
+```powershell
+.\.venv\Scripts\python.exe -B -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe -B tools\export_results.py
+```
+
+Tests distinguish source-only checks from checks requiring the separate native collection. Missing native-data tests are explicitly skipped, not counted as numerical verification. The exporter checks 32 monitor means/amplitudes and four per-cell mesh-quality collections. Its output is English CSV/JSON, without starting Fluent.
+
+The eight documented monitor-analysis commands have been exercised on an isolated copy of the accepted text monitors. This verifies analysis/restart handling; it does not repeat the commercial solver campaign or establish numerical independence.
 
 ## Rebuild the report
 

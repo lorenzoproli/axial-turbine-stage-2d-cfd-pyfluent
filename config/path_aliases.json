@@ -7,7 +7,7 @@
     "01_geometria/sorgenti_SU2/COPYING.LGPL-2.1": "geometry/reference/COPYING.LGPL-2.1",
     "01_geometria/sorgenti_SU2/licenza_verificata.json": "geometry/reference/license_verification.json",
     "01_geometria/sorgenti_SU2/PROVENIENZA.md": "geometry/reference/SOURCE.md",
-    "01_geometria/sorgenti_SU2/reference_mesh.su2": "geometry/reference/reference_mesh.su2",
+    "01_geometria/sorgenti_SU2/reference_mesh.su2": "geometry/reference/mesh_axial_stage_2d_turb.su2",
     "01_geometria/sorgenti_SU2/stage.cfg": "geometry/reference/stage.cfg",
     "01_geometria/sorgenti_SU2/zone_1.cfg": "geometry/reference/zone_1.cfg",
     "01_geometria/sorgenti_SU2/zone_2.cfg": "geometry/reference/zone_2.cfg",
@@ -1143,8 +1143,6 @@
     "06_figure/mesh/M3/03_parete_rotore.png": "results/figures/mesh/M3/03_wall_rotor.png",
     "06_figure/mesh/M3/04_interfaccia.png": "results/figures/mesh/M3/04_interface.png",
     "07_animazioni/campagna_mesh_sistematiche/M3_HYBRID35/native_fluent/final_delivery/M3_Mach_verified_interval_5T_to_35T.mp4": "results/videos/m3_absolute_mach_5T_to_35T.mp4",
-    "07_animazioni/riproduzione_mesh_adattata/T400/periodo_finale/T400_mach_periodo_finale.mp4": "results/videos/adapted_t400_absolute_mach.mp4",
-    "07_animazioni/riproduzione_mesh_adattata/T400/periodo_finale/T400_pressure_periodo_finale.mp4": "results/videos/adapted_t400_absolute_pressure.mp4",
     "07_animazioni/campagna_mesh_sistematiche/M3_HYBRID35/native_fluent": "runs/rendering/M3",
     "07_animazioni/campagna_mesh_sistematiche/M3_HYBRID35/native_fluent/final_delivery/encoding_configuration.json": "runs/rendering/M3/final_delivery/encoding_configuration.json",
     "07_animazioni/campagna_mesh_sistematiche/M3_HYBRID35/native_fluent/final_delivery/source_frames_SHA256.csv": "runs/rendering/M3/final_delivery/source_frames_SHA256.csv",
@@ -1230,7 +1228,9 @@
     "08_documentazione/report/images/da8030f0_sample_02.png": "docs/report/images/m3_mach_5p25_periods.png",
     "08_documentazione/report/images/dd7f869a_grid_blade_pressure_yplus.png": "docs/report/images/grid_blade_pressure_yplus.png",
     "08_documentazione/report/images/e5ac8e04_grid_amplitudes_cycle_ranges.png": "docs/report/images/grid_cycle_amplitudes.png",
-    "08_documentazione/report/images/eb3dd3f5_mass_conservation_storage.png": "docs/report/images/m3_mass_conservation.png"
+    "08_documentazione/report/images/eb3dd3f5_mass_conservation_storage.png": "docs/report/images/m3_mass_conservation.png",
+    "geometry/reference/reference_mesh.su2": "geometry/reference/mesh_axial_stage_2d_turb.su2",
+    "runs/adapted_mesh/ITER30/ripresa_24_processi": "runs/adapted_mesh/ITER30/resume_24_processes"
   },
   "components": {
     "statore": "stator",

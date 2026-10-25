@@ -1,0 +1,46 @@
+{
+  "verification_date": "2026-10-25",
+  "source_scope": "Unmodified upstream numerical reference files; independent of Fluent solver inputs",
+  "files": [
+    {
+      "file": "stage.cfg",
+      "source_url": "https://raw.githubusercontent.com/su2code/SU2/master/TestCases/turbomachinery/axial_stage_2D/Axial_stage2D.cfg",
+      "bytes": 5791,
+      "sha256": "e18fd6b07bd29f16b1dd3c2b49139d506f54e464f593f76ec673f24cab3172af",
+      "byte_identical_to_checked_upstream": true
+    },
+    {
+      "file": "zone_1.cfg",
+      "source_url": "https://raw.githubusercontent.com/su2code/SU2/master/TestCases/turbomachinery/axial_stage_2D/zone_1.cfg",
+      "bytes": 914,
+      "sha256": "211d9a0286e595bdb59bcf2957fc7f4bbc5dc137ead477bc5730b6dece198e90",
+      "byte_identical_to_checked_upstream": true
+    },
+    {
+      "file": "zone_2.cfg",
+      "source_url": "https://raw.githubusercontent.com/su2code/SU2/master/TestCases/turbomachinery/axial_stage_2D/zone_2.cfg",
+      "bytes": 979,
+      "sha256": "e977201ecbc470fb84b696b5838077bf502157858f465a40a8d5f1111702e0da",
+      "byte_identical_to_checked_upstream": true
+    },
+    {
+      "file": "mesh_axial_stage_2d_turb.su2",
+      "source_url": "https://raw.githubusercontent.com/su2code/TestCases/master/turbomachinery/axial_stage_2D/mesh_axial_stage_2d_turb.su2",
+      "bytes": 5468904,
+      "sha256": "b147b24e63151d022b7f151456359ec6ce6790bbd2a3d406f0cbdccf2ac9b0a6",
+      "byte_identical_to_checked_upstream": true
+    },
+    {
+      "file": "COPYING.LGPL-2.1",
+      "source_url": "https://raw.githubusercontent.com/su2code/TestCases/master/COPYING",
+      "bytes": 24485,
+      "sha256": "21d403b3e2862effbc6988988fa40cca1c2996f8dcf7aee95bfe9914f7a8dcb0",
+      "byte_identical_to_checked_upstream": true
+    }
+  ],
+  "configuration_repository_license": {
+    "source_url": "https://raw.githubusercontent.com/su2code/SU2/master/COPYING",
+    "sha256": "b3aa400aca6d2ba1f0bd03bd98d03d1fe7489a3bbb26969d72016360af8a5c9d",
+    "comparison": "LGPL 2.1 wording identical; blank-line formatting differs from the retained TestCases text"
+  }
+}

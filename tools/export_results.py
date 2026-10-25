@@ -230,9 +230,19 @@ def export_runs():
         periods = int(round(progress['tempo_corrente_s'] / T)) if systematic else None
         if systematic:
             assert periods == {'M1': 35, 'M2': 40, 'M3': 35}[run]
+        resources = progress.get('segmenti_risorse', [])
+        configured = progress.get('config', {}).get('fluent', {}).get('processor_count')
+        initial_mpi = resources[0]['processi'] if resources else configured
+        final_mpi = resources[-1]['processi'] if resources else configured
+        if not initial_mpi or not final_mpi:
+            raise ValueError('Missing recorded MPI count for ' + run)
+        change_step = resources[1]['passi_iniziali'] if len(resources) > 1 else None
         row = dict(run_id=analysis['id'], dataset=group,
                    active_cells=progress['celle_attive'], timestep_s=progress['dt_s'],
-                   inner_iterations=progress['iterazioni_per_passo'], mpi_processes=24,
+                   inner_iterations=progress['iterazioni_per_passo'],
+                   mpi_processes_initial_segment=initial_mpi,
+                   mpi_processes_final_segment=final_mpi,
+                   mpi_change_after_accepted_step=change_step,
                    accepted_steps=steps, final_time_s=progress['tempo_corrente_s'],
                    integration_duration_s=duration, periods_from_hybrid=periods,
                    statistics_start_s=analysis['finestra_s'][0], statistics_end_s=analysis['finestra_s'][1],

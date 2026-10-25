@@ -63,12 +63,26 @@ def status():
         if not path.exists():
             continue
         item = json.loads(path.read_text(encoding='utf-8-sig'))
+        resources = item.get('segmenti_risorse', [])
+        counts = [entry['processi'] for entry in resources] if resources else [item.get('config', {}).get('fluent', {}).get('processor_count', 24)]
         values.append(dict(run_id=item.get('id', run_id), recorded_status=states.get(item.get('stato'), item.get('stato')),
             completed_steps=item.get('passi_completati'), target_steps=item.get('passi_pianificati'),
             physical_time_s=item.get('tempo_corrente_s'), configured_mpi_processes=24,
-            last_recorded_active_mpi_processes=item.get('processi_attuali'),
+            recorded_mpi_process_counts=counts, last_recorded_active_mpi_processes=item.get('processi_attuali'),
             record_updated_utc=item.get('updated_utc'), source=path.relative_to(ROOT).as_posix()))
-    return dict(mode='OFFLINE_SAVED_RECORDS', live_process_measurement=False, runs=values)
+    mode = 'OFFLINE_SAVED_RECORDS'
+    published = ROOT / 'results/run_summary.csv'
+    if not values and published.is_file():
+        mode = 'OFFLINE_PUBLISHED_RESULTS'
+        with published.open(encoding='utf-8-sig', newline='') as stream:
+            for item in csv.DictReader(stream):
+                counts = list(dict.fromkeys([int(item['mpi_processes_initial_segment']), int(item['mpi_processes_final_segment'])]))
+                values.append(dict(run_id=item['run_id'],
+                    recorded_status='COMPLETE_OPERATIONAL_MONITOR_CHECKS_PASSED' if item['operational_monitor_checks_passed']=='True' else 'COMPLETE_MONITOR_RECURRENCE_UNCONFIRMED',
+                    completed_steps=int(item['accepted_steps']), target_steps=int(item['accepted_steps']),
+                    physical_time_s=float(item['final_time_s']), recorded_mpi_process_counts=counts,
+                    last_recorded_active_mpi_processes=None, source='results/run_summary.csv'))
+    return dict(mode=mode, live_process_measurement=False, runs=values)
 
 
 def main():
@@ -102,7 +116,9 @@ def main():
         if not args.id:
             parser.error('--id is required for analysis')
         from monitor_analysis import analyse
-        print(json.dumps(analyse(case_directory(args.id))['esiti'], indent=2))
+        checks = analyse(case_directory(args.id))['esiti']
+        print(json.dumps(dict(cycle_means=checks['medie'], cycle_amplitudes=checks['ampiezze'],
+            phase_waveforms=checks['fase'], boundary_mass_flux=checks['portate']), indent=2))
         return
     script = 'compile_report.py' if args.action == 'report' else 'plot_mesh_quality.py'
     subprocess.run([sys.executable, str(Path(__file__).with_name(script))], check=True)

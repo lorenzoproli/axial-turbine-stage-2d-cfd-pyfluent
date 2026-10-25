@@ -41,13 +41,13 @@
   },
   {
     "path": "config/path_aliases.json",
-    "bytes": 238903,
-    "sha256": "8c84e9f198d6e0f65b1aca5f1e2c9ecd834baf247ad69182accd96faf37a8209"
+    "bytes": 238809,
+    "sha256": "8db98721ad635d79716196004e13e1835e0eaf1c24b1b5de979dff0411bfed59"
   },
   {
     "path": "config/README.md",
-    "bytes": 1307,
-    "sha256": "dc48900e8abba0d6bec7d60f5bc099f5720b49505ac1e0653cd10d49350c4bdf"
+    "bytes": 1335,
+    "sha256": "7bff1892ee7f7566d6cc91ad7ada847dac8ef2bf6ee5ef4602bfabc5e3fbb607"
   },
   {
     "path": "config/workflow_config.json",
@@ -56,13 +56,13 @@
   },
   {
     "path": "docs/limitations.md",
-    "bytes": 4354,
-    "sha256": "61a7c23eba275939c9749ed681ebd74f77e01362aa18a29d483429690551e521"
+    "bytes": 4372,
+    "sha256": "df389772903dd26215a5e945043ec0ae8e11916cc2e24c3b9f700543aa720957"
   },
   {
     "path": "docs/methodology.md",
-    "bytes": 6252,
-    "sha256": "9b0837a2a3e09a2d2d1ffd4001127f3d931ea4f3a4729a6054d177a4621f1685"
+    "bytes": 6298,
+    "sha256": "20c9c3116a962f680bbf3eee7f619d552d75f95c72a208cacdd4dbe0e008c8ed"
   },
   {
     "path": "docs/README.md",
@@ -76,8 +76,8 @@
   },
   {
     "path": "docs/report/axial_turbine_stage_2d_report.pdf",
-    "bytes": 6987422,
-    "sha256": "e8d79c43a4dd3fddcb1d0fb832e26013ad35529dfa706b746e3a3cdfced62f44"
+    "bytes": 6987164,
+    "sha256": "38c94fa274d9e27acea061a7522b1021713b14e7877d805d02ccfbde22148cc2"
   },
   {
     "path": "docs/report/images/baseline_adapted_mesh.png",
@@ -181,13 +181,13 @@
   },
   {
     "path": "docs/report/main.tex",
-    "bytes": 51294,
-    "sha256": "3546ca295cd981ee63aa3a903e52bf5cc7aae5edf5777eb123beac37a2e9bac0"
+    "bytes": 51133,
+    "sha256": "12770af90db24553eff3d8ef5b3891a3b0078b3267ba7374b15167cc911e7c03"
   },
   {
     "path": "docs/report/manifest.json",
-    "bytes": 923,
-    "sha256": "70d0a2db25247145ce2dceec4e4e6b17e98e245cd6c0c51c8ad79b80dcf4e880"
+    "bytes": 892,
+    "sha256": "3e856f8df5928f9682ede79f77abfddb03cb4ccf31079e276251cf709277bf3a"
   },
   {
     "path": "docs/report/README.md",
@@ -196,8 +196,8 @@
   },
   {
     "path": "docs/reproduction.md",
-    "bytes": 6119,
-    "sha256": "43daf28677992518bcd5324d440776ff6179d18cf0634972d242ecde25d797cd"
+    "bytes": 7417,
+    "sha256": "433974ffeb41027551fe1f30cd6431c35faea7fde00817da65fbd22c6efcae1c"
   },
   {
     "path": "geometry/axial_stage_surfaces.step",
@@ -235,14 +235,19 @@
     "sha256": "e82c9195d55f4a94e53e4e31c33d21b0a10c9925d4df25c5abe6ffdf23af4bf7"
   },
   {
-    "path": "geometry/reference/reference_mesh.su2",
+    "path": "geometry/reference/mesh_axial_stage_2d_turb.su2",
     "bytes": 5468904,
     "sha256": "b147b24e63151d022b7f151456359ec6ce6790bbd2a3d406f0cbdccf2ac9b0a6"
   },
   {
     "path": "geometry/reference/SOURCE.md",
-    "bytes": 492,
-    "sha256": "c62aa1f104a874d9a23286d288bdd052d626efcd4c5aec5b3daec4cfc5de9e01"
+    "bytes": 1380,
+    "sha256": "6d04531a9202937367c39df919c254e3ccc9afc39bbda3ab9263fa478d08af3c"
+  },
+  {
+    "path": "geometry/reference/source_manifest.json",
+    "bytes": 2146,
+    "sha256": "b415a06b45dc8cf3b54a84fa0df6f808694406c7ec4eabccbdd1d08f19811a94"
   },
   {
     "path": "geometry/reference/stage.cfg",
@@ -266,8 +271,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 8421,
-    "sha256": "107b648470e606b7b5524cae583b89fd926943fff0e9ae65ba6467734ceffca6"
+    "bytes": 8603,
+    "sha256": "260e90a960ab6d5c1e1a2634ac16a12620bc68dedc0650ded6d6a27a19d71cc3"
   },
   {
     "path": "requirements-lock.txt",
@@ -281,8 +286,8 @@
   },
   {
     "path": "results/adapted_mesh/ITER30/assessment.json",
-    "bytes": 1149,
-    "sha256": "1febc13849169a18466c35197545975065f56e13c2982855e774ec6b39954397"
+    "bytes": 1244,
+    "sha256": "f3dd829a62e026e5602851d53947d671248d7715b603b6607b6372391b2dfdfc"
   },
   {
     "path": "results/adapted_mesh/ITER30/cycle_mass_flux.csv",
@@ -311,8 +316,8 @@
   },
   {
     "path": "results/adapted_mesh/ITER60/assessment.json",
-    "bytes": 1149,
-    "sha256": "8d3b8e4dea73952b8bdd1ccc8f6a8d52916d8dedc4ada15445eef2e077c9d8e8"
+    "bytes": 1246,
+    "sha256": "23e162a722e56cacc0b699d4518b0a77be4b285d53d0cf0215f483828c3e20cf"
   },
   {
     "path": "results/adapted_mesh/ITER60/cycle_mass_conservation.csv",
@@ -346,13 +351,13 @@
   },
   {
     "path": "results/adapted_mesh/README.md",
-    "bytes": 2040,
-    "sha256": "1af84af3fd3df7527f2785e4cac36db94dcf5996d90496822e4333e59d56b042"
+    "bytes": 2209,
+    "sha256": "382a6b069da28ad9cd9286fcd94dc2246e5668e00276403ddaf3c18febcbca2f"
   },
   {
     "path": "results/adapted_mesh/T100/assessment.json",
-    "bytes": 1149,
-    "sha256": "7f297050589df69a6095cf9c106ec371052fa85445657852e9913b022c4adc78"
+    "bytes": 1246,
+    "sha256": "e9d79992978e94c37ea5ecfbb07ff20a37f8bbfc00d56e4850601572d0a6ef75"
   },
   {
     "path": "results/adapted_mesh/T100/cycle_mass_conservation.csv",
@@ -401,8 +406,8 @@
   },
   {
     "path": "results/adapted_mesh/T200/assessment.json",
-    "bytes": 1152,
-    "sha256": "3b858f9985f72062a5e6322977012c1402ed669a81ba208d3111268dcb0d8d54"
+    "bytes": 1249,
+    "sha256": "4fe80b6692a2cc2be26306b36650a55af4338e201a75a394c05c0bc85aaa2390"
   },
   {
     "path": "results/adapted_mesh/T200/cycle_mass_conservation.csv",
@@ -451,8 +456,8 @@
   },
   {
     "path": "results/adapted_mesh/T400/assessment.json",
-    "bytes": 1152,
-    "sha256": "f4ad3d48bdf014deb70a9555ddc2456398e75fb3b518e99adf8aa076c7265dcc"
+    "bytes": 1249,
+    "sha256": "b4b91ae204bf1905f2047cc77d396b12bdd653ac883efbcb6b622859d1645020"
   },
   {
     "path": "results/adapted_mesh/T400/cycle_mass_conservation.csv",
@@ -502,7 +507,7 @@
   {
     "path": "results/data_manifest.json",
     "bytes": 50394,
-    "sha256": "65ef4e8a7ff4d3d0c00da383b835cdbc58f8798062efa2ca19d677c7333420d1"
+    "sha256": "f1132642299d2a5eb502d710406e1d62d0636b3c6073d86dffdd24a2a2c8108f"
   },
   {
     "path": "results/figures/mesh/M1/02_wall_stator.png",
@@ -591,13 +596,13 @@
   },
   {
     "path": "results/README.md",
-    "bytes": 4451,
-    "sha256": "f19246e1b63d08752b215c00cce20970cfb345ae0e215f8e3b657334f9a17756"
+    "bytes": 4711,
+    "sha256": "0a035014d61b634ddd90dea3567f91f9f138e8b9eb0783e95d6873c7a737c8fd"
   },
   {
     "path": "results/run_summary.csv",
-    "bytes": 1320,
-    "sha256": "2ee82862692a796b09e268c7f7f89c23dd7da64487c144c29e01aa2b33e404f3"
+    "bytes": 1429,
+    "sha256": "0101fa748a3cbda9ea938ea576eeaf36d70f04759438f36ab2cd99a4c6edc956"
   },
   {
     "path": "results/sensitivity/assessment.json",
@@ -651,8 +656,8 @@
   },
   {
     "path": "results/systematic_mesh/M1/assessment.json",
-    "bytes": 1630,
-    "sha256": "2a2100c20a284ce92f82b145c7c9bb13bb9804ccc6f55a41942f8dceb1d54564"
+    "bytes": 1727,
+    "sha256": "9aaff87672e4d5b3e1279fa902a87e09a25e1c580206e3a624442e28a159117a"
   },
   {
     "path": "results/systematic_mesh/M1/cycle_mass_conservation.csv",
@@ -706,8 +711,8 @@
   },
   {
     "path": "results/systematic_mesh/M2/assessment.json",
-    "bytes": 1638,
-    "sha256": "b0af99a88bc90092c411974d74968e24303bdebada3ae3f1379d95c9e67765ac"
+    "bytes": 1735,
+    "sha256": "f7e887bbdd3e8ccdca2f5747f1ecd6a0e55940d6e6594ef61914a1438038bdc3"
   },
   {
     "path": "results/systematic_mesh/M2/cycle_mass_conservation.csv",
@@ -761,8 +766,8 @@
   },
   {
     "path": "results/systematic_mesh/M3/assessment.json",
-    "bytes": 1633,
-    "sha256": "689ace6b06430976c6974ca43c80dc679e685d59134c20f7e26f85736e8732a7"
+    "bytes": 1730,
+    "sha256": "7ab44145f4fdd1226de520bd9ec934a1bf44d9668ea8d5f1c9a32032bc1daf43"
   },
   {
     "path": "results/systematic_mesh/M3/cycle_mass_conservation.csv",
@@ -820,24 +825,29 @@
     "sha256": "a9e2d7ac0fb2933440ae2edb13420ab7f7f7a557d6f03017209880df253725fd"
   },
   {
-    "path": "results/videos/adapted_t400_absolute_mach.mp4",
-    "bytes": 596332,
-    "sha256": "6fb73f954ad0cee823ad14353cc86976c0542f0d4538fdab6085b5cc59c8346f"
-  },
-  {
-    "path": "results/videos/adapted_t400_absolute_pressure.mp4",
-    "bytes": 627459,
-    "sha256": "a71d78faa3ee272f7fab81c206c572a9d42403ece74ba81af2d835c3dcf7aa58"
-  },
-  {
     "path": "results/videos/m3_absolute_mach_5T_to_35T.mp4",
     "bytes": 18822580,
     "sha256": "7734cdb87058c308dfcdb4904cc5b5561c318b74365dd4a1ada2a1313624e7bc"
   },
   {
     "path": "results/videos/README.md",
-    "bytes": 1048,
-    "sha256": "903457e7d8628ff3d3e7b4ba05bfd730c213468d1924115e45a5e964389f31a5"
+    "bytes": 1757,
+    "sha256": "c18e098c862f37d9785ff4d22ebb44652176190cfe4c3eb889e6a785e8755d9b"
+  },
+  {
+    "path": "results/videos/source_frames.csv",
+    "bytes": 187632,
+    "sha256": "193bf706351d56da07e0b4350afaf025347f8c78fcbe26e6dc890577fdd23a4d"
+  },
+  {
+    "path": "results/videos/video_manifest.json",
+    "bytes": 1249,
+    "sha256": "394a1b0b8eb5a3d1f866873796f7ba7ddc27231743383eaee74652f59ac088bf"
+  },
+  {
+    "path": "tests/test_delivery_contract.py",
+    "bytes": 6557,
+    "sha256": "9bf60c1c2579d5c37a1c04a2d56ca99e36b68f2cac3871d7372fa0f6b3fdaf5b"
   },
   {
     "path": "tests/test_native_history_reproduction.py",
@@ -851,8 +861,8 @@
   },
   {
     "path": "tools/export_results.py",
-    "bytes": 21012,
-    "sha256": "dd1ada96122955711b3348eb94c03e0ba5522cb0349d795898d253bd970f805e"
+    "bytes": 21674,
+    "sha256": "aca451f7f8034f9b37a888ae59e2304b9bd972ec83684dca7dad032c3d7912ed"
   },
   {
     "path": "workflow/assess_hybrid35.py",
@@ -871,8 +881,8 @@
   },
   {
     "path": "workflow/cfd.py",
-    "bytes": 5946,
-    "sha256": "7d602cfa71c65022f16a06cf700c72fcae41fbd277ef9b6e192da83b04be2adb"
+    "bytes": 7302,
+    "sha256": "eb6125b2e1ee19ca0be1e5633fc066fba06652bc57ca96fd47b8a0f95f6ff421"
   },
   {
     "path": "workflow/common.py",
@@ -926,8 +936,8 @@
   },
   {
     "path": "workflow/monitor_analysis.py",
-    "bytes": 10748,
-    "sha256": "1c2511f953710aa1c02c87b6c1da5e7d5e1bb34daa45876d9159cdb2731dd542"
+    "bytes": 11531,
+    "sha256": "4b16ee103f69472b9f6d2f3d7ca57c3581f094233bfc4c58566268753c185cc2"
   },
   {
     "path": "workflow/monitor_paths.py",
@@ -951,8 +961,8 @@
   },
   {
     "path": "workflow/package_project.py",
-    "bytes": 2544,
-    "sha256": "952a30e66432eed860c6f4c8329974118ff96a5f4921bfe4766d325717ee7aed"
+    "bytes": 3158,
+    "sha256": "baafb6982a289c12079df9cc2c63ea17135f51b2c71ab37475e4c0d59e484165"
   },
   {
     "path": "workflow/periodicity_diagnostic.py",
@@ -966,8 +976,8 @@
   },
   {
     "path": "workflow/plot_histories.py",
-    "bytes": 3769,
-    "sha256": "be7cebaa6ac1696b5eb0de3dd4081081afd74887f94a1d77bb8b378023e74788"
+    "bytes": 3580,
+    "sha256": "c58e9b588e97917b450ca85e06712918f508329e9552bf5ab3e7bb9950b12bdb"
   },
   {
     "path": "workflow/plot_mesh_quality.py",
@@ -1056,8 +1066,8 @@
   },
   {
     "path": "workflow/verify_project.py",
-    "bytes": 3330,
-    "sha256": "5c5f18f3cb8b4c6dbf6d53cdcf611416fe13f2e59f50e79cb44187a717947242"
+    "bytes": 4489,
+    "sha256": "dd99ba3b482e2c8d76291a38c91013295f6cc6275c0c6835f22bc5a525a2d51e"
   },
   {
     "path": "workflow/verify_restart_geometry.py",

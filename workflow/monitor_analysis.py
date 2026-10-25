@@ -43,16 +43,31 @@ def merge_series(pieces):
     assert np.all(np.diff(x[:, 2]) > 0)
     return x
 
+def accepted_monitor_segments(meta, run_dir):
+    """Resolve accepted restart ranges from explicit saved boundaries."""
+    run_dir = project_path(run_dir)
+    monitor_segments = meta.get('monitor_segments')
+    if not monitor_segments:
+        current = project_path(meta.get('output_correnti', run_dir))
+        resources = meta.get('segmenti_risorse', [])
+        if current != run_dir:
+            if not resources or resources[-1].get('tempo_iniziale_s') is None:
+                raise ValueError('Restarted monitor history requires an explicit accepted segment boundary.')
+            boundary = resources[-1]['tempo_iniziale_s']
+            monitor_segments = [dict(directory=str(run_dir), from_s=None, to_s=boundary),
+                                dict(directory=str(current), from_s=boundary, to_s=None)]
+        else:
+            monitor_segments = [dict(directory=str(run_dir), from_s=None, to_s=None)]
+    return monitor_segments
+
 def analyse(run_dir, monitor_dirs=None):
     run_dir = project_path(run_dir)
     meta = json.loads((run_dir / 'progress.json').read_text())
     run_id = meta['id']
     start, end = meta['finestra_media_s']
     assert meta['passi_completati'] == meta['passi_pianificati'], 'Run incompleto'
-    if monitor_dirs is None:
-        monitor_segments = meta.get('monitor_segments', [dict(directory=str(run_dir), from_s=None, to_s=None)])
-    else:
-        monitor_segments = [dict(directory=str(d), from_s=None, to_s=None) for d in monitor_dirs]
+    monitor_segments = accepted_monitor_segments(meta, run_dir) if monitor_dirs is None else [
+        dict(directory=str(d), from_s=None, to_s=None) for d in monitor_dirs]
     data = {}
     sources = []
     for name in NAMES:
@@ -165,7 +180,5 @@ def analyse(run_dir, monitor_dirs=None):
     return summary
 if __name__ == '__main__':
     import sys
-    d = WORK / 'campagna' / sys.argv[1]
-    dirs = [d, d / 'ripresa_24_processi'] if sys.argv[1] == 'ITER30' else None
-    r = analyse(d, dirs)
+    r = analyse(case_directory(sys.argv[1]))
     print(json.dumps({k: v for k, v in r.items() if k in ['id', 'esiti', 'periodicita_monitor_entro_criteri_proposti']}, ensure_ascii=False))

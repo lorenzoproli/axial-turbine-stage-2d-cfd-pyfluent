@@ -1,0 +1,38 @@
+{
+  "run_id": "M3_HYBRID35",
+  "sha256": "7734cdb87058c308dfcdb4904cc5b5561c318b74365dd4a1ada2a1313624e7bc",
+  "encoded_frames": 1201,
+  "playback_seconds": 48.04,
+  "FPS": 25,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "first_native_step": 2000,
+  "last_native_step": 14000,
+  "first_physical_time_s": 0.001487918924999998,
+  "last_physical_time_s": 0.01041543247499999,
+  "native_frame_interval_s": 7.439594624999999e-06,
+  "fixed_Mach_range": [
+    0.0,
+    1.2
+  ],
+  "full_from_zero": false,
+  "periodicity_confirmed": false,
+  "file": "m3_absolute_mach_5T_to_35T.mp4",
+  "source_frame_index": "source_frames.csv",
+  "source_frame_index_sha256": "193bf706351d56da07e0b4350afaf025347f8c78fcbe26e6dc890577fdd23a4d",
+  "source_frame_integrity_checked": 1201,
+  "capture_record_integrity_checked": 1201,
+  "fixed_colour_bar_rectangle": [
+    57,
+    140,
+    126,
+    940
+  ],
+  "camera_configurations": 1,
+  "maximum_recorded_exported_nodal_mach": 1.1894145011901855,
+  "maximum_scope": "Exported nodes at saved frames; not a cellwise or continuous-time maximum",
+  "visual_review": "Beginning, middle, quarter-period motion and final decoded samples inspected",
+  "encoding_method": "Offline H.264 from native Fluent PNGs; no Fluent Playback"
+}

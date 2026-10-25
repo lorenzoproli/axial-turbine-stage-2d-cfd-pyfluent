@@ -38,8 +38,8 @@ The verified M3 Mach movie covers **5T–35T**, not the complete startup from ze
 
 Camera, three-pitch crop and 0–1.2 Mach limits remain fixed. Values above 1.2 saturate the upper colour, so this visual maximum is not a measured maximum of the flow. `Solution time` displays the real Fluent clock; video playback duration is a separate quantity.
 
-Beginning, intermediate motion and final samples were visually inspected. Such sampling does not certify every individual transition or establish periodic convergence. A complete verified t = 0 M3 sequence is unavailable. Adapted-mesh pressure and Mach movies are separate datasets and must not be represented as the M3 campaign.
+Beginning, intermediate motion and final samples were visually inspected. Such sampling does not certify every individual transition or establish periodic convergence. A complete verified t = 0 M3 sequence is unavailable. Only the fine-mesh Mach movie is included in the selected results; no systematic-campaign pressure movie is supplied.
 
 ## Availability and reproduction
 
-Selected evidence and workflow sources are included in the repository. Large native inputs, complete solver histories and dense source-frame sequences are maintained separately. A repository clone alone does not provide all dependencies needed to rerun the numerical campaign or recreate every movie. The [reproduction guide](reproduction.md) specifies the required collections.
+Selected evidence and workflow sources are included in the repository. Large native inputs, complete solver histories and dense source-frame sequences are maintained separately. A repository clone alone does not provide all dependencies needed to rerun the numerical campaign or re-encode the selected movie. The [reproduction guide](reproduction.md) specifies the required collections.

@@ -4,7 +4,7 @@
 
 A configuration-driven workflow for a translating rotor, a stationary blade row and their unsteady interaction. The project combines native Fluent restart checks, systematic mesh generation, cycle-resolved numerical assessment and fixed-scale flow visualisation.
 
-The main result is a traceable numerical study: the final means are relatively insensitive to the last mesh refinement, while oscillation amplitudes and periodic settling remain unresolved. The distinction matters more than an apparently smooth animation.
+The main result is a traceable numerical study: the final means are relatively insensitive to the last mesh refinement, while oscillation amplitudes and periodic settling remain unresolved. Cycle means, oscillation amplitudes and phase recurrence are assessed separately.
 
 ## Start here
 
@@ -81,6 +81,8 @@ geometry/     Geometry definitions, meshing inputs and attributed SU2 reference
 workflow/     Python entry points and supporting modules
 results/      Selected numerical evidence, figures and movies
 docs/         Method, reproduction guide, limitations and editable report
+tests/        Offline portability, restart-analysis and packaging checks
+tools/        Verified export of English numerical tables
 inputs/       Local native input data; excluded from Git
 runs/         Local solver histories, checkpoints and field exports; excluded from Git
 ```
@@ -98,7 +100,7 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe workflow\cfd.py status
 ```
 
-The verifier checks the curated files; add `--native` to verify the separate native case/data collection. `status` reads saved records; it does not measure live CPU usage or start Fluent. Missing local native data must be supplied before the corresponding analyses can be regenerated.
+The verifier checks the curated files; add `--native` to verify the separate native case/data collection. `status` reads saved native records or the published run summary; it does not measure live CPU usage or start Fluent. Missing local native data must be supplied before the corresponding analyses can be regenerated.
 
 Example analysis and report commands:
 
@@ -115,7 +117,7 @@ The numerical campaign is closed. [config/campaign_state.json](config/campaign_s
 
 The verified fine-mesh movie shows absolute Mach over **5T–35T**, using 1,201 native Fluent PNGs acquired every ten CFD steps. The camera and three-pitch crop remain fixed, the physical clock is displayed as `Solution time: ... s`, and the colour range is fixed at 0–1.2. Values above 1.2 saturate the upper colour; this is a display cap, not a reported physical maximum.
 
-The 1920 × 1080, 25 FPS movie is encoded offline from the accepted frames. Playback time differs from physical simulation time. A complete verified M3 sequence from t = 0 is unavailable. Adapted-mesh Mach and absolute-static-pressure movies belong to the separate reproduction dataset.
+The 1920 × 1080, 25 FPS movie is encoded offline from the accepted frames. Playback time differs from physical simulation time. A complete verified M3 sequence from t = 0 is unavailable. The [M3 Mach movie](results/videos/m3_absolute_mach_5T_to_35T.mp4) is the sole delivered video.
 
 ## Attribution and use
 

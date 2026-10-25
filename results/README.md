@@ -12,7 +12,7 @@ This directory contains the selected scientific evidence for eight completed fin
 | [mesh_quality/](mesh_quality/README.md) | Native active-cell extrema, zone quantiles and diagnostic counts for the historical baseline and three systematic meshes |
 | [sensitivity/](sensitivity/README.md) | Inner-iteration, timestep and three-mesh comparisons |
 | [figures/](figures/README.md) | Figure index and additional mesh views |
-| [videos/](videos/) | Verified fine-mesh Mach movie and separate adapted-mesh movies |
+| [videos/](videos/) | Selected fine-mesh absolute-Mach movie and source-frame index |
 | [data_manifest.json](data_manifest.json) | Table hashes, separately supplied source hashes, units and export checks |
 
 The historical reference is not counted as one of the eight automated runs. Its native saved solution is at 0.010653 s, with 289,671 active cells and 72,168 inactive AMR parents. The three systematic meshes are a separate family. AMR was disabled in the verified final reference and automated calculations.
@@ -22,6 +22,8 @@ The historical reference is not counted as one of the eight automated runs. Its 
 M1 completed 35 periods and passed the configured final settling checks. M2 completed 40 periods but retained an inlet-flow amplitude recurrence failure. M3 completed 35 periods but retained a rotor-force amplitude recurrence failure for one of the final two cycle pairs.
 
 The medium-to-fine mesh mean changes are below 0.15% for the four monitors; peak-to-peak amplitude changes remain approximately 5.9–7.5%. The three-grid mean trends are nonmonotonic. Temporal independence, general grid independence, an observed asymptotic order and GCI are not established. The observations therefore describe sensitivity of a finite-duration dataset, not an experimentally validated or fully independent turbine-performance prediction.
+
+The run summary records separate initial/final MPI counts. ITER30 used 8 processes through accepted step 240, then 24 through step 596. Its final three-period statistics lie in the 24-process segment. A blank process-change step means no change is recorded.
 
 ## Table conventions and units
 

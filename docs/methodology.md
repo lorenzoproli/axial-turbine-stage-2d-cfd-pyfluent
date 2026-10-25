@@ -23,7 +23,7 @@ Native Fluent force and mass-flow values use a 1 m reference depth. Inlet mass f
 | Coupling / gradient | PISO / least-squares cell-based |
 | Discretisation | Second-order pressure and second-order upwind transported quantities |
 | Time scheme | Second-order implicit |
-| Parallel execution | 24 MPI processes, one solver calculation at a time |
+| Parallel execution | 24 MPI processes for the systematic campaign; ITER30 settling began with 8 and continued with 24 |
 
 The model is inherited from the native case and checked against saved settings. Nominal SU2 inputs are a source reference, not a substitute for inspecting the actual Fluent model. Absolute Mach was checked against velocity magnitude divided by sound speed. Native static pressure is absolute because the operating pressure is zero.
 
