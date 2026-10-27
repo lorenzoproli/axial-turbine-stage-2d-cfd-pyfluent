@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased - v1.1.0
+## v1.1.0 - 2026-10-27
 
 - Separate native inputs/results datasets with a checksum-based installer.
 - Independent single-mesh workspaces using the original-position Hybrid t=0 checkpoints.

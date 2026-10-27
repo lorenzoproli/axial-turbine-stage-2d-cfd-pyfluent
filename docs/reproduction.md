@@ -46,7 +46,7 @@ The integrity command checks the complete selected-file inventory, report PDF, n
 
 ## Install the native-data assets
 
-The v1.1.0 native assets are not yet publicly available. Once published, download the native inputs and results matching the source version from [Releases](https://github.com/lorenzoproli/axial-turbine-stage-2d-cfd-pyfluent/releases). Keep the ZIPs outside the repository. The exact names, sizes and SHA256 values are in [config/release_assets.json](../config/release_assets.json).
+Download the native inputs and results matching the source version from [Releases](https://github.com/lorenzoproli/axial-turbine-stage-2d-cfd-pyfluent/releases). Keep the ZIPs outside the repository. The exact names, sizes and SHA256 values are in [config/release_assets.json](../config/release_assets.json).
 
 - Native inputs: 100 files, about 340 MB compressed. Required to prepare a new single-mesh study, reopen the baseline or regenerate the mesh family.
 - Native results: 954 files, about 881 MB compressed. Add these to regenerate accepted analyses and inspect final native fields.

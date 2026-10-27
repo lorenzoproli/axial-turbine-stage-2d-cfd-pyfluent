@@ -91,7 +91,7 @@ The lightweight repository does not include the Python environment, commercial a
 
 ## Download and reuse
 
-Native datasets are distributed separately from the lightweight source tree. The v1.1.0 native assets are prepared but are not yet published. Their expected names and checksums are listed in [config/release_assets.json](config/release_assets.json); download links become active only after the corresponding release is published.
+Native datasets are distributed separately from the lightweight source tree. Download the version-matched input and result archives from [v1.1.0](https://github.com/lorenzoproli/axial-turbine-stage-2d-cfd-pyfluent/releases/tag/v1.1.0). Their names, sizes and checksums are listed in [config/release_assets.json](config/release_assets.json).
 
 | Download | Purpose |
 |---|---|

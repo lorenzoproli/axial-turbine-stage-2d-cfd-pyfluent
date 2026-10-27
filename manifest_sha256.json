@@ -12,7 +12,7 @@
   {
     "path": "CHANGELOG.md",
     "bytes": 789,
-    "sha256": "b84d1f628aba7d36b6b1a2d87217be5c200970abb418969b664d7b94cb21bffd"
+    "sha256": "0eb7449acc9b1c588cf5747c1894de454410959ec0bf8e647acb77f9ec2fd324"
   },
   {
     "path": "CITATION.cff",
@@ -106,8 +106,8 @@
   },
   {
     "path": "docs/reproduction.md",
-    "bytes": 15293,
-    "sha256": "66fa68428a500f7d09411406516f6e58d15949c24a283bee1c8083feede7563a"
+    "bytes": 15220,
+    "sha256": "810447024138ab55054ba826c2526d3042d3de155ccb77132f427a83558daa61"
   },
   {
     "path": "geometry/axial_stage_surfaces.step",
@@ -191,8 +191,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 10324,
-    "sha256": "29a5057ac969eb6b7230de6705d6805471626d77cb7078a6e47228a84056e534"
+    "bytes": 10336,
+    "sha256": "91462622ca56b41f7e104c96eb168646ec2ce2e4171ec5e098390f43faf13071"
   },
   {
     "path": "requirements-lock.txt",
