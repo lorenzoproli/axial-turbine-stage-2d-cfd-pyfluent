@@ -43,3 +43,10 @@ STATUS.md
 *.fls
 *.fdb_latexmk
 *.synctex.gz
+
+# Local report authoring files; only the final PDF is versioned
+/docs/report/*
+!/docs/report/axial_turbine_stage_2d_report.pdf
+
+# Regenerated post-processing figures
+/results/figures/generated/

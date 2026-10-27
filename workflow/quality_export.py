@@ -1,4 +1,5 @@
 """Export native Fluent quality metrics for active two-dimensional cells."""
+from data_schema import csv, json
 from common import *
 from pipeline import FLUIDS
 from ansys.fluent.core.fields.field_data_interfaces import SurfaceFieldDataRequest, ScalarFieldDataRequest, SurfaceDataType
@@ -18,17 +19,17 @@ def export_quality(s, mesh_id, expected_cells=None):
         if len(candidates) == 1:
             desired[metric] = candidates[0]
     if not desired:
-        raise RuntimeError('Campi qualità non identificati univocamente; vedere campi_disponibili.json')
+        raise RuntimeError('Quality fields are ambiguous; inspect available_fields.json')
     geo = s.fields.field_data.get_field_data(SurfaceFieldDataRequest(surfaces=FLUIDS, data_types=[SurfaceDataType.FacesCentroid]))
     fields = {metric: s.fields.field_data.get_field_data(ScalarFieldDataRequest(surfaces=FLUIDS, field_name=field, node_value=False, boundary_value=False)) for metric, field in desired.items()}
     summary = []
     npz = {}
     n_total = 0
     target = out / 'qualita_per_cella_attiva.csv'
-    assert not target.exists(), 'Esportazione gia presente: usare identificativo distinto'
+    assert not target.exists(), 'Export already exists; choose a different identifier'
     with target.open('x', newline='', encoding='utf-8-sig') as f:
         writer = csv.writer(f)
-        writer.writerow(['zona', 'indice_esportazione_locale_NON_ID_CELLA', 'x_m', 'y_m', 'z_m'] + list(fields))
+        writer.writerow(['zone', 'local_export_index_NOT_CELL_ID', 'x_m', 'y_m', 'z_m'] + list(fields))
         for iz, name in enumerate(FLUIDS):
             xyz = geo[name].face_centroids
             n = len(xyz)
@@ -39,12 +40,12 @@ def export_quality(s, mesh_id, expected_cells=None):
             npz[f'zone{iz}_centroids_m'] = xyz
             for metric, values in zip(fields, arrays):
                 npz[f'zone{iz}_{metric}'] = values
-                summary.append(dict(mesh=mesh_id, zona=name, metrica=metric, campo_fluent=desired[metric], celle=n, minimo=float(values.min()), q01=float(np.quantile(values, 0.01)), q05=float(np.quantile(values, 0.05)), mediana=float(np.median(values)), q95=float(np.quantile(values, 0.95)), q99=float(np.quantile(values, 0.99)), massimo=float(values.max()), unita='m3' if metric == 'cell_volume_m3' else '-'))
+                summary.append(dict(mesh=mesh_id, zone=name, metric=metric, native_field=desired[metric], active_cells=n, minimum=float(values.min()), q01=float(np.quantile(values, 0.01)), q05=float(np.quantile(values, 0.05)), median=float(np.median(values)), q95=float(np.quantile(values, 0.95)), q99=float(np.quantile(values, 0.99)), maximum=float(values.max()), unit='m3' if metric == 'cell_volume_m3' else '-'))
     if expected_cells is not None:
         assert n_total == expected_cells
     csvwrite(out / 'statistiche_qualita.csv', summary)
     np.savez_compressed(out / 'qualita_celle.npz', **npz)
-    result = dict(mesh=mesh_id, utc=now(), tempo_s=float(s.scheme.eval("(rpgetvar 'flow-time)")), celle_attive=n_total, campi=desired, statistiche=summary, nota_indici='Indici locali del vettore esportato, non identificativi globali Fluent', csv=dict(file=str(target), byte=target.stat().st_size, sha256=sha(target)))
+    result = dict(mesh=mesh_id, utc=now(), physical_time_s=float(s.scheme.eval("(rpgetvar 'flow-time)")), active_cells=n_total, fields=desired, statistics=summary, index_note='Local exported-array indices; these are not global Fluent IDs', csv=dict(file=str(target), byte=target.stat().st_size, sha256=sha(target)))
     jwrite(out / 'esportazione_qualita.json', result)
     print('QUALITY_EXPORTED', mesh_id, n_total, desired, flush=True)
     return result

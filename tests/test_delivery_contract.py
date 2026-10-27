@@ -16,6 +16,9 @@ class DeliveryContractTests(unittest.TestCase):
                 '.env':'private placeholder', '.workspace/session.json':'private placeholder',
                 '.git/config':'private placeholder', '.venv/pyvenv.cfg':'runtime placeholder',
                 'config/local_config.json':'private placeholder', 'docs/.private':'private placeholder',
+                'docs/report/main.tex':'local editable source', 'docs/report/generated.pdf':'local generated PDF',
+                'docs/report/axial_turbine_stage_2d_report.pdf':'publication PDF',
+                'docs/report/manifest.json':'generated metadata', 'results/figures/generated/plot.png':'local plot',
                 'scratch.txt':'not a deliverable', 'inputs/reference.cas.h5':'native placeholder'}
             for name,text in content.items():
                 p=checkout/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(text,encoding='utf-8')
@@ -25,7 +28,7 @@ class DeliveryContractTests(unittest.TestCase):
                     target=base/('with_native.zip' if native else 'source.zip')
                     with contextlib.redirect_stdout(io.StringIO()):module.package(target,native)
                     with zipfile.ZipFile(target) as archive:
-                        expected={'README.md','LICENSE','LICENSE-CONTENT','docs/method.md','config/model.json','ARCHIVE_SHA256.json'}
+                        expected={'README.md','LICENSE','LICENSE-CONTENT','docs/method.md','config/model.json','docs/report/axial_turbine_stage_2d_report.pdf','ARCHIVE_SHA256.json'}
                         if native:expected.add('inputs/reference.cas.h5')
                         self.assertEqual(set(archive.namelist()),expected)
                         for item in json.loads(archive.read('ARCHIVE_SHA256.json')):
@@ -39,10 +42,10 @@ class DeliveryContractTests(unittest.TestCase):
             initial=checkout/'runs/adapted_mesh/ITER30'; resumed=initial/'resume_24_processes'
             resumed.mkdir(parents=True)
             period=2.97583785e-4;dt=3e-6;t0=0.010653
-            metadata=dict(id='ITER30',passi_completati=596,passi_pianificati=596,dt_s=dt,
-                iterazioni_per_passo=30,finestra_media_s=[t0+3*period,t0+6*period],
-                output_correnti='runs/adapted_mesh/ITER30/ripresa_24_processi',
-                segmenti_risorse=[dict(processi=8,passi=240),dict(processi=24,passi_iniziali=240,tempo_iniziale_s=t0+240*dt)])
+            metadata=dict(id='ITER30',completed_steps=596,planned_steps=596,timestep_s=dt,
+                inner_iterations_per_step=30,averaging_window_s=[t0+3*period,t0+6*period],
+                current_output='runs/adapted_mesh/ITER30/ripresa_24_processi',
+                resource_segments=[dict(mpi_processes=8,steps=240),dict(mpi_processes=24,initial_steps=240,initial_time_s=t0+240*dt)])
             (initial/'progress.json').write_text(json.dumps(metadata),encoding='utf-8')
             names=['forza_y_rotore','mdot_inlet','mdot_outlet','pt_outlet']; originals={}
             for name in names:
@@ -57,10 +60,10 @@ class DeliveryContractTests(unittest.TestCase):
             result=subprocess.run([sys.executable,'-B','workflow/cfd.py','analyse','--id','ITER30'],cwd=checkout,capture_output=True,text=True,timeout=60)
             self.assertEqual(result.returncode,0,result.stdout+result.stderr)
             analysis=json.loads((checkout/'runs/analysis/adapted_mesh/ITER30/analysis.json').read_text(encoding='utf-8'))
-            self.assertEqual(len(analysis['statistiche']),4)
-            self.assertEqual(analysis['cicli'],3)
-            self.assertEqual(len(analysis['sorgenti']),8)
-            self.assertTrue(analysis['periodicita_monitor_entro_criteri_proposti'])
+            self.assertEqual(len(analysis['statistics']),4)
+            self.assertEqual(analysis['cycles'],3)
+            self.assertEqual(len(analysis['sources']),8)
+            self.assertTrue(analysis['monitor_periodicity_within_proposed_criteria'])
             plotted=subprocess.run([sys.executable,'-B','workflow/plot_histories.py','ITER30'],cwd=checkout,capture_output=True,text=True,timeout=60)
             self.assertEqual(plotted.returncode,0,plotted.stdout+plotted.stderr)
             provenance_files=list((checkout/'results/figures').rglob('history_plot_provenance.json'))

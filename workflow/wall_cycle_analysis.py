@@ -1,4 +1,5 @@
 """Saved-cycle wall statistics with verified geometric face matching."""
+from data_schema import csv, json
 from common import *
 from english_labels import install
 install()
@@ -8,11 +9,11 @@ from scipy.spatial import cKDTree
 def analyse_wall_cycle(run_id):
     d = case_directory(run_id)
     meta = json.loads((d / 'progress.json').read_text())
-    assert meta['passi_completati'] == meta['passi_pianificati']
-    directory = project_path(meta.get('output_correnti', d)) / 'campi_in_fase'
+    assert meta['completed_steps'] == meta['planned_steps']
+    directory = project_path(meta.get('current_output', d)) / 'campi_in_fase'
     if meta.get('captures'):
-        first_step = meta['passi_pianificati'] - int(round(T / meta['dt_s']))
-        manifests = [m for m in meta['captures'] if m.get('passi_completati', -1) >= first_step]
+        first_step = meta['planned_steps'] - int(round(T / meta['timestep_s']))
+        manifests = [m for m in meta['captures'] if m.get('completed_steps', -1) >= first_step]
     else:
         manifests = [json.loads(p.read_text()) for p in sorted(directory.glob('step_*_manifest.json'))]
     times = np.array([m['solution_time_s'] for m in manifests])
@@ -37,44 +38,44 @@ def analyse_wall_cycle(run_id):
             pressure = np.array([float(v['pressione_statica_assoluta_Pa']) for v in r])
             yp = np.array([float(v['yplus']) for v in r])
             assert np.isfinite(pressure).all() and np.isfinite(yp).all() and (yp >= 0).all()
-            assert np.allclose([float(v['tempo_s']) for v in r], m['solution_time_s'], atol=1e-12, rtol=0)
+            assert np.allclose([float(v['physical_time_s']) for v in r], m['solution_time_s'], atol=1e-12, rtol=0)
             if reference is None:
                 reference = xy.copy()
-            assert len(xy) == len(reference), 'Topologia parete modificata'
+            assert len(xy) == len(reference), 'Topologia wall modificata'
             shift = xy.mean(axis=0) - reference.mean(axis=0)
             distance, indices = cKDTree(xy - shift).query(reference)
-            assert len(np.unique(indices)) == len(reference) and distance.max() < 1e-07, 'Corrispondenza facce non verificata'
+            assert len(np.unique(indices)) == len(reference) and distance.max() < 1e-07, 'Face correspondence is not established'
             assert abs(shift[0]) < 1e-07 and (wall == 'wall_rotore' or abs(shift[1]) < 1e-07)
-            evidence.append(dict(wall=wall, tempo_s=m['solution_time_s'], traslazione_native_y_m=float(shift[1]), errore_mapping_m=float(distance.max()), file=str(p), sha256=declared['sha256']))
+            evidence.append(dict(wall=wall, physical_time_s=m['solution_time_s'], native_translation_y_m=float(shift[1]), mapping_error_m=float(distance.max()), file=str(p), sha256=declared['sha256']))
             pressures.append(pressure[indices])
             ys.append(yp[indices])
         pressures = np.array(pressures)
         ys = np.array(ys)
         mean_p = np.trapezoid(pressures, times, axis=0) / T
         mean_y = np.trapezoid(ys, times, axis=0) / T
-        rows = [dict(indice_riferimento=i, x_m=float(x), y_riferimento_m=float(y), pressione_media_temporale_Pa=float(mean_p[i]), pressione_min_campionata_Pa=float(pressures[:, i].min()), pressione_max_campionata_Pa=float(pressures[:, i].max()), yplus_media_temporale=float(mean_y[i]), yplus_min_campionato=float(ys[:, i].min()), yplus_max_campionato=float(ys[:, i].max())) for i, (x, y) in enumerate(reference)]
+        rows = [dict(reference_face_index=i, x_m=float(x), reference_y_m=float(y), time_mean_static_pressure_Pa=float(mean_p[i]), sampled_static_pressure_min_Pa=float(pressures[:, i].min()), sampled_static_pressure_max_Pa=float(pressures[:, i].max()), time_mean_yplus=float(mean_y[i]), sampled_yplus_min=float(ys[:, i].min()), sampled_yplus_max=float(ys[:, i].max())) for i, (x, y) in enumerate(reference)]
         csvwrite(out / (wall + '_inviluppo.csv'), rows)
         envelopes[wall] = rows
-        stats.append(dict(prova=run_id, wall=wall, faces=len(reference), campioni_temporali=len(times), inizio_s=float(times[0]), fine_s=float(times[-1]), yplus_min_campionato=float(ys.min()), yplus_max_campionato=float(ys.max()), frazione_facce_con_yplus_sempre_lt1=float(np.mean(ys.max(axis=0) < 1)), nota='Estremi sui campioni disponibili; nessuna garanzia sugli istanti non campionati. Frazione per numero facce, senza pesatura per area. Media temporale trapezoidale.'))
+        stats.append(dict(run_id=run_id, wall=wall, faces=len(reference), time_samples=len(times), start_time_s=float(times[0]), end_time_s=float(times[-1]), sampled_yplus_min=float(ys.min()), sampled_yplus_max=float(ys.max()), face_count_fraction_below_one_at_all_samples=float(np.mean(ys.max(axis=0) < 1)), note='Extrema refer to the available samples. Face fractions are count weighted; time means use trapezoidal integration.'))
     csvwrite(out / 'riepilogo_ciclo.csv', stats)
     csvwrite(out / 'mapping_e_sha256.csv', evidence)
-    result = dict(utc=now(), prova=run_id, stato='CICLO_CAMPIONATO_ANALIZZATO', statistiche=stats, intervallo_campionamento_s=np.diff(times).tolist(), nota=f'Actual saved final-cycle sampling: {len(times) - 1} intervals. Sampled extrema do not bound unsaved phases; datasets with different phase resolution do not have equivalent peak resolution.')
-    jwrite(out / 'esito.json', result)
+    result = dict(utc=now(), run_id=run_id, status='SAMPLED_CYCLE_ANALYSED', statistics=stats, intervallo_campionamento_s=np.diff(times).tolist(), note=f'Actual saved final-cycle sampling: {len(times) - 1} intervals. Sampled extrema do not bound unsaved phases; datasets with different phase resolution do not have equivalent peak resolution.')
+    jwrite(out / 'assessment.json', result)
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     fig, axs = plt.subplots(2, 2, figsize=(12.8, 7.2), layout='constrained')
     for col, (wall, rows) in enumerate(envelopes.items()):
         x = np.array([r['x_m'] for r in rows])
-        for ax, mean, low, high, label in [(axs[0, col], 'pressione_media_temporale_Pa', 'pressione_min_campionata_Pa', 'pressione_max_campionata_Pa', 'Pressione statica assoluta [Pa]'), (axs[1, col], 'yplus_media_temporale', 'yplus_min_campionato', 'yplus_max_campionato', 'y+ [-]')]:
-            ax.vlines(x, [r[low] for r in rows], [r[high] for r in rows], color='#8db4c6', lw=0.5, alpha=0.5, label='Inviluppo campionato')
-            ax.scatter(x, [r[mean] for r in rows], s=1.2, color='#145775', label='Media temporale')
-            ax.set(xlabel='X assiale [m]', ylabel=label, title=wall)
+        for ax, mean, low, high, label in [(axs[0, col], 'time_mean_static_pressure_Pa', 'sampled_static_pressure_min_Pa', 'sampled_static_pressure_max_Pa', 'Absolute static pressure [Pa]'), (axs[1, col], 'time_mean_yplus', 'sampled_yplus_min', 'sampled_yplus_max', 'y+ [-]')]:
+            ax.vlines(x, [r[low] for r in rows], [r[high] for r in rows], color='#8db4c6', lw=0.5, alpha=0.5, label='Sampled envelope')
+            ax.scatter(x, [r[mean] for r in rows], s=1.2, color='#145775', label='Time mean')
+            ax.set(xlabel='Axial X [m]', ylabel=label, title=wall)
             ax.grid(alpha=0.2)
             ax.legend()
         axs[1, col].axhline(1, color='#333333', ls='--', lw=0.7)
-    fig.suptitle(f'{run_id}: ciclo [{times[0]:.12f}, {times[-1]:.12f}] s; {len(times)} campioni')
-    figdir = project_path(ROOT / '06_figure/campagna' / run_id)
+    fig.suptitle(f'{run_id}: window_cycle_index [{times[0]:.12f}, {times[-1]:.12f}] s; {len(times)} samples')
+    figdir = project_path(ROOT / 'results/figures/generated/campaign' / run_id)
     figdir.mkdir(parents=True, exist_ok=True)
     fig.savefig(figdir / 'pressione_yplus_inviluppo_ciclo.png', dpi=150)
     plt.close(fig)

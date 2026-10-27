@@ -1,9 +1,10 @@
+from data_schema import csv, json
 from common import *
 from pipeline import snapshot, FLUIDS
 import numpy as np, time
 SMOKE = WORK / 'prova_breve'
 SMOKE.mkdir(exist_ok=True)
-assert not (SMOKE / 'smoke_final.cas.h5').exists(), 'Prova gia eseguita: non sovrascrivere risultati'
+assert not (SMOKE / 'smoke_final.cas.h5').exists(), 'This trial already exists; preserve its results'
 s.settings.file.read_case_data(file_name=str(WORK / 'checkpoint_comune' / 'checkpoint.cas.h5'))
 for n in s.settings.solution.monitor.report_files.get_object_names():
     s.settings.solution.monitor.report_files[n].file_name = str(SMOKE / (n + '.out'))
@@ -41,7 +42,7 @@ computed_after = s.settings.solution.report_definitions.compute(report_defs=['fo
 for a, b in zip(computed_before, computed_after):
     for k in a:
         assert abs(a[k][0] - b[k][0]) < max(1e-08, abs(a[k][0]) * 1e-10)
-result = dict(utc=now(), stato='AVANZAMENTO_SALVATAGGIO_RILETTURA_VERIFICATI_RENDER_IN_ATTESA', steps=6, dt_s=3e-06, max_iter_per_step=30, tempo_iniziale_s=before['solution_time_s'], tempo_finale_s=expected_time, spostamento_rotore_xyz_m=shift.tolist(), spostamento_atteso_xyz_m=expected.tolist(), celle_attive=289671, amr_automatico=False, originali_e_monitor_storici_invariati=True, wall_seconds=time.monotonic() - start, frames=frames, manifest=manifest, report_finali=computed_after)
+result = dict(utc=now(), status='ADVANCEMENT_SAVE_RELOAD_CHECKED_RENDER_PENDING', steps=6, timestep_s=3e-06, max_iter_per_step=30, initial_time_s=before['solution_time_s'], final_time_s=expected_time, rotor_displacement_xyz_m=shift.tolist(), expected_displacement_xyz_m=expected.tolist(), active_cells=289671, automatic_mesh_adaptation=False, original_inputs_and_monitors_unchanged=True, wall_seconds=time.monotonic() - start, frames=frames, manifest=manifest, final_reports=computed_after)
 jwrite(SMOKE / 'smoke_verifica.json', result)
-append_status('Prova breve PyFluent eseguita: 6 passi da t=0.010653 a 0.010671 s, dt=3e-6 s, massimo 30 iterazioni/passo; mesh attiva invariata e AMR disattivo. Spostamento del rotore verificato contro Vy=-150 m/s. Salvataggio e rilettura coerenti, report coincidenti; baseline e quattro monitor originali invariati. Rendering Mach/pressione in verifica; non è una prova di convergenza.')
-print('SMOKE_SAVED_RELOADED_OK', json.dumps({k: result[k] for k in ['tempo_finale_s', 'spostamento_rotore_xyz_m', 'wall_seconds']}), flush=True)
+append_status('Six-step native checkpoint trial: dt=3e-6 s, 30 inner iterations, fixed active cell count, automatic adaptation disabled, expected rotor translation, coherent save and reload. This diagnostic is separate from the convergence study.')
+print('SMOKE_SAVED_RELOADED_OK', json.dumps({k: result[k] for k in ['final_time_s', 'rotor_displacement_xyz_m', 'wall_seconds']}), flush=True)

@@ -1,4 +1,5 @@
 """Verify loaded checkpoint geometry, physical setup and reports before advancement."""
+from data_schema import csv, json
 from common import *
 from pipeline import FLUIDS
 from monitor_paths import monitor_path
@@ -9,7 +10,7 @@ import numpy as np, h5py
 
 def verify(s, target, meta, case, time_s, step):
     assert int(s.scheme.eval("(rpgetvar 'time-step)")) == step
-    assert int(s.fields.reduction.count(locations=FLUIDS)) == meta['celle_attive']
+    assert int(s.fields.reduction.count(locations=FLUIDS)) == meta['active_cells']
     assert not s.scheme.eval("(rpgetvar 'adapt/dynamic?)")
     geometry = verify_loaded_geometry(s, case)
     original = json.loads((target / 'setup_effettivo.json').read_text())
@@ -45,4 +46,4 @@ def verify(s, target, meta, case, time_s, step):
         keys = list(f['results/1/phase-1/cells'])
     required = [f'SV_{name}_M{level}' for name in ['DENSITY', 'ENERGY', 'K', 'O', 'P', 'T', 'U', 'V'] for level in [1, 2]]
     assert all((name in keys for name in required)), 'Missing second-order time-history arrays'
-    return dict(utc=now(), state='CHECKPOINT_RESTART_VERIFIED_BEFORE_ADVANCE', case=str(case), data=str(data), native_time_s=time_s, native_step=step, geometry=geometry, reports=rows, field_extrema=fields, physical_setup_and_methods_unchanged=True, AMR_active=False, second_order_history_arrays_present=required, initialization_executed=False, time_reset=False)
+    return dict(utc=now(), state='CHECKPOINT_RESTART_VERIFIED_BEFORE_ADVANCE', case=str(case), data=str(data), native_time_s=time_s, native_step=step, geometry=geometry, reports=rows, field_extrema=fields, physical_setup_and_methods_unchanged=True, automatic_mesh_adaptation_active=False, second_order_history_arrays_present=required, initialization_executed=False, time_reset=False)

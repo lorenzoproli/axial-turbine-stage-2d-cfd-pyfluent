@@ -24,6 +24,22 @@ def load(name):
 
 
 class ReuseDeliveryTests(unittest.TestCase):
+    def test_legacy_records_use_english_without_changing_native_ids_or_values(self):
+        from data_schema import json as records, csv as tables
+        import io
+        raw = '{"passi_completati":14000,"tempo_corrente_s":0.010415432475,"stato":"eseguita_periodicita_non_confermata","monitor":"forza_y_rotore"}'
+        data = records.loads(raw)
+        self.assertEqual(data["completed_steps"], 14000)
+        self.assertEqual(data["current_time_s"], 0.010415432475)
+        self.assertEqual(data["status"], "COMPLETED_PERIODICITY_UNCONFIRMED")
+        self.assertEqual(data["monitor"], "forza_y_rotore")
+        self.assertEqual(records.loads(records.dumps(data)), data)
+        table = tables.DictReader(io.StringIO("tempo_s,media\n0.01,-1305.516\n"))
+        self.assertEqual(table.fieldnames, ["physical_time_s", "mean"])
+        self.assertEqual(next(table), {"physical_time_s":"0.01", "mean":"-1305.516"})
+        with self.assertRaises(ValueError):
+            records.loads('{"passi_completati":1,"completed_steps":2}')
+
     def test_prepare_isolated_copy_and_preserve_historical_guard(self):
         module = load("create_study")
         with tempfile.TemporaryDirectory() as temp:
@@ -40,7 +56,7 @@ class ReuseDeliveryTests(unittest.TestCase):
             pairs = [dict(file=p, byte=len(v), sha256=hashlib.sha256(v).hexdigest())
                      for p, v in files.items() if "/hybrid_initial." in p]
             evidence = dict(initial_clock=dict(time_s=0.0, step=0), restoration_before_hybrid=True,
-                            physical_setup_unchanged=True, AMR_active=False, manifest_initial_checkpoint=pairs)
+                            physical_setup_unchanged=True, automatic_mesh_adaptation_active=False, manifest_initial_checkpoint=pairs)
             files["inputs/initial_conditions/M3/hybrid_initialization_verified.json"] = json.dumps(evidence).encode()
             records = []
             for relative, value in files.items():

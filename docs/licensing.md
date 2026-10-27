@@ -7,7 +7,7 @@ The project separates its software licence from its publication-content licence.
 | Material | Applicable terms |
 |---|---|
 | Original code in `workflow/`, `tools/`, `tests/`; original configuration in `config/`; original meshing-control code/template | [MIT](../LICENSE) |
-| Original README and documentation prose; report PDF/LaTeX; original figures, selected numerical tables and movie presentation | [CC BY 4.0](../LICENSE-CONTENT), only for rights held by the project author |
+| Original README and documentation prose; report PDF; original figures, selected numerical tables and movie presentation | [CC BY 4.0](../LICENSE-CONTENT), only for rights held by the project author |
 | SU2 reference configurations and mesh in `geometry/reference/` | Retained upstream terms and [LGPL 2.1 text](../geometry/reference/COPYING.LGPL-2.1); see the [source record](../geometry/reference/SOURCE.md) |
 | SU2-derived `geometry/axial_stage_surfaces.step` and underlying source geometry represented in figures/video | Outside the new MIT/CC BY grants; source attribution and applicable upstream rights are retained |
 | Third-party licence texts and notices | Their own terms; do not replace the original text with the project licence |
@@ -41,7 +41,6 @@ The following declarations were checked against the installed package metadata f
 | Matplotlib | 3.10.7 | Matplotlib licence agreement, based on the PSF licence |
 | h5py | 3.16.0 | BSD-3-Clause |
 | imageio-ffmpeg | 0.6.0 | BSD-2-Clause for the Python wrapper; FFmpeg has separate build-dependent terms |
-| pypdf | 6.10.0 | BSD-3-Clause |
 | Pillow | 11.3.0 | MIT-CMU |
 
 Python packages and executables are installed separately rather than bundled in the repository. In particular, [FFmpeg's own licensing information](https://ffmpeg.org/legal.html) describes the terms for its executable and optional components. ANSYS application licences are separate from the open-source PyFluent interface licence.

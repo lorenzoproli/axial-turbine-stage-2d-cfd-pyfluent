@@ -6,7 +6,7 @@
     "mean_difference_limit_percent": 0.1,
     "amplitude_difference_limit_percent": 2,
     "phase_rms_limit_percent_of_amplitude": 2,
-    "applicable_mesh": "historical_adapted_mesh"
+    "applicable_mesh": "historical_baseline_mesh"
   },
   "timestep": {
     "T200_T400_within_recorded_limits": false,

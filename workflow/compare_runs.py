@@ -1,4 +1,5 @@
 """Common-window phase comparisons without automatic order or GCI claims."""
+from data_schema import csv, json
 from common import *
 from registry import update_test
 import numpy as np
@@ -11,56 +12,56 @@ def phase_profiles(run_id):
     names = sorted({r['monitor'] for r in rows})
     out = {}
     for name in names:
-        cycles = sorted({int(r['ciclo']) for r in rows if r['monitor'] == name})
-        out[name] = np.mean([[float(r['valore']) for r in rows if r['monitor'] == name and int(r['ciclo']) == k] for k in cycles], axis=0)
+        cycles = sorted({int(r['window_cycle_index']) for r in rows if r['monitor'] == name})
+        out[name] = np.mean([[float(r['value']) for r in rows if r['monitor'] == name and int(r['window_cycle_index']) == k] for k in cycles], axis=0)
     return out
 
 def compare_iteration():
     base = project_path(ROOT / '05_postprocessing/campagna')
-    a = json.loads((base / 'ITER30/analisi.json').read_text())
-    b = json.loads((base / 'ITER60/analisi.json').read_text())
-    assert np.allclose(a['finestra_s'], b['finestra_s'], rtol=0, atol=1e-13)
+    a = json.loads((base / 'ITER30/analysis.json').read_text())
+    b = json.loads((base / 'ITER60/analysis.json').read_text())
+    assert np.allclose(a['window_s'], b['window_s'], rtol=0, atol=1e-13)
     pa, pb = (phase_profiles('ITER30'), phase_profiles('ITER60'))
     rows = []
-    for x, y in zip(a['statistiche'], b['statistiche']):
+    for x, y in zip(a['statistics'], b['statistics']):
         assert x['monitor'] == y['monitor']
         n = x['monitor']
-        amp = y['ampiezza_picco_picco_media_cicli']
-        rows.append(dict(monitor=n, media_ITER30=x['media'], media_ITER60=y['media'], unita=x['unita'], differenza_media_percento=100 * abs(x['media'] - y['media']) / abs(y['media']), differenza_ampiezza_percento=100 * abs(x['ampiezza_picco_picco_media_cicli'] - amp) / amp, rms_profilo_fase_percento_ampiezza=100 * float(np.sqrt(np.mean((pa[n] - pb[n]) ** 2))) / amp))
-    criteria = dict(media_percento=0.1, ampiezza_percento=2, rms_fase_percento_ampiezza=2)
-    passed = all((r['differenza_media_percento'] <= 0.1 and r['differenza_ampiezza_percento'] <= 2 and (r['rms_profilo_fase_percento_ampiezza'] <= 2) for r in rows))
+        amp = y['mean_cycle_peak_to_peak']
+        rows.append(dict(monitor=n, mean_ITER30=x['mean'], mean_ITER60=y['mean'], unit=x['unit'], mean_difference_percent=100 * abs(x['mean'] - y['mean']) / abs(y['mean']), amplitude_difference_percent=100 * abs(x['mean_cycle_peak_to_peak'] - amp) / amp, phase_rms_percent_of_amplitude=100 * float(np.sqrt(np.mean((pa[n] - pb[n]) ** 2))) / amp))
+    criteria = dict(mean_percent=0.1, amplitude_percent=2, phase_rms_percent_of_amplitude=2)
+    passed = all((r['mean_difference_percent'] <= 0.1 and r['amplitude_difference_percent'] <= 2 and (r['phase_rms_percent_of_amplitude'] <= 2) for r in rows))
     fields = []
     paths = []
     for rid in ['ITER30', 'ITER60']:
         directory = case_directory(rid)
         meta = json.loads((directory / 'progress.json').read_text())
-        paths.append(project_path(meta.get('output_correnti', directory)) / 'final_fields.npz')
+        paths.append(project_path(meta.get('current_output', directory)) / 'final_fields.npz')
     with np.load(paths[0]) as za, np.load(paths[1]) as zb:
         assert abs(float(za['solution_time_s']) - float(zb['solution_time_s'])) < 1e-12
         for iz, zone in enumerate(['statore', 'rotore']):
             xa = za[f'zone{iz}_vertices']
             xb = zb[f'zone{iz}_vertices']
             dist, idx = cKDTree(xb).query(xa)
-            assert float(dist.max()) < 1e-07, 'Geometrie non coincidenti: confronto di campi vietato'
+            assert float(dist.max()) < 1e-07, 'Field comparison requires matching geometry'
             for f in ['mach-number', 'pressure', 'density', 'temperature']:
                 va = za[f'zone{iz}_{f}'].astype(float)
                 vb = zb[f'zone{iz}_{f}'][idx].astype(float)
                 d = va - vb
-                fields.append(dict(zona=zone, campo=f, tempo_s=float(za['solution_time_s']), differenza_massima_assoluta=float(abs(d).max()), rms_differenza=float(np.sqrt(np.mean(d * d))), rms_relativo_percento=100 * float(np.sqrt(np.mean(d * d) / np.mean(vb * vb))), errore_massimo_abbinamento_m=float(dist.max()), metodo='Confronto nodale alla stessa fase; nearest coordinate entro 1e-7 m, non pesato in volume'))
-    out = base / 'confronto_iterazioni'
+                fields.append(dict(zone=zone, field=f, physical_time_s=float(za['solution_time_s']), maximum_absolute_difference=float(abs(d).max()), absolute_rms_difference=float(np.sqrt(np.mean(d * d))), relative_rms_percent=100 * float(np.sqrt(np.mean(d * d) / np.mean(vb * vb))), maximum_geometric_mapping_error_m=float(dist.max()), method='Nodal comparison at matching phase; nearest coordinates within 1e-7 m; no volume weighting'))
+    out = project_path(ROOT / 'runs/analysis/sensitivity/inner_iterations')
     csvwrite(out / 'confronto_ITER30_ITER60.csv', rows)
     csvwrite(out / 'confronto_campi_stessa_fase.csv', fields)
     chosen = 30 if passed else 60
-    result = dict(utc=now(), finestre_s=a['finestra_s'], criteri_diagnostici_proposti=criteria, entro_criteri=passed, iterazioni_temporali_scelte=chosen, confronti=rows, campi=fields, nota='Scelta per la campagna temporale; la sensibilita 30/60 non dimostra da sola convergenza temporale o spaziale')
-    jwrite(out / 'esito.json', result)
+    result = dict(utc=now(), windows_s=a['window_s'], proposed_diagnostic_criteria=criteria, within_criteria=passed, selected_temporal_iterations=chosen, comparisons=rows, fields=fields, note='Operational setting for the timestep study; the 30/60 comparison alone does not establish temporal or spatial independence')
+    jwrite(out / 'assessment.json', result)
     for rid in ['ITER30', 'ITER60']:
-        update_test(rid, 'eseguita_statistiche_e_confronto_iterativo_verificati', cicli_media=3, evidenza=str(out / 'esito.json'), prossima_attivita='Campagna temporale sulla stessa mesh e checkpoint')
+        update_test(rid, 'COMPLETED_STATISTICS_AND_ITERATION_COMPARISON_CHECKED', averaging_cycles=3, evidence=str(out / 'assessment.json'), next_activity='Timestep study on the same mesh and common checkpoint')
         p = WORK / 'campagna' / rid / 'progress.json'
         meta = json.loads(p.read_text())
-        meta['stato'] = 'eseguita_analizzata'
-        meta['analisi'] = str(base / rid / 'analisi.json')
+        meta['status'] = 'COMPLETED_AND_ANALYSED'
+        meta['analysis'] = str(base / rid / 'analysis.json')
         jwrite(p, meta)
-    append_status(f'Confronto ITER30/ITER60 completato su stessi tre periodi e campi alla stessa fase: {('entro' if passed else 'oltre')} i criteri diagnostici proposti. Per la campagna temporale scelti {chosen} iterazioni effettive/passo. In ITER60 il bilancio con accumulo e stato verificato: massimo difetto integrale circa 0.000114% della massa entrante e massimo difetto BDF2 circa 0.0000275% della portata inlet.')
+    append_status(f'ITER30/ITER60 compared over the same three periods and phase-matched fields: {('within' if passed else 'outside')} the proposed diagnostic criteria. Selected for the timestep study: {chosen} actual iterations per step. ITER60 includes domain storage: maximum integral defect about 0.000114% of inlet mass and maximum BDF2 defect about 0.0000275% of inlet flow.')
     print(json.dumps(result, ensure_ascii=False), flush=True)
     return result
 if __name__ == '__main__':

@@ -1,4 +1,5 @@
 """Offline status and explicit entry points for the reproducible CFD workflow."""
+from data_schema import csv, json
 from common import *
 import argparse, subprocess, sys
 
@@ -56,24 +57,24 @@ def launch(directory, graphics=False):
 def status():
     """Summarise saved results; recorded MPI counts are not live CPU activity."""
     values = []
-    states = {'eseguita_analizzata': 'COMPLETE_AND_ANALYSED',
-        'eseguita_periodicita_monitor_verificata': 'COMPLETE_OPERATIONAL_PERIODICITY_CHECKS_PASSED',
-        'eseguita_periodicita_non_confermata': 'COMPLETE_PERIODICITY_UNCONFIRMED',
-        'fallita': 'TECHNICAL_FAILURE', 'arrestata_con_checkpoint': 'STOPPED_WITH_CHECKPOINT',
-        'interrotta_checkpoint_disponibile': 'INTERRUPTED_WITH_CHECKPOINT',
-        'in_corso_24_processi': 'RECORDED_RUNNING_STATE',
-        'calcolo_completato_statistiche_da_verificare': 'COMPLETE_ASSESSMENT_PENDING'}
+    states = {'COMPLETED_AND_ANALYSED': 'COMPLETE_AND_ANALYSED',
+        'COMPLETED_MONITOR_PERIODICITY_CHECKS_PASSED': 'COMPLETE_OPERATIONAL_PERIODICITY_CHECKS_PASSED',
+        'COMPLETED_PERIODICITY_UNCONFIRMED': 'COMPLETE_PERIODICITY_UNCONFIRMED',
+        'FAILED': 'TECHNICAL_FAILURE', 'STOPPED_WITH_CHECKPOINT': 'STOPPED_WITH_CHECKPOINT',
+        'INTERRUPTED_CHECKPOINT_AVAILABLE': 'INTERRUPTED_WITH_CHECKPOINT',
+        'RUNNING_24_MPI': 'RECORDED_RUNNING_STATE',
+        'COMPLETED_ASSESSMENT_PENDING': 'COMPLETE_ASSESSMENT_PENDING'}
     for run_id in ['ITER30', 'ITER60', 'T100', 'T200', 'T400', 'M1_HYBRID35', 'M2_HYBRID35', 'M3_HYBRID35']:
         path = case_directory(run_id) / 'progress.json'
         if not path.exists():
             continue
         item = json.loads(path.read_text(encoding='utf-8-sig'))
-        resources = item.get('segmenti_risorse', [])
-        counts = [entry['processi'] for entry in resources] if resources else [item.get('config', {}).get('fluent', {}).get('processor_count', 24)]
-        values.append(dict(run_id=item.get('id', run_id), recorded_status=states.get(item.get('stato'), item.get('stato')),
-            completed_steps=item.get('passi_completati'), target_steps=item.get('passi_pianificati'),
-            physical_time_s=item.get('tempo_corrente_s'), configured_mpi_processes=24,
-            recorded_mpi_process_counts=counts, last_recorded_active_mpi_processes=item.get('processi_attuali'),
+        resources = item.get('resource_segments', [])
+        counts = [entry['mpi_processes'] for entry in resources] if resources else [item.get('config', {}).get('fluent', {}).get('processor_count', 24)]
+        values.append(dict(run_id=item.get('id', run_id), recorded_status=states.get(item.get('status'), item.get('status')),
+            completed_steps=item.get('completed_steps'), target_steps=item.get('planned_steps'),
+            physical_time_s=item.get('current_time_s'), configured_mpi_processes=24,
+            recorded_mpi_process_counts=counts, last_recorded_active_mpi_processes=item.get('active_mpi_processes'),
             record_updated_utc=item.get('updated_utc'), source=path.relative_to(ROOT).as_posix()))
     mode = 'OFFLINE_SAVED_RECORDS'
     published = ROOT / 'results/run_summary.csv'
@@ -92,11 +93,9 @@ def status():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=['status', 'run', 'resume', 'analyse', 'report', 'quality-figures'])
+    parser.add_argument('action', choices=['status', 'run', 'resume', 'analyse', 'quality-figures'])
     parser.add_argument('--id', help='Run identifier recorded in the campaign configuration')
-    args, extra = parser.parse_known_args()
-    if extra and args.action != 'report':
-        parser.error('Unrecognised arguments: ' + ' '.join(extra))
+    args = parser.parse_args()
     if args.action == 'status':
         print(json.dumps(status(), ensure_ascii=False, indent=2))
         return
@@ -115,7 +114,7 @@ def main():
             result = advance(session, target, metadata)
         finally:
             session.exit()
-        if result['passi_completati'] == result['passi_pianificati']:
+        if result['completed_steps'] == result['planned_steps']:
             from monitor_analysis import analyse
             analyse(target)
         return
@@ -123,12 +122,11 @@ def main():
         if not args.id:
             parser.error('--id is required for analysis')
         from monitor_analysis import analyse
-        checks = analyse(case_directory(args.id))['esiti']
-        print(json.dumps(dict(cycle_means=checks['medie'], cycle_amplitudes=checks['ampiezze'],
-            phase_waveforms=checks['fase'], boundary_mass_flux=checks['portate']), indent=2))
+        checks = analyse(case_directory(args.id))['checks']
+        print(json.dumps(dict(cycle_means=checks['means'], cycle_amplitudes=checks['amplitudes'],
+            phase_waveforms=checks['phase'], boundary_mass_flux=checks['mass_flows']), indent=2))
         return
-    script = 'compile_report.py' if args.action == 'report' else 'plot_mesh_quality.py'
-    subprocess.run([sys.executable, str(Path(__file__).with_name(script)), *extra], check=True)
+    subprocess.run([sys.executable, str(Path(__file__).with_name('plot_mesh_quality.py'))], check=True)
 
 
 if __name__ == '__main__':

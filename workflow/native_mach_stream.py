@@ -1,4 +1,5 @@
 """Native Mach acquisition throughout a transient, with safe restart indexing."""
+from data_schema import csv, json
 from common import *
 from native_capture_mach_fast import MachCaptureFast
 from pipeline import FLUIDS, WALLS
@@ -10,7 +11,7 @@ CONFIG_PATH = CONFIG_DIR / 'mach_stream_config.json'
 def configuration():
     cfg = json.loads(CONFIG_PATH.read_text())
     assert cfg['fields'] == ['mach-number'] and cfg['CFD_steps_between_frames'] == 10
-    assert abs(cfg['dt_s'] * 400 - T) < 1e-15 and cfg['samples_per_period'] == 40
+    assert abs(cfg['timestep_s'] * 400 - T) < 1e-15 and cfg['samples_per_period'] == 40
     assert cfg['start_from_actual_t0'] and cfg['include_nonlooping_final_endpoint']
     folder = cfg.get('output_subdirectory', 'from_t0')
     assert project_path(folder).name == folder and folder not in ['.', '..']
@@ -63,7 +64,7 @@ class MachStream:
         actual = float(self.s.scheme.eval("(rpgetvar 'flow-time)"))
         native_step = int(self.s.scheme.eval("(rpgetvar 'time-step)"))
         assert native_step == self.origin_step + step
-        assert abs(actual - self.origin_time_s - step * self.cfg['dt_s']) < 1e-12
+        assert abs(actual - self.origin_time_s - step * self.cfg['timestep_s']) < 1e-12
         existing = next((item for item in self.index['frames'] if item['step'] == step), None)
         if existing:
             path = self.directory / existing['manifest']
@@ -100,7 +101,7 @@ class MachStream:
             low = previous['periodic_instancing'][FLUIDS[1]]['original_y_bounds_m']
             high = record['periodic_instancing'][FLUIDS[1]]['original_y_bounds_m']
             record['motion_since_previous_frame'] = verified_motion(previous['solution_time_s'], sum(low) / 2, actual, sum(high) / 2)
-        record.update(relative_CFD_step=step, native_step=native_step, physical_acquisition_interval_s=self.cfg['dt_s'] * 10, acquisition_configuration=self.cfg, periodic_view_coverage=coverage, nodal_Mach_extrema=extrema, nodes_above_display_limit={name: int(np.count_nonzero(value > self.cfg['fixed_Mach_range'][1])) for name, value in values.items()}, upper_colour_saturation_disclosed=self.cfg.get('out_of_range_policy') == 'saturate_with_disclosure')
+        record.update(relative_CFD_step=step, native_step=native_step, physical_acquisition_interval_s=self.cfg['timestep_s'] * 10, acquisition_configuration=self.cfg, periodic_view_coverage=coverage, nodal_Mach_extrema=extrema, nodes_above_display_limit={name: int(np.count_nonzero(value > self.cfg['fixed_Mach_range'][1])) for name, value in values.items()}, upper_colour_saturation_disclosed=self.cfg.get('out_of_range_policy') == 'saturate_with_disclosure')
         path = self.directory / (tag + '_manifest.json')
         jwrite(path, record)
         self.index['frames'].append(dict(step=step, solution_time_s=actual, manifest=path.name, sha256=sha(path)))
@@ -117,7 +118,7 @@ def playback_export(session, directory, run_id, records, require_t0=True):
     assert len(records) >= 2 and all((r['selected_fields'] == ['mach'] for r in records))
     if require_t0:
         assert times[0] == 0 and records[0]['native_step'] == 0
-    assert np.allclose(np.diff(times), cfg['dt_s'] * 10, rtol=0, atol=1e-12)
+    assert np.allclose(np.diff(times), cfg['timestep_s'] * 10, rtol=0, atol=1e-12)
     assert all((r['configuration'] == records[0]['configuration'] and r['acquisition_configuration'] == cfg for r in records))
     name = run_id.lower() + '-native-mach-transient'
     sequence = directory / (name + '.cxa')

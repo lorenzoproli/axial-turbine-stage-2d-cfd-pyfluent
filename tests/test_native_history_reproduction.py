@@ -1,10 +1,11 @@
 """Reproduce saved scientific summaries from the optional local native dataset."""
 from pathlib import Path
-import json, sys, unittest
+import sys, unittest
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'workflow'))
+from data_schema import csv, json
 from common import T, case_directory, project_path, sha, english_name
 from monitor_analysis import NAMES, read_monitor, merge_series, segment
 from monitor_paths import monitor_path
@@ -20,14 +21,14 @@ class NativeHistoryReproduction(unittest.TestCase):
             self.assertTrue(checkpoint.is_file())
             self.assertEqual(evidence['initial_clock'], {'time_s': 0.0, 'step': 0})
             self.assertTrue(evidence['restoration_before_hybrid'])
-            self.assertFalse(evidence['AMR_active'])
+            self.assertFalse(evidence['automatic_mesh_adaptation_active'])
 
     def test_final_phase_sample_paths_and_hashes(self):
         if not (ROOT / 'runs/systematic_mesh/M1/progress.json').is_file():
             self.skipTest('The optional native CFD dataset is not installed.')
         for run_id in ['M1_HYBRID35', 'M2_HYBRID35', 'M3_HYBRID35']:
             metadata = json.loads((case_directory(run_id) / 'progress.json').read_text(encoding='utf-8-sig'))
-            start, end = metadata['finestra_media_s']
+            start, end = metadata['averaging_window_s']
             samples = [sample for sample in metadata['captures'] if start-1e-12 <= sample['solution_time_s'] <= end+1e-12]
             self.assertEqual(len(samples), 13)
             self.assertTrue(np.allclose(np.diff([sample['solution_time_s'] for sample in samples]), T/4, rtol=0, atol=1e-12))
@@ -46,11 +47,11 @@ class NativeHistoryReproduction(unittest.TestCase):
         for run_id in ['M1_HYBRID35', 'M2_HYBRID35', 'M3_HYBRID35']:
             with self.subTest(run_id=run_id):
                 metadata = json.loads((case_directory(run_id) / 'progress.json').read_text(encoding='utf-8-sig'))
-                saved = json.loads(project_path(f'05_postprocessing/campagna/{run_id}/analisi.json').read_text(encoding='utf-8-sig'))
-                start, end = saved['finestra_s']
+                saved = json.loads(project_path(f'05_postprocessing/campagna/{run_id}/analysis.json').read_text(encoding='utf-8-sig'))
+                start, end = saved['window_s']
                 self.assertAlmostEqual((end - start) / T, 3, places=9)
-                self.assertAlmostEqual(metadata['dt_s'], T / 400, places=16)
-                self.assertEqual(metadata['iterazioni_per_passo'], 30)
+                self.assertAlmostEqual(metadata['timestep_s'], T / 400, places=16)
+                self.assertEqual(metadata['inner_iterations_per_step'], 30)
                 for name in NAMES:
                     pieces = []
                     for part in metadata['monitor_segments']:
@@ -62,22 +63,22 @@ class NativeHistoryReproduction(unittest.TestCase):
                         pieces.append(values)
                     native = merge_series(pieces)
                     self.assertTrue(np.all(np.diff(native[:, 0]) == 1))
-                    self.assertEqual(native[-1, 0], metadata['passi_completati'])
-                    self.assertTrue(np.allclose(native[:, 2], native[:, 0] * metadata['dt_s'], rtol=0, atol=1e-12))
+                    self.assertEqual(native[-1, 0], metadata['completed_steps'])
+                    self.assertTrue(np.allclose(native[:, 2], native[:, 0] * metadata['timestep_s'], rtol=0, atol=1e-12))
                     times, values = segment(native[:, 2], native[:, 1], start, end)
                     mean = float(np.trapezoid(values, times) / (end - start))
                     amplitude = float(np.mean([np.ptp(segment(native[:, 2], native[:, 1], start + index*T, start + (index+1)*T)[1]) for index in range(3)]))
-                    expected = next(row for row in saved['statistiche'] if row['monitor'] == name)
-                    self.assertTrue(np.isclose(mean, expected['media'], rtol=1e-10, atol=1e-10))
-                    self.assertTrue(np.isclose(amplitude, expected['ampiezza_picco_picco_media_cicli'], rtol=1e-10, atol=1e-10))
+                    expected = next(row for row in saved['statistics'] if row['monitor'] == name)
+                    self.assertTrue(np.isclose(mean, expected['mean'], rtol=1e-10, atol=1e-10))
+                    self.assertTrue(np.isclose(amplitude, expected['mean_cycle_peak_to_peak'], rtol=1e-10, atol=1e-10))
 
     def test_final_native_pairs_remain_unchanged(self):
         if not (ROOT / 'runs/systematic_mesh/M1/progress.json').is_file():
             self.skipTest('The optional native CFD dataset is not installed.')
         for run_id in ['M1_HYBRID35', 'M2_HYBRID35', 'M3_HYBRID35']:
             metadata = json.loads((case_directory(run_id) / 'progress.json').read_text(encoding='utf-8-sig'))
-            self.assertEqual(len(metadata['manifest_finale']), 2)
-            for item in metadata['manifest_finale']:
+            self.assertEqual(len(metadata['final_manifest']), 2)
+            for item in metadata['final_manifest']:
                 path = project_path(item['file'])
                 self.assertEqual(path.stat().st_size, item['byte'])
                 self.assertEqual(sha(path), item['sha256'])

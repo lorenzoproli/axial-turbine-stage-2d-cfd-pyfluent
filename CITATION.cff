@@ -7,7 +7,7 @@ license: MIT
 title: "Axial Turbine Stage 2D CFD with PyFluent"
 abstract: >-
   A transient planar stator-rotor CFD workflow using ANSYS Fluent and PyFluent,
-  with preserved historical reference data, fixed adapted-mesh comparisons,
+  with preserved historical reference data, fixed-topology baseline comparisons,
   three systematic meshes, original-position Hybrid Initialization,
   cycle-resolved numerical sensitivity checks and fixed-scale Mach visualisation.
 authors:

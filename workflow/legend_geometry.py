@@ -1,4 +1,5 @@
 """Measure native PNG colour-bar borders without modifying the image."""
+from data_schema import csv, json
 import numpy as np
 from PIL import Image
 

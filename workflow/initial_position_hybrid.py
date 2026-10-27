@@ -1,4 +1,5 @@
 """Restore the actual original rotor geometry before a fresh t=0 Hybrid start."""
+from data_schema import csv, json
 from common import *
 from pipeline import FLUIDS, WALLS, snapshot, segments
 from cfd import node_processes
@@ -60,7 +61,7 @@ def overlay(reference, restored, run_id):
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     from matplotlib.collections import LineCollection
-    out = project_path(ROOT / '06_figure/campagna' / run_id / 'initial_rotor_position.png')
+    out = project_path(ROOT / 'results/figures/generated/campaign' / run_id / 'initial_rotor_position.png')
     out.parent.mkdir(parents=True, exist_ok=True)
     fig, ax = plt.subplots(figsize=(12, 6), layout='constrained')
     for g, color, width, label in [(reference, '#b35413', 1.3, 'Original t=0 blade profiles'), (restored, '#126486', 0.7, 'Restored systematic mesh profiles')]:
@@ -168,7 +169,7 @@ def initialise(s, run_cfg, cfg):
     for name in s.settings.solution.monitor.report_files.get_object_names():
         s.settings.solution.monitor.report_files[name].file_name = str(directory / (name + '.out'))
     s.settings.file.auto_save.data_frequency = 0
-    s.settings.solution.run_calculation.transient_controls.time_step_size = cfg['dt_s']
+    s.settings.solution.run_calculation.transient_controls.time_step_size = cfg['timestep_s']
     s.settings.solution.run_calculation.transient_controls.max_iter_per_time_step = cfg['inner_iterations_per_step']
     for equation in s.settings.solution.monitor.residual.equations.get_object_names():
         s.settings.solution.monitor.residual.equations[equation].check_convergence = False
@@ -184,12 +185,12 @@ def initialise(s, run_cfg, cfg):
     s.settings.solution.run_calculation.dual_time_iterate(time_step_count=steps, max_iter_per_step=cfg['inner_iterations_per_step'])
     smoke = snapshot(s, directory / 'smoke_fields.npz')
     finite_positive(smoke)
-    assert abs(smoke['solution_time_s'] - steps * cfg['dt_s']) < 1e-12
+    assert abs(smoke['solution_time_s'] - steps * cfg['timestep_s']) < 1e-12
     motion = verified_motion(initial['solution_time_s'], initial['rotor_wall_node_centroid'][1], smoke['solution_time_s'], smoke['rotor_wall_node_centroid'][1])
     assert int(s.fields.reduction.count(locations=FLUIDS)) == expected and (not s.scheme.eval("(rpgetvar 'adapt/dynamic?)"))
     s.settings.file.write_case_data(file_name=str(directory / 'smoke_final.cas.h5'))
     close_transcript(s)
-    record = dict(utc=now(), state='ORIGINAL_POSITION_T0_HYBRID_AND_SIX_STEP_SMOKE_VERIFIED', run_id=run_id, reference_case=str(reference_case), reference_sha256=sha(reference_case), reference_clock=original_clock, source_case=str(source), source_sha256=sha(source), source_clock=source_clock, native_mesh=str(mesh), native_mesh_sha256=sha(mesh), settings_file=str(settings), settings_sha256=sha(settings), geometry_restoration_method='Verified native raw mesh and native settings transfer; rotor aligned to the original t=0 case before Hybrid. No DAT/IP read.', checkpoint_to_original_offset_y_m=float((bounds(reference, 1) - bounds(checkpoint_geometry, 1))[:, 1].mean()), rotor_restoration_offset_y_m=offset, restoration_before_hybrid=True, pre_hybrid_clock=pre_hybrid, initial_clock=dict(time_s=0.0, step=0), initialization_settings=init_settings, geometry_checks=errors, periodic_pairs=periodic, physical_setup_unchanged=True, data_or_IP_loaded=False, old_BDF_history_loaded=False, AMR_active=False, initial_fields=initial, smoke_fields=smoke, smoke_motion=motion, initial_checkpoint=str(checkpoint), manifest_initial_checkpoint=manifest, quality_evidence=str(project_path(ROOT / '05_postprocessing/qualita_mesh' / (run_id + '_initial_position') / 'esportazione_qualita.json')), position_overlay=image, smoke_excluded_from_main_run=True)
+    record = dict(utc=now(), state='ORIGINAL_POSITION_T0_HYBRID_AND_SIX_STEP_SMOKE_VERIFIED', run_id=run_id, reference_case=str(reference_case), reference_sha256=sha(reference_case), reference_clock=original_clock, source_case=str(source), source_sha256=sha(source), source_clock=source_clock, native_mesh=str(mesh), native_mesh_sha256=sha(mesh), settings_file=str(settings), settings_sha256=sha(settings), geometry_restoration_method='Verified native raw mesh and native settings transfer; rotor aligned to the original t=0 case before Hybrid. No DAT/IP read.', checkpoint_to_original_offset_y_m=float((bounds(reference, 1) - bounds(checkpoint_geometry, 1))[:, 1].mean()), rotor_restoration_offset_y_m=offset, restoration_before_hybrid=True, pre_hybrid_clock=pre_hybrid, initial_clock=dict(time_s=0.0, step=0), initialization_settings=init_settings, geometry_checks=errors, periodic_pairs=periodic, physical_setup_unchanged=True, data_or_IP_loaded=False, old_BDF_history_loaded=False, automatic_mesh_adaptation_active=False, initial_fields=initial, smoke_fields=smoke, smoke_motion=motion, initial_checkpoint=str(checkpoint), manifest_initial_checkpoint=manifest, quality_evidence=str(project_path(ROOT / '05_postprocessing/qualita_mesh' / (run_id + '_initial_position') / 'esportazione_qualita.json')), position_overlay=image, smoke_excluded_from_main_run=True)
     jwrite(directory / 'hybrid_initialization_verified.json', record)
     text(directory / 'README.md', '# Original-position Hybrid start\n\nThe original historical t=0 case supplies the rotor geometry. The verified systematic case supplies mesh and physical setup. Only the rotor fluid zone is translated; periodic pairs, blade polylines and unchanged setup are checked. Physical time and step are set to zero before Hybrid. No historical data or IP file is read. The six-step smoke test is separate; the main run reloads the untouched fresh initialized checkpoint at t=0.\n')
     append_status(run_id + ': original rotor position restored before Hybrid at t=0/step=0; physical setup and periodicity preserved, quality exported, six-step motion/finite-field smoke test verified. Main run will reload the fresh initialized checkpoint; smoke steps are excluded. Evidence: ' + str((directory / 'hybrid_initialization_verified.json').relative_to(ROOT)))

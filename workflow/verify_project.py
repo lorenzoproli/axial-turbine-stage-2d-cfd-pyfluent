@@ -1,6 +1,7 @@
 """Check portable publication assets and optional local native data offline."""
+from data_schema import csv, json
 from pathlib import Path
-import argparse,hashlib,json
+import argparse, hashlib
 from package_project import source_files
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -26,8 +27,8 @@ def verify_native():
         checked+=1
     for rid in ['ITER30','ITER60','T100','T200','T400','M1_HYBRID35','M2_HYBRID35','M3_HYBRID35']:
         meta=json.loads((case_directory(rid)/'progress.json').read_text(encoding='utf-8'))
-        current=project_path(meta.get('output_correnti',case_directory(rid)))
-        records=meta.get('manifest_finale') or [dict(file=str(current/('final.'+ext+'.h5'))) for ext in ['cas','dat']]
+        current=project_path(meta.get('current_output',case_directory(rid)))
+        records=meta.get('final_manifest') or [dict(file=str(current/('final.'+ext+'.h5'))) for ext in ['cas','dat']]
         for row in records:
             path=project_path(row['file'])
             if not path.is_file() or row.get('sha256') and sha(path)!=row['sha256']:raise ValueError('Native checkpoint mismatch: '+str(path))
@@ -36,9 +37,6 @@ def verify_native():
     return checked,len(index['files'])
 
 def main(write=False,native=False):
-    report=ROOT/'docs/report';record=json.loads((report/'manifest.json').read_text(encoding='utf-8'))
-    if sha(report/'axial_turbine_stage_2d_report.pdf')!=record['PDF']['sha256']:raise ValueError('Report PDF checksum mismatch')
-    if sha(report/'main.tex')!=record['source']['sha256']:raise ValueError('Report source differs from the indexed manuscript')
     results=ROOT/'results'
     data=json.loads((results/'data_manifest.json').read_text(encoding='utf-8'))
     for row in data['outputs']:
@@ -50,7 +48,7 @@ def main(write=False,native=False):
     if sha(results/'videos'/video['source_frame_index'])!=video['source_frame_index_sha256']:raise ValueError('Movie source index mismatch')
     if write:
         rows=[dict(path=p.relative_to(ROOT).as_posix(),bytes=p.stat().st_size,sha256=sha(p)) for p in source_files() if p!=MANIFEST]
-        MANIFEST.write_text(json.dumps(rows,indent=2)+'\n',encoding='utf-8')
+        MANIFEST.write_text(json.dumps(rows,indent=2)+'\n',encoding='utf-8',newline='\n')
     rows=json.loads(MANIFEST.read_text(encoding='utf-8'))
     actual={p.relative_to(ROOT).as_posix() for p in source_files() if p!=MANIFEST}
     declared={row['path'] for row in rows}

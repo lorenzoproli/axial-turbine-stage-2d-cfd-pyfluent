@@ -1,6 +1,7 @@
 """Build a size/SHA256-verified source archive without network operations."""
+from data_schema import csv, json
 from pathlib import Path
-import argparse,hashlib,json,zipfile
+import argparse, hashlib, zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
 PUBLIC_DIRECTORIES={'config','docs','geometry','results','tests','tools','workflow'}
@@ -21,7 +22,9 @@ def source_files(include_native=False):
         private=any(part.startswith('.') or part=='__pycache__' for part in rel.parts)
         if len(rel.parts)==1 and path.name in PUBLIC_ROOT_FILES:
             private=False
-        if (allowed and not private and path.name not in ['path_map.json','local_config.json']
+        local_report_source = rel.parts[:2] == ('docs', 'report') and rel.as_posix() != 'docs/report/axial_turbine_stage_2d_report.pdf'
+        generated_plot = rel.parts[:3] == ('results', 'figures', 'generated')
+        if (allowed and not private and not local_report_source and not generated_plot and path.name not in ['path_map.json','local_config.json']
                 and path.suffix not in ['.pyc','.pyo','.tmp','.lock']):
             yield path
 

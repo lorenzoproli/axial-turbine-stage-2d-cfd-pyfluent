@@ -1,4 +1,5 @@
 """Sequential original-position Hybrid runs with a final three-cycle assessment."""
+from data_schema import csv, json
 from common import *
 from cfd import launch, node_processes, ensure_campaign_open
 import argparse, traceback
@@ -36,7 +37,7 @@ def run_configs():
         if inputs['expected_cells'] <= 0:
             raise ValueError('Expected active cell count must be positive.')
         item = dict(inputs, **paths)
-        item.update(mesh=base + '_systematic_original_position_Hybrid', dt_s=CFG['dt_s'],
+        item.update(mesh=base + '_systematic_original_position_Hybrid', timestep_s=CFG['timestep_s'],
             max_iter=CFG['inner_iterations_per_step'], initial_time_s=0.0, target_periods=periods,
             target_steps=periods * CFG['steps_per_period'], warmup_periods=periods - 3, average_periods=3,
             capture_periods=3, capture_fields=['mach-number', 'pressure', 'density', 'temperature'],
@@ -56,7 +57,7 @@ def validate_configuration():
         raise ValueError('This campaign configuration requires 24 MPI processes.')
     if CFG.get('automatic_transient_extensions', False):
         raise ValueError('Automatic transient extension is disabled for this campaign.')
-    if abs(CFG['dt_s'] * CFG['steps_per_period'] - T) >= 1e-15:
+    if abs(CFG['timestep_s'] * CFG['steps_per_period'] - T) >= 1e-15:
         raise ValueError('Timestep and steps per period are inconsistent.')
     _verify_file(CFG['initial_geometry_reference'], CFG['initial_geometry_reference_sha256'])
     return run_configs()
@@ -77,7 +78,7 @@ def prepared_initial_checkpoint(run_config):
     if (evidence.get('run_id') != run_config['id'] or evidence.get('initial_clock') != {'time_s': 0.0, 'step': 0}
             or evidence.get('restoration_before_hybrid') is not True
             or evidence.get('physical_setup_unchanged') is not True
-            or evidence.get('AMR_active') is not False
+            or evidence.get('automatic_mesh_adaptation_active') is not False
             or evidence.get('reference_sha256') != CFG['initial_geometry_reference_sha256']):
         raise RuntimeError('The supplied Hybrid checkpoint does not satisfy its t=0 geometry/setup declaration.')
     manifest = evidence.get('manifest_initial_checkpoint', [])
@@ -133,10 +134,10 @@ def main(selected_id):
     try:
         if (target / 'progress.json').exists():
             metadata = json.loads((target / 'progress.json').read_text(encoding='utf-8-sig'))
-            if metadata['passi_completati'] == metadata['passi_pianificati']:
+            if metadata['completed_steps'] == metadata['planned_steps']:
                 print('EXISTING_COMPLETED_RESULT_PRESERVED', selected_id, flush=True)
                 return
-            if metadata['passi_pianificati'] != run_config['target_steps']:
+            if metadata['planned_steps'] != run_config['target_steps']:
                 raise RuntimeError('Restart target differs from the saved run; configure a separate extension explicitly.')
             session = launch(ROOT / 'runs/launcher' / (selected_id + '_' + datetime.now().strftime('%Y%m%d_%H%M%S_%f')),
                              graphics=run_config.get('native_animation_enabled', True))
@@ -163,8 +164,8 @@ def main(selected_id):
         close_transcript(session)
         session.exit()
         session = None
-        if result['passi_completati'] != run_config['target_steps']:
-            write_state('STOPPED_WITH_CHECKPOINT', run_id=selected_id, reason=result.get('motivo_arresto'))
+        if result['completed_steps'] != run_config['target_steps']:
+            write_state('STOPPED_WITH_CHECKPOINT', run_id=selected_id, reason=result.get('stop_reason'))
             return
         for _ in range(30):
             if not node_processes():

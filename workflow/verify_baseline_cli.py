@@ -1,4 +1,5 @@
 """Verify immutable baseline inputs; a new native audit requires a clean project."""
+from data_schema import csv, json
 from common import *
 import argparse
 EXPECTED = {'stadio_assiale_2D_CFD_final.cas.h5': 'c9f78c24b1a5263f655136f0c1a632ba4276c2eec23a6e1b02622d7276378f7b', 'stadio_assiale_2D_CFD_final.dat.h5': '1038a1e420ebfa1a47a87d002627b207c05b8016d12ff650990773d737710be1'}
@@ -10,13 +11,13 @@ def verify():
         actual = sha(p)
         if actual != expected:
             raise RuntimeError('Historical baseline checksum changed: ' + name)
-        rows.append(dict(file=str(p), byte=p.stat().st_size, sha256=actual, esito='VERIFICATO'))
+        rows.append(dict(file=str(p), byte=p.stat().st_size, sha256=actual, result='VERIFIED'))
     return rows
 
 def new_audit():
     from cfd import ensure_campaign_open
     ensure_campaign_open()
-    assert not (AUDIT / 'audit_baseline.json').exists() and (not (WORK / 'checkpoint_comune').exists()), 'Audit esistente: non ripeterlo o sovrascriverlo. Usare una copia indipendente con soli input e codice.'
+    assert not (AUDIT / 'audit_baseline.json').exists() and (not (WORK / 'checkpoint_comune').exists()), 'Baseline assessment already exists; use an independent copy of the inputs and code.'
     verify()
     prepare_input()
     from cfd import launch
@@ -34,7 +35,7 @@ def new_audit():
         namespace = {'s': s, 'state': state, '__file__': str(script), '__name__': 'audit_owned_session'}
         exec(compile(script.read_text(encoding='utf-8'), str(script), 'exec'), namespace)
         quality = export_quality(s, 'baseline_adattata', 289671)
-        print('BASELINE_AUDIT_24_COMPLETED', quality['celle_attive'], flush=True)
+        print('BASELINE_AUDIT_24_COMPLETED', quality['active_cells'], flush=True)
     finally:
         close_transcript(s)
         s.exit()
@@ -43,7 +44,7 @@ def new_smoke():
     from cfd import ensure_campaign_open
     ensure_campaign_open()
     assert (WORK / 'checkpoint_comune/checkpoint.cas.h5').exists()
-    assert not (WORK / 'prova_breve/smoke_final.cas.h5').exists(), 'Prova breve gia eseguita: usare una riproduzione indipendente'
+    assert not (WORK / 'prova_breve/smoke_final.cas.h5').exists(), 'This trial already exists; use an independent workspace'
     from cfd import launch
     from transcript_utils import close_transcript
     s = launch(WORK / 'launcher' / ('smoke_' + datetime.now().strftime('%Y%m%d_%H%M%S')))

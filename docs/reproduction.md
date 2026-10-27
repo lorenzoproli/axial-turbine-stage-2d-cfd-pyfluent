@@ -2,13 +2,13 @@
 
 ## What is supplied
 
-The repository contains the Python workflow, recorded configurations, reference geometry material, selected numerical evidence, figures, the selected Mach movie and an editable report. Native Fluent/Workbench inputs and results are distributed as separate versioned release assets because of their size and software-specific dependencies.
+The repository contains the Python workflow, recorded configurations, reference geometry material, selected numerical evidence, figures, the selected Mach movie and the final PDF report. Native Fluent/Workbench inputs and results are packaged as separate versioned release assets because of their size and software-specific dependencies.
 
 The following operations have different requirements:
 
 | Operation | Required material | Starts Fluent? |
 |---|---|---|
-| Read figures, tables and report | Repository only | No |
+| Read figures, tables and the final report | Repository only | No |
 | Check curated-file integrity and saved status | Repository and Python dependencies | No |
 | Regenerate native-monitor/field analyses | Appropriate native run collection and exported samples | No |
 | Reopen a case or repeat a numerical run | Coherent native case/data, mesh/geometry, complete dependencies, Fluent and licences | Yes; campaign currently closed |
@@ -21,7 +21,7 @@ A missing native input is a missing dependency. It must not be substituted with 
 - ANSYS Fluent 2024 R2, double-precision planar 2D.
 - PyFluent `ansys-fluent-core==0.42.2` and `ansys-api-fluent==0.7.0`.
 - Exact analysis/rendering dependencies in the root `requirements.txt`.
-- 24 MPI processes for the systematic campaign and the final adapted-mesh segments. ITER30 used 8 processes for its first 240 accepted settling steps and 24 for the remaining 356 steps. The recorded machine has an Intel Core i9-14900K and approximately 64 GiB RAM; no core-affinity optimisation is claimed.
+- 24 MPI processes for the systematic campaign and the final baseline-mesh segments. ITER30 used 8 processes for its first 240 accepted settling steps and 24 for the remaining 356 steps. The recorded machine has an Intel Core i9-14900K and approximately 64 GiB RAM; no core-affinity optimisation is claimed.
 - ANSYS Workbench/Meshing are additionally required to reproduce the recorded commercial meshing procedure.
 
 ## Create an environment
@@ -42,11 +42,11 @@ The Python environment and commercial applications are not redistributed. A vali
 .\.venv\Scripts\python.exe workflow\cfd.py status
 ```
 
-The integrity command checks the complete selected-file inventory, report source/PDF, numerical-table hashes and movie hash. Add `--native` to verify the separately supplied native case/data collection. With local native data, status values come from saved records. In a source-only clone, status reads the published eight-run summary. They do not establish that a solver process is currently running or that the recorded MPI count is a live process measurement.
+The integrity command checks the complete selected-file inventory, report PDF, numerical-table hashes and movie hash. Add `--native` to verify the separately supplied native case/data collection. With local native data, status values come from saved records. In a source-only clone, status reads the published eight-run summary. They do not establish that a solver process is currently running or that the recorded MPI count is a live process measurement.
 
 ## Install the native-data assets
 
-Download the native inputs and results matching the source version from [Releases](https://github.com/lorenzoproli/axial-turbine-stage-2d-cfd-pyfluent/releases). Keep the ZIPs outside the repository. The exact names, sizes and SHA256 values are in [config/release_assets.json](../config/release_assets.json).
+The v1.1.0 native assets are not yet publicly available. Once published, download the native inputs and results matching the source version from [Releases](https://github.com/lorenzoproli/axial-turbine-stage-2d-cfd-pyfluent/releases). Keep the ZIPs outside the repository. The exact names, sizes and SHA256 values are in [config/release_assets.json](../config/release_assets.json).
 
 - Native inputs: 100 files, about 340 MB compressed. Required to prepare a new single-mesh study, reopen the baseline or regenerate the mesh family.
 - Native results: 954 files, about 881 MB compressed. Add these to regenerate accepted analyses and inspect final native fields.
@@ -77,7 +77,7 @@ For a supplied M3 native run collection:
 
 Other accepted identifiers are `ITER30`, `ITER60`, `T100`, `T200`, `T400`, `M1_HYBRID35` and `M2_HYBRID35`. The legacy `HYBRID35` suffix is a stable run identifier: M2 actually reached 40 periods. Actual final step/time and the run summary determine duration.
 
-Analysis writes derived outputs under `runs/analysis/` and figure outputs under `results/figures/`. Use a separate work copy when reproducing a published result. The legacy ITER30 analysis automatically joins its original and 24-process restart monitors at the recorded accepted boundary. Confirm the source segment boundaries before comparing a regenerated table with the report; accepted restart segments and final statistical windows are essential inputs.
+Analysis writes derived outputs under `runs/analysis/` and figure outputs under `results/figures/generated/`. Use a separate work copy when reproducing a published result. The legacy ITER30 analysis automatically joins its original and 24-process restart monitors at the recorded accepted boundary. Confirm the source segment boundaries before comparing a regenerated table with the report; accepted restart segments and final statistical windows are essential inputs.
 
 The source-only clone has no native histories. Install both assets before regeneration. Offline analysis does not require an ANSYS licence; numerical calculation does.
 
@@ -90,16 +90,6 @@ After installing both native datasets, run:
 ~~~
 
 The exporter reads the accepted monitor histories, mesh-quality arrays and saved sensitivity records, and writes the English CSV/JSON tables in results/. Use a separate work copy for regenerated outputs.
-
-## Rebuild the report
-
-The manuscript is a self-contained LaTeX project under `docs/report/`.
-
-```powershell
-.\.venv\Scripts\python.exe workflow\cfd.py report
-```
-
-The report compiler requires `pdflatex`; PDF page rendering requires Poppler's `pdftoppm`. Install these tools separately and make them available through the configured executable paths or `PATH`. Compilation starts no solver. The --render option saves page previews under .build/report_review/. Tables, figures, captions and page breaks can then be inspected before using the rebuilt PDF.
 
 ## Campaign state and restarts
 
@@ -135,7 +125,42 @@ Default output includes per-step numerical monitors, health checks, periodic coh
 
 For a controlled stop, place STOP_AFTER_BATCH.txt under the prepared workspace's runs/adapted_mesh directory. Remove it only when ready to resume. Reissue the same --only command to resume a stopped/interrupted run; checkpoint hashes, time and moving geometry are verified before advancing, and monitor segments remain separate. Completed runs are preserved. A power-loss recovery requires a saved checkpoint and a restartable state; inspect progress.json before resuming rather than changing its step count manually.
 
-For new adapted-mesh timestep/iteration comparisons, use a separate work copy and the supplied common checkpoint with the recorded workflow_config.json. The independent helper currently targets the systematic M1/M2/M3 family; it does not automatically launch the adapted-mesh comparison campaign.
+## Capture Mach during a new M3 calculation
+
+Image acquisition is optional. To use the native M3 preset:
+
+~~~powershell
+.\.venv\Scripts\python.exe workflow\create_study.py --mesh M3 --name m3-video --periods 35 --capture-mach --prepare
+.\.venv\Scripts\python.exe runs\new_studies\m3-video\workflow\run_hybrid35_campaign.py --only M3_HYBRID35
+~~~
+
+The preset records absolute Mach from the actual initial t=0 state every ten CFD steps. Camera and three-pitch crop are fixed; the legend is 0-1.2 with upper-colour saturation disclosed. The physical Fluent clock is shown in each frame.
+
+Before the production calculation, a short native scene preview checks motion, checkpoint reload and playback in a separate diagnostic branch. The controller prints its preview directory and waits. Inspect decoded_01.png, decoded_02.png and decoded_03.png for the blade rows, camera, legend and time annotation. Then use a second terminal to record that visual decision with the prepared workspace's graphics_review.py --directory PREVIEW_DIRECTORY --approve command. The record is bound to those exact images; it does not replace numerical convergence assessment.
+
+The main calculation reloads the untouched initial checkpoint after this preview. Native PNGs and their index remain in the independent workspace; playback/encoding uses physical frame times separately from video FPS. The delivered historical movie still covers 5T-35T; this opt-in route acquires a new calculation and does not reconstruct missing historical frames.
+
+## Repeat baseline-mesh iteration and timestep comparisons
+
+Prepare a separate workspace from the common checkpoint:
+
+~~~powershell
+.\.venv\Scripts\python.exe workflow\create_study.py --baseline-comparisons --name baseline-study --prepare
+~~~
+
+The following commands start calculations. Run one at a time and inspect its completion before the next:
+
+~~~powershell
+.\.venv\Scripts\python.exe runs\new_studies\baseline-study\workflow\cfd.py run --id ITER30
+.\.venv\Scripts\python.exe runs\new_studies\baseline-study\workflow\cfd.py run --id ITER60
+.\.venv\Scripts\python.exe runs\new_studies\baseline-study\workflow\cfd.py run --id T100
+.\.venv\Scripts\python.exe runs\new_studies\baseline-study\workflow\cfd.py run --id T200
+.\.venv\Scripts\python.exe runs\new_studies\baseline-study\workflow\cfd.py run --id T400
+~~~
+
+Each calculation reloads the same case/data pair at 0.010653 s. The iteration tests use the same timestep and 30/60 inner iterations. The temporal tests use T/100, T/200 and T/400 with 30 inner iterations. Three periods of settling precede the three-period averaging window. Native physical time and rotor coordinates are retained; no initialization or clock reset is applied.
+
+After the corresponding runs finish, execute compare_runs.py and temporal_analysis.py from that workspace using the original environment's Python. Use cfd.py resume --id RUN_ID after a controlled stop. Existing completed run directories are preserved.
 
 ## Recreate the mesh family
 
@@ -149,11 +174,14 @@ The journal is written into that new directory. The historical execute shortcut 
 
 ## Requirements and troubleshooting
 
-- A source-only clone supports integrity, saved status, tests and report inspection.
+- A source-only clone supports integrity, saved status, tests and the final PDF report.
 - Both native assets are required to regenerate the accepted monitor, wall and field analyses.
-- The independent-study helper prepares the supplied systematic meshes. Timestep/iteration comparisons and native animation capture require their respective configurations, as described above.
+- The independent-study helper prepares systematic-mesh or baseline-comparison workspaces. Native animation capture requires its dedicated configuration.
 - A missing archive or input is reported explicitly. Do not rename another checkpoint to satisfy it.
 - Import errors: use the same Python executable used for installation, then run python -m pip check.
 - Fluent launch/licence errors: confirm the installed 24.2 executable and 24-process entitlement. Do not connect to or stop another person's session.
-- Report tools: call workflow/compile_report.py --compiler PATH --pdftoppm PATH --render, or forward these options through workflow/cfd.py report. Explicit paths support tools installed outside PATH.
 - Native execution and the complete lock file target Windows/Python 3.12 and Fluent 2024 R2.
+
+## Record format and native identifiers
+
+Workflow messages and new metadata use English. Native Fluent zone/report identifiers retain their exact names. The aliases in config/legacy_schema.json allow the archived records to be read without changing their original bytes. config/path_aliases.json provides the corresponding historical path compatibility. These mappings do not alter physical or numerical settings.

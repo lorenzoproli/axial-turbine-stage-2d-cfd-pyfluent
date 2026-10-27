@@ -1,10 +1,11 @@
 """A compact operational run register; scientific results remain immutable."""
+from data_schema import csv, json
 from common import *
 
 REG = ROOT / 'runs/run_register.csv'
-FIELD_NAMES = {'processi': 'mpi_processes', 'iterazioni_per_passo': 'inner_iterations_per_step',
-    'celle_attive': 'active_cells', 'evidenza': 'evidence', 'prossima_attivita': 'next_activity',
-    'passi_completati': 'completed_steps', 'tempo_finale_s': 'physical_time_s', 'mesh': 'mesh'}
+FIELD_NAMES = {'mpi_processes': 'mpi_processes', 'inner_iterations_per_step': 'inner_iterations_per_step',
+    'active_cells': 'active_cells', 'evidence': 'evidence', 'next_activity': 'next_activity',
+    'completed_steps': 'completed_steps', 'final_time_s': 'physical_time_s', 'mesh': 'mesh'}
 
 
 def update_test(run_id, status, **values):

@@ -1,3 +1,4 @@
+from data_schema import csv, json
 from common import *
 import numpy as np
 from ansys.fluent.core.fields.field_data_interfaces import SurfaceFieldDataRequest, ScalarFieldDataRequest, SurfaceDataType
@@ -80,7 +81,7 @@ def render_snapshot(p, outdir, tag):
                 ax.add_collection(LineCollection(line, colors='#202020', linewidths=0.35))
         ax.set(xlim=(0.005, 0.402), ylim=(-0.095, 0.095), xlabel='Axial X [m]', ylabel='Tangential Y [m]')
         ax.set_aspect('equal')
-        ax.set_title(label + ' â€” fixed adapted mesh', loc='left', fontsize=12)
+        ax.set_title(label + ' — fixed-topology baseline mesh', loc='left', fontsize=12)
         ax.text(0.99, 1.035, f'Solution time: {t:.9f} s', transform=ax.transAxes, ha='right', va='bottom', fontsize=11, fontfamily='monospace')
         ax.text(0.015, 0.02, 'Stationary stator  |  Rotor Vy = -150 m/s  |  Periodic pitch: 0.04463756775 m', transform=ax.transAxes, fontsize=8, color='black', bbox={'facecolor': 'white', 'alpha': 0.85, 'edgecolor': 'none'})
         fig.colorbar(artist, ax=ax, shrink=0.85, label=label)
@@ -89,7 +90,7 @@ def render_snapshot(p, outdir, tag):
         plt.close(fig)
         files.append(str(target))
         saturation[field] = sum((int(np.sum((vals[field] < vmin) | (vals[field] > vmax))) for xyz, tri, vals in prepared))
-    jwrite(outdir / (tag + '_render.json'), dict(solution_time_s=t, camera=dict(xlim_m=[0.005, 0.402], ylim_m=[-0.095, 0.095], projection='XY_orthographic'), legende_fisse=limits, copie_periodiche=[-3, -2, -1, 0, 1, 2, 3], verifica_periodiche=str(AUDIT / 'periodicita_geometrica.csv'), nodal_interpolation=True, punti_fuori_legenda=saturation, files=files))
+    jwrite(outdir / (tag + '_render.json'), dict(solution_time_s=t, camera=dict(xlim_m=[0.005, 0.402], ylim_m=[-0.095, 0.095], projection='XY_orthographic'), fixed_legends=limits, periodic_copies=[-3, -2, -1, 0, 1, 2, 3], periodic_geometry_evidence=str(AUDIT / 'periodicita_geometrica.csv'), nodal_interpolation=True, nodes_outside_legend=saturation, files=files))
     return files
 if __name__ == '__main__':
     import sys

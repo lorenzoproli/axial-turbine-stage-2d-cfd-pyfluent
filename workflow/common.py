@@ -3,10 +3,11 @@
 Native Fluent zone/report identifiers and the numerical metadata schema are
 preserved. Importing this module does not create files or start applications.
 """
+from data_schema import csv, json
 from pathlib import Path
 from datetime import datetime, timezone
 from contextlib import contextmanager, ExitStack
-import csv, hashlib, json, os, re, shutil, time, uuid
+import hashlib, os, re, shutil, time, uuid
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_DIR = ROOT / 'config'
@@ -35,7 +36,7 @@ def _path_aliases():
     for source in sources:
         if not source.is_file():
             continue
-        value = json.loads(source.read_text(encoding='utf-8-sig'))
+        value = json.raw_loads(source.read_text(encoding='utf-8-sig'))
         if isinstance(value, dict):
             _COMPONENT_TOKENS.update(value.get('components', {}))
             _FILENAME_ALIASES.update(value.get('filenames', {}))

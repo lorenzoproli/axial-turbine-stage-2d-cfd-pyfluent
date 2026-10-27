@@ -31,13 +31,13 @@ The model is inherited from the native case and checked against saved settings. 
 
 ### Historical baseline
 
-The coherent historical case/data pair was saved at step 3,551 and physical time 0.010653 s. Its original timestep was approximately 3e-6 s. The 361,839 stored cells comprise 289,671 active cells and 72,168 inactive AMR parents.
+The coherent historical case/data pair was saved at step 3,551 and physical time 0.010653 s. Its original timestep was approximately 3e-6 s. The 361,839 stored cells comprise 289,671 active cells and 72,168 inactive parent cells.
 
-Earlier adaptation changed the original 73,167-cell topology. Deleting the automatic criterion did not reverse that change. Automatic adaptation was subsequently disabled; the retained adapted topology is a historical property, not evidence that AMR remained active.
+Automatic mesh adaptation is disabled in the reported calculations. The baseline is reused with fixed topology and is kept separate from the independently generated systematic mesh family.
 
-### Fixed adapted-mesh comparisons
+### Fixed-topology baseline-mesh comparisons
 
-ITER30 and ITER60 restart from a common checkpoint at the same physical time and rotor position, using 3e-6 s and 30/60 inner iterations. T100, T200 and T400 use `T/100`, `T/200` and `T/400`, respectively. The adapted mesh remains fixed in cell count while the rotor translates.
+ITER30 and ITER60 restart from a common checkpoint at the same physical time and rotor position, using 3e-6 s and 30/60 inner iterations. T100, T200 and T400 use `T/100`, `T/200` and `T/400`, respectively. The baseline mesh remains fixed in cell count while the rotor translates.
 
 Post-change settling is excluded from the final comparison interval. Comparisons use complete periods and matched rotor phase. The iteration result belongs to this mesh; it is not an independent iteration study for M3.
 

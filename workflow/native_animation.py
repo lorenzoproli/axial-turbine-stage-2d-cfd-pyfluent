@@ -1,4 +1,5 @@
 """Native Fluent PNG capture and native Playback MP4 export; no external rendering."""
+from data_schema import csv, json
 from common import *
 from pipeline import FLUIDS, WALLS
 from ansys.fluent.core.fields.field_data_interfaces import SurfaceFieldDataRequest, SurfaceDataType

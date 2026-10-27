@@ -1,4 +1,5 @@
 """Read-only comparison of baseline and systematic blade-wall geometry."""
+from data_schema import csv, json
 from common import *
 from pipeline import segments
 import numpy as np

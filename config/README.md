@@ -2,7 +2,7 @@
 
 | File | Purpose |
 |---|---|
-| `workflow_config.json` | Fluent version/precision, adapted-mesh comparisons, safety limits and common rendering settings |
+| `workflow_config.json` | Fluent version/precision, baseline-mesh comparisons, safety limits and common rendering settings |
 | `hybrid35_campaign_config.json` | Three systematic meshes, input hashes, original-position Hybrid setup, timestep and per-run duration |
 | `campaign_state.json` | Historical closed-campaign guard; independent work copies have their own explicit open state |
 | `native_animation_config.json` | Shared native scene, camera, periodic repeats and legend defaults; the M3 stream selects Mach-only capture |
@@ -14,3 +14,5 @@ Configuration and code are separate. Paths are relative to the repository root; 
 The run identifier `M2_HYBRID35` remains stable although M2 reached 40 periods. The actual accepted final step/time and the recorded duration take precedence over the identifier. No automatic extension is configured.
 
 The release_assets.json catalog gives the versioned native ZIP names, byte counts and SHA256 values. native_data_index.json declares the 1,054 payloads restored by the two assets. Independently prepared studies receive their own explicit open state; the historical root stays closed.
+
+legacy_schema.json maps historical record fields to the English workflow schema. display_labels.json provides readable names for native Fluent identifiers. Both mappings are included in independent workspaces.

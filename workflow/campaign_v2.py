@@ -1,4 +1,5 @@
 """Coherent native checkpoints, isolated monitor segments and strict restarts."""
+from data_schema import csv, json
 from common import *
 from pipeline import snapshot, FLUIDS
 from registry import update_test
@@ -35,7 +36,7 @@ def prepare(s, run_cfg):
     mass = float(computed[0]['massa_dominio'][0])
     assert mass > 0 and np.isfinite(mass)
     s.settings.file.auto_save.data_frequency = 0
-    dt = run_cfg['dt_s']
+    dt = run_cfg['timestep_s']
     iterations = run_cfg['max_iter']
     s.settings.solution.run_calculation.transient_controls.time_step_size = dt
     s.settings.solution.run_calculation.transient_controls.max_iter_per_time_step = iterations
@@ -46,7 +47,7 @@ def prepare(s, run_cfg):
     warm = run_cfg.get('warmup_periods', CONFIG['campaign']['warmup_periods'])
     avg = run_cfg.get('average_periods', CONFIG['campaign']['average_periods'])
     steps = int(np.ceil((warm + avg) * T / dt - 1e-10))
-    meta = dict(id=run_id, stato='preparata_non_avanzata', start_utc=now(), processi_attuali=24, initial_checkpoint=str(checkpoint), initial_checkpoint_sha256=sha(checkpoint), initial_data_sha256=sha(checkpoint.with_name(checkpoint.name.replace('.cas.h5', '.dat.h5'))), tempo_iniziale_s=t0, dt_s=dt, iterazioni_per_passo=iterations, criteri_arresto_residui=False, passi_pianificati=steps, passi_completati=0, assestamento_periodi=warm, media_periodi=avg, finestra_media_s=[t0 + warm * T, t0 + (warm + avg) * T], fase_iniziale_mod_T=t0 / T % 1, mesh=run_cfg.get('mesh', 'adattata_fissa'), celle_attive=expected_cells, massa_iniziale_kg=mass, campioni_per_periodo_finale=run_cfg.get('samples_per_period', 100 if run_id in ['T400', 'M3'] else 4), config=CONFIG, output_correnti=str(target), monitor_segments=[dict(directory=str(target), from_s=t0, to_s=None)])
+    meta = dict(id=run_id, status='PREPARED_NOT_ADVANCED', start_utc=now(), active_mpi_processes=24, initial_checkpoint=str(checkpoint), initial_checkpoint_sha256=sha(checkpoint), initial_data_sha256=sha(checkpoint.with_name(checkpoint.name.replace('.cas.h5', '.dat.h5'))), initial_time_s=t0, timestep_s=dt, inner_iterations_per_step=iterations, residual_stopping_enabled=False, planned_steps=steps, completed_steps=0, settling_periods=warm, averaging_periods=avg, averaging_window_s=[t0 + warm * T, t0 + (warm + avg) * T], initial_phase_mod_T=t0 / T % 1, mesh=run_cfg.get('mesh', 'baseline_fixed_topology'), active_cells=expected_cells, initial_mass_kg=mass, final_samples_per_period=run_cfg.get('samples_per_period', 100 if run_id in ['T400', 'M3'] else 4), config=CONFIG, current_output=str(target), monitor_segments=[dict(directory=str(target), from_s=t0, to_s=None)])
     meta.update(capture_periods=run_cfg.get('capture_periods', 1), native_animation_enabled=run_cfg.get('native_animation_enabled', True), capture_fields=run_cfg.get('capture_fields', ['mach-number', 'pressure']), max_run_hours=run_cfg.get('max_run_hours', CONFIG['safety']['max_run_hours']), initialization_method=run_cfg.get('initialization_method', 'Native checkpoint restart'))
     if run_cfg.get('native_mach_stream_configuration'):
         path = project_path(ROOT / run_cfg['native_mach_stream_configuration'])
@@ -59,7 +60,7 @@ def prepare(s, run_cfg):
     meta['git_revision'] = revision.stdout.strip() if revision is not None and revision.returncode == 0 else None
     meta['code_manifest'] = [dict(file=str(p.relative_to(ROOT)), sha256=sha(p)) for p in sorted(Path(__file__).parent.glob('*.py'))]
     meta['initial_checkpoint_relative'] = str(checkpoint.relative_to(ROOT))
-    meta['passo_globale_iniziale'] = int(s.scheme.eval("(rpgetvar 'time-step)"))
+    meta['initial_global_step'] = int(s.scheme.eval("(rpgetvar 'time-step)"))
     jwrite(target / 'progress.json', meta)
     print('CAMPAIGN_PREPARED', run_id, steps, 'mass_kg=', mass, flush=True)
     return (target, meta)
@@ -67,18 +68,18 @@ def prepare(s, run_cfg):
 def advance(s, target, meta):
     from cfd import ensure_campaign_open
     ensure_campaign_open()
-    output = project_path(meta.get('output_correnti', target))
+    output = project_path(meta.get('current_output', target))
     start_wall = time.monotonic()
-    done = meta['passi_completati']
-    total = meta['passi_pianificati']
-    dt = meta['dt_s']
-    iterations = meta['iterazioni_per_passo']
-    t0 = meta['tempo_iniziale_s']
-    reason = 'limite_passi_raggiunto'
-    meta['stato'] = 'in_corso_24_processi'
+    done = meta['completed_steps']
+    total = meta['planned_steps']
+    dt = meta['timestep_s']
+    iterations = meta['inner_iterations_per_step']
+    t0 = meta['initial_time_s']
+    reason = 'step_limit_reached'
+    meta['status'] = 'RUNNING_24_MPI'
     jwrite(target / 'progress.json', meta)
-    update_test(meta['id'], meta['stato'], processi=24, dt_s=dt, iterazioni_per_passo=iterations, celle_attive=meta['celle_attive'], mesh=meta['mesh'], evidenza=str(target / 'progress.json'), prossima_attivita='Completare la finestra e verificare le statistiche')
-    append_status(f'{meta['id']} running with 24 MPI processes: dt={dt:.12g} s, {iterations} inner iterations/step, target {total} steps. {meta['assestamento_periodi']} periods excluded; {meta['media_periodi']} complete periods used for statistics. Restart preserves physical time and the moving mesh.')
+    update_test(meta['id'], meta['status'], mpi_processes=24, timestep_s=dt, inner_iterations_per_step=iterations, active_cells=meta['active_cells'], mesh=meta['mesh'], evidence=str(target / 'progress.json'), next_activity='Complete the averaging window and assess its statistics')
+    append_status(f'{meta['id']} running with 24 MPI processes: dt={dt:.12g} s, {iterations} inner iterations/step, target {total} steps. {meta['settling_periods']} periods excluded; {meta['averaging_periods']} complete periods used for statistics. Restart preserves physical time and the moving mesh.')
     next_checkpoint = int(np.ceil(done * dt / T + 1 - 1e-10))
     from solution_exports import capture
     capture_steps = []
@@ -86,8 +87,8 @@ def advance(s, target, meta):
     if base_id in ['T100', 'T200', 'T400', 'M1', 'M2', 'M3']:
         per_period = int(round(T / dt))
         assert abs(per_period * dt - T) < 1e-14
-        start_cycle = (meta['assestamento_periodi'] + meta['media_periodi'] - 1) * per_period
-        samples = meta.get('campioni_per_periodo_finale', 100 if meta['id'] == 'T400' else 4)
+        start_cycle = (meta['settling_periods'] + meta['averaging_periods'] - 1) * per_period
+        samples = meta.get('final_samples_per_period', 100 if meta['id'] == 'T400' else 4)
         stride = per_period // samples
         assert stride > 0 and per_period % stride == 0
         capture_steps = list(range(start_cycle, start_cycle + per_period + 1, stride))
@@ -103,7 +104,7 @@ def advance(s, target, meta):
     stream_settings = meta.get('native_mach_stream_settings')
     if base_id in ['M2', 'M3'] and meta.get('native_animation_enabled', True) and (not stream_settings):
         from native_animation import capture_native, playback_export
-        periods = meta['assestamento_periodi'] + meta['media_periodi']
+        periods = meta['settling_periods'] + meta['averaging_periods']
         native_directory = project_path(ROOT / '07_animazioni/campagna_mesh_sistematiche' / meta['id'] / 'native_fluent' / f'period_{periods:02d}_{output.name}')
         meta['native_animation_directory'] = str(native_directory)
     try:
@@ -118,10 +119,10 @@ def advance(s, target, meta):
                 jwrite(target / 'progress.json', meta)
         while done < total:
             if shutil.disk_usage(ROOT).free < CONFIG['safety']['min_free_disk_GiB'] * 1024 ** 3:
-                reason = 'spazio_insufficiente'
+                reason = 'insufficient_disk_space'
                 break
             if time.monotonic() - start_wall > meta.get('max_run_hours', CONFIG['safety']['max_run_hours']) * 3600:
-                reason = 'limite_durata'
+                reason = 'runtime_limit'
                 break
             future_captures = [n for n in capture_steps if n > done]
             batch = min(CONFIG['campaign']['batch_steps'], total - done, min(future_captures) - done if future_captures else total - done)
@@ -131,7 +132,7 @@ def advance(s, target, meta):
             done += batch
             current = float(s.scheme.eval("(rpgetvar 'flow-time)"))
             assert abs(current - (t0 + done * dt)) < 1e-10
-            health = dict(utc=now(), time_s=current, passi_completati=done, processi=24, celle_attive=int(s.fields.reduction.count(locations=FLUIDS)))
+            health = dict(utc=now(), time_s=current, completed_steps=done, mpi_processes=24, active_cells=int(s.fields.reduction.count(locations=FLUIDS)))
             bad = []
             for field in ['density', 'temperature', 'pressure', 'mach-number']:
                 vals = s.fields.field_data.get_field_data(ScalarFieldDataRequest(surfaces=FLUIDS, field_name=field, node_value=False))
@@ -140,25 +141,25 @@ def advance(s, target, meta):
                 finite = all((np.isfinite(v).all() for v in vals.values()))
                 health[field] = dict(min=low, max=high, finite=bool(finite))
                 if not finite:
-                    bad.append(field + '_non_finito')
+                    bad.append(field + '_non_finite')
                 if field in ['density', 'temperature', 'pressure'] and low <= 0:
-                    bad.append(field + '_non_positivo')
+                    bad.append(field + '_non_positive')
                 if field == 'mach-number' and high > CONFIG['safety']['max_mach_diagnostic']:
                     bad.append('Mach_oltre_soglia_diagnostica')
-            if health['celle_attive'] != meta['celle_attive']:
-                bad.append('numero_celle_variato')
+            if health['active_cells'] != meta['active_cells']:
+                bad.append('active_cell_count_changed')
             if s.scheme.eval("(rpgetvar 'adapt/dynamic?)"):
-                bad.append('AMR_attivato')
+                bad.append('automatic_adaptation_enabled')
             with (output / 'health_checks.jsonl').open('a', encoding='utf-8') as f:
                 f.write(json.dumps(health) + '\n')
-            meta.update(passi_completati=done, tempo_corrente_s=current, wall_seconds=time.monotonic() - start_wall, updated_utc=now(), ultimo_health=health)
+            meta.update(completed_steps=done, current_time_s=current, wall_seconds=time.monotonic() - start_wall, updated_utc=now(), latest_health=health)
             if done in capture_steps:
                 frame = capture(s, output / 'campi_in_fase', f'step_{done:05d}', fields=meta.get('capture_fields', ['mach-number', 'pressure']))
                 if native_directory is not None and mach_stream is None and (done >= start_cycle):
                     native = capture_native(s, native_directory, f'step_{done:05d}', frame)
                     native_records.append(native)
                     frame['native_png_manifest'] = str(native_directory / f'step_{done:05d}_native_manifest.json')
-                frame['passi_completati'] = done
+                frame['completed_steps'] = done
                 meta['captures'].append(frame)
                 print('PHASE_CAPTURE_SAVED', meta['id'], done, f'{current:.12f}', flush=True)
             if mach_stream is not None and done % stream_settings['CFD_steps_between_frames'] == 0:
@@ -171,21 +172,21 @@ def advance(s, target, meta):
                 cp = output / 'checkpoints' / f'periodo_{next_checkpoint:02d}_step_{done:05d}'
                 cp.parent.mkdir(exist_ok=True)
                 s.settings.file.write_case_data(file_name=str(cp) + '.cas.h5')
-                meta['ultimo_checkpoint'] = file_manifest(sorted(cp.parent.glob(cp.name + '.*.h5')))
-                jwrite(cp.parent / (cp.name + '_manifest.json'), meta['ultimo_checkpoint'])
+                meta['latest_checkpoint'] = file_manifest(sorted(cp.parent.glob(cp.name + '.*.h5')))
+                jwrite(cp.parent / (cp.name + '_manifest.json'), meta['latest_checkpoint'])
                 jwrite(target / 'progress.json', meta)
                 next_checkpoint += 1
             if bad:
-                reason = 'arresto_diagnostico:' + ','.join(bad)
+                reason = 'diagnostic_stop:' + ','.join(bad)
                 break
             if (WORK / 'STOP_AFTER_BATCH.txt').exists():
-                reason = 'richiesta_controllo'
+                reason = 'controlled_stop_requested'
                 break
         if done > 0:
             final = output / 'final.cas.h5'
             assert not final.exists()
             s.settings.file.write_case_data(file_name=str(final))
-            meta['manifest_finale'] = file_manifest(sorted(output.glob('final.*.h5')))
+            meta['final_manifest'] = file_manifest(sorted(output.glob('final.*.h5')))
             if done == total:
                 meta['final_fields'] = snapshot(s, output / 'final_fields.npz')
                 if mach_stream is not None:
@@ -196,16 +197,16 @@ def advance(s, target, meta):
                     else:
                         meta['native_playback'] = stream_playback(s, native_directory, meta.get('native_playback_run_id', meta['id']), records)
                 elif native_directory is not None:
-                    native_records = [json.loads(project_path(frame['native_png_manifest']).read_text()) for frame in meta['captures'] if frame.get('passi_completati', -1) >= start_cycle and frame.get('native_png_manifest')]
+                    native_records = [json.loads(project_path(frame['native_png_manifest']).read_text()) for frame in meta['captures'] if frame.get('completed_steps', -1) >= start_cycle and frame.get('native_png_manifest')]
                     meta['native_playback'] = playback_export(s, native_directory, meta['id'], native_records)
-        meta.update(stato='calcolo_completato_statistiche_da_verificare' if done == total else 'arrestata_con_checkpoint', motivo_arresto=reason, fine_utc=now(), wall_seconds=time.monotonic() - start_wall)
+        meta.update(status='COMPLETED_ASSESSMENT_PENDING' if done == total else 'STOPPED_WITH_CHECKPOINT', stop_reason=reason, end_utc=now(), wall_seconds=time.monotonic() - start_wall)
         jwrite(target / 'progress.json', meta)
-        update_test(meta['id'], meta['stato'], passi_completati=done, tempo_finale_s=meta.get('tempo_corrente_s'), evidenza=str(target / 'progress.json'))
-        append_status(f'{meta['id']}: {meta['stato']}, {done}/{total} passi. Motivo: {reason}. Coppia finale verificata SHA256; controlli statistici successivi necessari.')
-        print('CAMPAIGN_SAVED', meta['id'], meta['stato'], flush=True)
+        update_test(meta['id'], meta['status'], completed_steps=done, final_time_s=meta.get('current_time_s'), evidence=str(target / 'progress.json'))
+        append_status(f'{meta['id']}: {meta['status']}, {done}/{total} steps. Motivo: {reason}. Final pair indexed by SHA256; statistical assessment follows.')
+        print('CAMPAIGN_SAVED', meta['id'], meta['status'], flush=True)
         return meta
     except Exception as e:
-        meta.update(stato='fallita', errore=repr(e), traceback=traceback.format_exc(), fine_utc=now(), motivo_arresto='technical_error:' + repr(e))
+        meta.update(status='FAILED', error=repr(e), traceback=traceback.format_exc(), end_utc=now(), stop_reason='technical_error:' + repr(e))
         try:
             if done > 0:
                 actual = float(s.scheme.eval("(rpgetvar 'flow-time)"))
@@ -215,13 +216,13 @@ def advance(s, target, meta):
                 s.settings.file.write_case_data(file_name=str(cp) + '.cas.h5')
                 checkpoint = file_manifest(sorted(cp.parent.glob(cp.name + '.*.h5')))
                 assert len(checkpoint) == 2
-                meta['ultimo_checkpoint'] = checkpoint
+                meta['latest_checkpoint'] = checkpoint
                 meta['failure_checkpoint_saved'] = True
                 jwrite(cp.parent / (cp.name + '_manifest.json'), checkpoint)
         except Exception as checkpoint_error:
             meta['failure_checkpoint_error'] = repr(checkpoint_error)
         jwrite(target / 'progress.json', meta)
-        update_test(meta['id'], 'fallita', evidenza=str(target / 'progress.json'))
+        update_test(meta['id'], 'FAILED', evidence=str(target / 'progress.json'))
         raise
 
 def resume(s, run_id):
@@ -229,10 +230,10 @@ def resume(s, run_id):
     ensure_campaign_open()
     target = case_directory(run_id)
     meta = json.loads((target / 'progress.json').read_text())
-    restartable = ['fallita', 'arrestata_con_checkpoint', 'interrotta_checkpoint_disponibile', 'in_corso_24_processi', 'ready_for_extension', 'pronta_estensione_autorizzata']
-    if meta['stato'] not in restartable:
+    restartable = ['FAILED', 'STOPPED_WITH_CHECKPOINT', 'INTERRUPTED_CHECKPOINT_AVAILABLE', 'RUNNING_24_MPI', 'ready_for_extension', 'READY_FOR_AUTHORISED_EXTENSION']
+    if meta['status'] not in restartable:
         raise RuntimeError('The saved run is not in a restartable state.')
-    candidates = meta.get('manifest_finale') if meta['stato'] in ['arrestata_con_checkpoint', 'ready_for_extension', 'pronta_estensione_autorizzata'] else meta.get('ultimo_checkpoint')
+    candidates = meta.get('final_manifest') if meta['status'] in ['STOPPED_WITH_CHECKPOINT', 'ready_for_extension', 'READY_FOR_AUTHORISED_EXTENSION'] else meta.get('latest_checkpoint')
     if not candidates:
         raise RuntimeError('No verified checkpoint is available.')
     for f in candidates:
@@ -242,15 +243,15 @@ def resume(s, run_id):
     cas = next((project_path(f['file']) for f in candidates if f['file'].endswith('.cas.h5')))
     s.settings.file.read_case_data(file_name=str(cas))
     current = float(s.scheme.eval("(rpgetvar 'flow-time)"))
-    done = int(round((current - meta['tempo_iniziale_s']) / meta['dt_s']))
-    assert abs(current - (meta['tempo_iniziale_s'] + done * meta['dt_s'])) < 1e-10
+    done = int(round((current - meta['initial_time_s']) / meta['timestep_s']))
+    assert abs(current - (meta['initial_time_s'] + done * meta['timestep_s'])) < 1e-10
     verification = None
     if run_id.endswith('_HYBRID35'):
         from verify_campaign_restart import verify
         verification = verify(s, target, meta, cas, current, done)
     segment = target / 'segments' / datetime.now().strftime('%Y%m%d_%H%M%S_%f')
     segment.mkdir(parents=True)
-    segments = meta.setdefault('monitor_segments', [dict(directory=str(target), from_s=meta['tempo_iniziale_s'], to_s=None)])
+    segments = meta.setdefault('monitor_segments', [dict(directory=str(target), from_s=meta['initial_time_s'], to_s=None)])
     segments[-1]['to_s'] = current
     segments.append(dict(directory=str(segment), from_s=current, to_s=None, checkpoint=str(cas), sha256=sha(cas)))
     for name in s.settings.solution.monitor.report_files.get_object_names():
@@ -260,10 +261,10 @@ def resume(s, run_id):
     if verification is not None:
         jwrite(segment / 'restart_verified_before_advance.json', verification)
         meta.setdefault('verified_restarts', []).append(str(segment / 'restart_verified_before_advance.json'))
-    meta.update(passi_completati=done, tempo_corrente_s=current, output_correnti=str(segment), ripresa_utc=now(), processi_attuali=24)
-    if meta.get('errore'):
-        meta.setdefault('previous_failures', []).append({k: meta.get(k) for k in ['errore', 'traceback', 'fine_utc', 'motivo_arresto']})
-    for key in ['errore', 'traceback', 'fine_utc', 'motivo_arresto', 'ultimo_health', 'manifest_finale']:
+    meta.update(completed_steps=done, current_time_s=current, current_output=str(segment), resumed_utc=now(), active_mpi_processes=24)
+    if meta.get('error'):
+        meta.setdefault('previous_failures', []).append({k: meta.get(k) for k in ['error', 'traceback', 'end_utc', 'stop_reason']})
+    for key in ['error', 'traceback', 'end_utc', 'stop_reason', 'latest_health', 'final_manifest']:
         meta.pop(key, None)
     meta['restart_source_manifest'] = candidates
     meta.setdefault('resume_code_manifests', []).append(dict(utc=now(), segment=str(segment), files=[dict(file=str(p.relative_to(ROOT)), sha256=sha(p)) for p in sorted(Path(__file__).parent.glob('*.py'))]))

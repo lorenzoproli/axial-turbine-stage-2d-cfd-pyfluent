@@ -1,4 +1,5 @@
 """Compare loaded blade geometry with coordinates in the saved native HDF5 case."""
+from data_schema import csv, json
 from common import *
 from pipeline import WALLS
 from ansys.fluent.core.fields.field_data_interfaces import SurfaceFieldDataRequest, SurfaceDataType
@@ -39,6 +40,6 @@ def verify_loaded_geometry(s, case):
         source = saved_wall_coordinates(case, wall)
         loaded = np.unique(data[wall].vertices[:, :2].astype(float), axis=0)
         error = max(cKDTree(source).query(loaded)[0].max(), cKDTree(loaded).query(source)[0].max())
-        assert len(source) == len(loaded) and error < 1e-07, 'Geometria del restart diversa dal case salvato'
-        rows.append(dict(wall=wall, nodi_fisici=len(source), errore_massimo_m=float(error), min_xy_salvato_m=source.min(axis=0).tolist(), max_xy_salvato_m=source.max(axis=0).tolist()))
+        assert len(source) == len(loaded) and error < 1e-07, 'Restart geometry differs from the saved case'
+        rows.append(dict(wall=wall, physical_nodes=len(source), maximum_error_m=float(error), saved_min_xy_m=source.min(axis=0).tolist(), saved_max_xy_m=source.max(axis=0).tolist()))
     return rows

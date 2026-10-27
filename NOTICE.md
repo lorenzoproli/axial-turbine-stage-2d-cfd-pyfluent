@@ -8,7 +8,7 @@ Original Python code in `workflow/`, `tools/` and `tests/`, original workflow co
 
 ## Original publication content: CC BY 4.0
 
-Original report text and LaTeX sources, explanatory documentation, figures, selected numerical tables and the supplied movie are licensed under [Creative Commons Attribution 4.0 International](LICENSE-CONTENT), to the extent of the rights held by the project author. Credit Lorenzo Proli, link to the repository and licence, and identify modifications as required by that licence.
+Original report text, explanatory documentation, figures, selected numerical tables and the supplied movie are licensed under [Creative Commons Attribution 4.0 International](LICENSE-CONTENT), to the extent of the rights held by the project author. Credit Lorenzo Proli, link to the repository and licence, and identify modifications as required by that licence.
 
 The licences apply to different material; they are not an option to relicense every file under either licence. The [licensing guide](docs/licensing.md) records the scope and exceptions.
 

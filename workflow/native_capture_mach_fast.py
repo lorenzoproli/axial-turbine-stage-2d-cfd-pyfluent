@@ -4,6 +4,7 @@ Reset after every case/data reload. A saved view reduces repeated camera calls;
 every frame refreshes the actual contour and validates the colour-bar geometry.
 The production stream performs separate moving-field and restart preflight.
 """
+from data_schema import csv, json
 from common import *
 from native_animation import configure, periodic_settings
 from legend_geometry import colour_bar_rectangle

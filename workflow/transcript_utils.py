@@ -1,4 +1,5 @@
 """Release only transcript handles owned by the current PyFluent session."""
+from data_schema import csv, json
 from common import WORK, ROOT
 from pathlib import Path
 import gc

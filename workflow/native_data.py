@@ -1,8 +1,8 @@
 """Verify and install versioned native-data assets without starting Fluent."""
+from data_schema import csv, json
 from pathlib import Path
 import argparse
 import hashlib
-import json
 import shutil
 import zipfile
 

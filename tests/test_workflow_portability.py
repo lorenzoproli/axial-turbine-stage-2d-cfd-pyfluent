@@ -11,7 +11,8 @@ class PortableWorkflowTests(unittest.TestCase):
         self.checkout = Path(self.temporary.name)
         (self.checkout / 'workflow').mkdir()
         (self.checkout / 'config').mkdir()
-        for filename in ['common.py', 'cfd.py', 'monitor_paths.py', 'run_hybrid35_campaign.py']:
+        shutil.copy2(WORKFLOW.parent / 'config/legacy_schema.json', self.checkout / 'config/legacy_schema.json')
+        for filename in ['common.py', 'cfd.py', 'monitor_paths.py', 'run_hybrid35_campaign.py', 'data_schema.py']:
             shutil.copy2(WORKFLOW / filename, self.checkout / 'workflow' / filename)
         aliases = {'mapping': {'03_simulazioni/caso': 'runs/example',
                               '03_simulazioni/caso/checkpoint_comune': 'inputs/common_checkpoint',

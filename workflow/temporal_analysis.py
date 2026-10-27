@@ -1,3 +1,4 @@
+from data_schema import csv, json
 from common import *
 from english_labels import install
 install()
@@ -8,61 +9,61 @@ import numpy as np
 def analyse_temporal():
     runs = ['T100', 'T200', 'T400']
     base = project_path(ROOT / '05_postprocessing/campagna')
-    summaries = {r: json.loads((base / r / 'analisi.json').read_text()) for r in runs}
-    assert all((s['periodicita_monitor_entro_criteri_proposti'] for s in summaries.values()))
-    assert all((np.allclose(summaries[r]['finestra_s'], summaries['T400']['finestra_s'], rtol=0, atol=1e-13) for r in runs))
+    summaries = {r: json.loads((base / r / 'analysis.json').read_text()) for r in runs}
+    assert all((s['monitor_periodicity_within_proposed_criteria'] for s in summaries.values()))
+    assert all((np.allclose(summaries[r]['window_s'], summaries['T400']['window_s'], rtol=0, atol=1e-13) for r in runs))
     profiles = {r: phase_profiles(r) for r in runs}
     rows = []
     stats = []
     for r in runs:
-        stats += summaries[r]['statistiche']
+        stats += summaries[r]['statistics']
     for left, right in zip(runs, runs[1:]):
-        for x, y in zip(summaries[left]['statistiche'], summaries[right]['statistiche']):
+        for x, y in zip(summaries[left]['statistics'], summaries[right]['statistics']):
             assert x['monitor'] == y['monitor']
             n = x['monitor']
-            amp = y['ampiezza_picco_picco_media_cicli']
-            rows.append(dict(monitor=n, da_prova=left, a_prova=right, differenza_media_percento=100 * abs(x['media'] - y['media']) / abs(y['media']), differenza_ampiezza_percento=100 * abs(x['ampiezza_picco_picco_media_cicli'] - amp) / amp, rms_fase_percento_ampiezza=100 * float(np.sqrt(np.mean((profiles[left][n] - profiles[right][n]) ** 2))) / amp))
+            amp = y['mean_cycle_peak_to_peak']
+            rows.append(dict(monitor=n, from_run=left, to_run=right, mean_difference_percent=100 * abs(x['mean'] - y['mean']) / abs(y['mean']), amplitude_difference_percent=100 * abs(x['mean_cycle_peak_to_peak'] - amp) / amp, phase_rms_percent_of_amplitude=100 * float(np.sqrt(np.mean((profiles[left][n] - profiles[right][n]) ** 2))) / amp))
     out = base / 'convergenza_temporale'
     csvwrite(out / 'confronti_temporali.csv', rows)
     csvwrite(out / 'statistiche_comparate.csv', stats)
-    iteration = json.loads((base / 'confronto_iterazioni/esito.json').read_text())
-    floors = {r['monitor']: r for r in iteration['confronti']}
-    flags = [dict(monitor=r['monitor'], confronto=r['da_prova'] + '-' + r['a_prova'], variazione_temporale_media_percento=r['differenza_media_percento'], sensibilita_iterativa_media_percento=floors[r['monitor']]['differenza_media_percento'], variazione_temporale_inferiore_a_sensibilita_iterativa=r['differenza_media_percento'] < floors[r['monitor']]['differenza_media_percento']) for r in rows]
+    iteration = json.loads(project_path(ROOT / 'runs/analysis/sensitivity/inner_iterations/assessment.json').read_text())
+    floors = {r['monitor']: r for r in iteration['comparisons']}
+    flags = [dict(monitor=r['monitor'], comparison=r['from_run'] + '-' + r['to_run'], temporal_mean_difference_percent=r['mean_difference_percent'], inner_iteration_mean_difference_percent=floors[r['monitor']]['mean_difference_percent'], temporal_mean_below_iteration_difference=r['mean_difference_percent'] < floors[r['monitor']]['mean_difference_percent']) for r in rows]
     for flag, r in zip(flags, rows):
         n = r['monitor']
-        cyclic = [v for rid in [r['da_prova'], r['a_prova']] for v in summaries[rid]['confronti_cicli'] if v['monitor'] == n]
-        flag.update(variazione_ciclica_media_max_percento=max((v['variazione_media_percento'] for v in cyclic)), variazione_ciclica_ampiezza_max_percento=max((v['variazione_ampiezza_percento'] for v in cyclic)), sensibilita_iterativa_ampiezza_percento=floors[n]['differenza_ampiezza_percento'], sensibilita_iterativa_rms_fase_percento_ampiezza=floors[n]['rms_profilo_fase_percento_ampiezza'], variazione_temporale_media_inferiore_a_variabilita_ciclica=r['differenza_media_percento'] < max((v['variazione_media_percento'] for v in cyclic)), variazione_temporale_ampiezza_inferiore_a_sensibilita_iterativa=r['differenza_ampiezza_percento'] < floors[n]['differenza_ampiezza_percento'])
+        cyclic = [v for rid in [r['from_run'], r['to_run']] for v in summaries[rid]['cycle_comparisons'] if v['monitor'] == n]
+        flag.update(maximum_cycle_mean_change_percent=max((v['mean_change_percent'] for v in cyclic)), maximum_cycle_amplitude_change_percent=max((v['amplitude_change_percent'] for v in cyclic)), inner_iteration_amplitude_difference_percent=floors[n]['amplitude_difference_percent'], inner_iteration_phase_rms_percent_of_amplitude=floors[n]['phase_rms_percent_of_amplitude'], temporal_mean_below_cycle_variability=r['mean_difference_percent'] < max((v['mean_change_percent'] for v in cyclic)), temporal_amplitude_below_iteration_difference=r['amplitude_difference_percent'] < floors[n]['amplitude_difference_percent'])
     csvwrite(out / 'controllo_errore_iterativo_vs_temporale.csv', flags)
-    result = dict(utc=now(), stato='CONFRONTI_ESEGUITI_INTERPRETAZIONE_E_ACCETTAZIONE_DA_COMPLETARE', finestra_s=summaries['T400']['finestra_s'], confronti=rows, controllo_errore_iterativo=flags, ordine_osservato=None, GCI=None, nota='Tre cicli per run; interpolazione lineare per il confronto in fase. Nessun ordine/GCI attribuito automaticamente. Variazioni fra cicli e sensibilita iterativa da confrontare con le differenze di timestep.')
-    jwrite(out / 'esito.json', result)
-    fine = [r for r in rows if r['a_prova'] == 'T400']
-    accepted = all((r['differenza_media_percento'] <= 0.1 and r['differenza_ampiezza_percento'] <= 2 and (r['rms_fase_percento_ampiezza'] <= 2) for r in fine))
-    result['decisione'] = dict(criteri_operativi_proposti=dict(medie_percento=0.1, ampiezze_percento=2, rms_fase_percento_ampiezza=2), T200_T400_entro_criteri=accepted, timestep_spaziale_s=T / (200 if accepted else 400), iterazioni=30, motivazione='T200 se le differenze rispetto a T400 rientrano nei criteri operativi; altrimenti il piu fine T400 resta il candidato da verificare. Non equivale a una stima asintotica dell errore.', limite='Le differenze inferiori alla sensibilita interna o alla variabilita ciclica non consentono un ordine affidabile. La scelta e operativa entro le scale osservate; nessuna dichiarazione di errore nullo.')
-    result['stato'] = 'SENSIBILITA_TEMPORALE_MISURATA_SCELTA_OPERATIVA_DOCUMENTATA'
-    jwrite(out / 'esito.json', result)
+    result = dict(utc=now(), status='COMPARISONS_COMPLETE_INTERPRETATION_PENDING', window_s=summaries['T400']['window_s'], comparisons=rows, inner_iteration_error_control=flags, observed_order=None, GCI=None, note='Three cycles per run with linear interpolation for phase comparison. Compare cycle variability and inner-iteration sensitivity with timestep differences; no automatic order or GCI is assigned.')
+    jwrite(out / 'assessment.json', result)
+    fine = [r for r in rows if r['to_run'] == 'T400']
+    accepted = all((r['mean_difference_percent'] <= 0.1 and r['amplitude_difference_percent'] <= 2 and (r['phase_rms_percent_of_amplitude'] <= 2) for r in fine))
+    result['decision'] = dict(proposed_operational_criteria=dict(means_percent=0.1, amplitudes_percent=2, phase_rms_percent_of_amplitude=2), T200_T400_within_criteria=accepted, spatial_study_timestep_s=T / (200 if accepted else 400), iterations=30, reason='Use T200 only if comparison with T400 meets the operational criteria; otherwise retain T400 as the finest tested setting. This is not an asymptotic error estimate.', limit='Differences below inner-iteration sensitivity or cycle variability do not support a reliable order. The operational choice applies to the observed scales.')
+    result['status'] = 'TEMPORAL_SENSITIVITY_RECORDED_OPERATIONAL_CHOICE_DOCUMENTED'
+    jwrite(out / 'assessment.json', result)
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
-    figdir = project_path(ROOT / '06_figure/campagna/convergenza_temporale')
+    figdir = project_path(ROOT / 'results/figures/generated/campaign/timestep')
     figdir.mkdir(parents=True, exist_ok=True)
-    names = [r['monitor'] for r in summaries['T400']['statistiche']]
-    for key, label, filename in [('media', 'Media', 'medie_vs_timestep.png'), ('ampiezza_picco_picco_media_cicli', 'Ampiezza picco-picco', 'ampiezze_vs_timestep.png')]:
+    names = [r['monitor'] for r in summaries['T400']['statistics']]
+    for key, label, filename in [('mean', 'Mean', 'medie_vs_timestep.png'), ('mean_cycle_peak_to_peak', 'Peak-to-peak amplitude', 'ampiezze_vs_timestep.png')]:
         fig, axs = plt.subplots(2, 2, figsize=(12.8, 7.2), layout='constrained')
         for ax, name in zip(axs.flat, names):
-            selected = [next((v for v in summaries[r]['statistiche'] if v['monitor'] == name)) for r in runs]
+            selected = [next((v for v in summaries[r]['statistics'] if v['monitor'] == name)) for r in runs]
             ax.plot([100, 200, 400], [v[key] for v in selected], '-o', color='#155b7d')
             ax.set_xscale('log', base=2)
             ax.set_xticks([100, 200, 400], labels=['T/100', 'T/200', 'T/400'])
-            ax.set(ylabel=label + ' [' + selected[0]['unita'] + ']', title=name)
+            ax.set(ylabel=label + ' [' + selected[0]['unit'] + ']', title=name)
             ax.grid(alpha=0.2)
-        fig.suptitle('Mesh adattata fissa: finestre equivalenti di tre periodi dopo assestamento')
+        fig.suptitle('Baseline mesh: equivalent three-period windows after settling')
         fig.savefig(figdir / filename, dpi=150)
         plt.close(fig)
     fig, axs = plt.subplots(2, 2, figsize=(12.8, 7.2), layout='constrained')
     for ax, name in zip(axs.flat, names):
         for rid in runs:
             ax.plot(np.linspace(0, 1, len(profiles[rid][name])), profiles[rid][name], label=rid, lw=1)
-        ax.set(xlabel='Fase relativa della finestra [-]', title=name)
+        ax.set(xlabel='Phase from window start [-]', title=name)
         ax.grid(alpha=0.2)
         ax.legend()
     fig.savefig(figdir / 'profili_in_fase_temporali.png', dpi=150)
@@ -72,7 +73,7 @@ def analyse_temporal():
     compare_available()
     for rid in runs:
         analyse_wall_cycle(rid)
-    append_status(f'Campagna T100/T200/T400 eseguita e confrontata su finestre equivalenti e tre periodi completi. Tabelle di medie/ampiezze/RMS di fase, variabilita fra cicli, sensibilita iterativa, campi alla stessa fase e pressione/y+ nel ciclo disponibili. T200/T400 entro criteri operativi proposti: {accepted}; dt candidato spaziale {result['decisione']['timestep_spaziale_s']:.12g} s. Nessun ordine/GCI o errore nullo attribuito: limiti di risolvibilita documentati.')
+    append_status(f'T100/T200/T400 compared over equivalent three-period windows. Means, amplitudes, phase RMS, cycle variability, iterative sensitivity and wall data are available. T200/T400 within the proposed criteria: {accepted}; spatial-study timestep {result['decision']['spatial_study_timestep_s']:.12g} s. No observed order, GCI or zero-error claim is assigned.')
     print('TEMPORAL_COMPARISONS_READY', json.dumps(rows), flush=True)
     return result
 if __name__ == '__main__':

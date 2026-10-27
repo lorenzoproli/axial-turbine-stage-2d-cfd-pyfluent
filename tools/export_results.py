@@ -5,9 +5,7 @@ statistics, and checks mesh-quality quantiles against the native arrays.
 It neither starts Fluent nor changes figures, movies or native input records.
 """
 from pathlib import Path
-import csv
 import hashlib
-import json
 import math
 import sys
 
@@ -15,6 +13,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'workflow'))
+from data_schema import csv, json
 from common import project_path  # portable resolution of native record paths
 
 T = 2.97583785e-4
@@ -24,52 +23,52 @@ MONITORS = {'forza_y_rotore': ('rotor_tangential_force', 'N'),
             'mdot_outlet': ('outlet_mass_flow', 'kg/s'),
             'pt_outlet': ('outlet_total_pressure', 'Pa')}
 HEADERS = {
-    'prova': 'run_id', 'ciclo': 'window_cycle_index', 'ciclo_finestra': 'window_cycle_index',
-    'inizio_s': 'start_time_s', 'fine_s': 'end_time_s', 'dt_s': 'timestep_s',
-    'iterazioni_per_passo': 'inner_iterations', 'media': 'mean', 'minimo': 'minimum',
-    'massimo': 'maximum', 'ampiezza_picco_picco': 'peak_to_peak',
-    'ampiezza_picco_picco_media_cicli': 'mean_cycle_peak_to_peak', 'unita': 'unit',
-    'da_ciclo': 'from_window_cycle_index', 'a_ciclo': 'to_window_cycle_index',
-    'variazione_media_percento': 'mean_change_percent',
-    'variazione_ampiezza_percento': 'amplitude_change_percent',
-    'rms_fase_percento_ampiezza': 'phase_rms_percent_of_amplitude',
-    'fase_relativa': 'phase_fraction', 'tempo_s': 'physical_time_s', 'valore': 'value',
-    'netto_kg_s': 'net_inward_flow_kg_s', 'sbilanciamento_percento': 'net_flow_percent_of_inlet',
-    'massa_netta_integrata_kg': 'integrated_net_inward_mass_kg',
-    'massa_entrante_netta_integrata_kg': 'integrated_net_inward_mass_kg',
-    'variazione_massa_dominio_kg': 'domain_mass_change_kg',
-    'difetto_integrale_kg': 'integral_mass_defect_kg',
-    'errore_integrale_percento': 'integral_mass_defect_percent_of_inlet_mass',
-    'campioni_temporali': 'time_samples', 'yplus_min_campionato': 'sampled_yplus_min',
-    'yplus_max_campionato': 'sampled_yplus_max',
-    'frazione_facce_con_yplus_sempre_lt1': 'face_count_fraction_below_one_at_all_samples',
-    'indice_riferimento': 'reference_face_index', 'y_riferimento_m': 'reference_y_m',
-    'pressione_media_temporale_Pa': 'time_mean_static_pressure_Pa',
-    'pressione_min_campionata_Pa': 'sampled_static_pressure_min_Pa',
-    'pressione_max_campionata_Pa': 'sampled_static_pressure_max_Pa',
-    'yplus_media_temporale': 'time_mean_yplus', 'zona': 'zone', 'campo': 'field',
-    'differenza_massima_assoluta': 'maximum_absolute_difference',
-    'rms_differenza': 'absolute_rms_difference',
-    'rms_relativo_percento': 'relative_rms_percent',
-    'errore_massimo_abbinamento_m': 'maximum_geometric_mapping_error_m',
-    'media_ITER30': 'mean_ITER30', 'media_ITER60': 'mean_ITER60',
-    'differenza_media_percento': 'mean_difference_percent',
-    'differenza_ampiezza_percento': 'amplitude_difference_percent',
-    'rms_profilo_fase_percento_ampiezza': 'phase_rms_percent_of_amplitude',
-    'da_prova': 'from_run', 'a_prova': 'to_run', 'confronto': 'comparison',
-    'variazione_temporale_media_percento': 'temporal_mean_difference_percent',
-    'sensibilita_iterativa_media_percento': 'inner_iteration_mean_difference_percent',
-    'variazione_temporale_inferiore_a_sensibilita_iterativa': 'temporal_mean_below_iteration_difference',
-    'variazione_ciclica_media_max_percento': 'maximum_cycle_mean_change_percent',
-    'variazione_ciclica_ampiezza_max_percento': 'maximum_cycle_amplitude_change_percent',
-    'sensibilita_iterativa_ampiezza_percento': 'inner_iteration_amplitude_difference_percent',
-    'sensibilita_iterativa_rms_fase_percento_ampiezza': 'inner_iteration_phase_rms_percent_of_amplitude',
-    'variazione_temporale_media_inferiore_a_variabilita_ciclica': 'temporal_mean_below_cycle_variability',
-    'variazione_temporale_ampiezza_inferiore_a_sensibilita_iterativa': 'temporal_amplitude_below_iteration_difference',
-    'metrica': 'metric', 'campo_fluent': 'native_field', 'celle': 'active_cells',
-    'mediana': 'median', 'condizione': 'condition', 'soglia': 'threshold', 'percento': 'percent',
+    'run_id': 'run_id', 'window_cycle_index': 'window_cycle_index', 'window_cycle_index': 'window_cycle_index',
+    'start_time_s': 'start_time_s', 'end_time_s': 'end_time_s', 'timestep_s': 'timestep_s',
+    'inner_iterations_per_step': 'inner_iterations', 'mean': 'mean', 'minimum': 'minimum',
+    'maximum': 'maximum', 'peak_to_peak': 'peak_to_peak',
+    'mean_cycle_peak_to_peak': 'mean_cycle_peak_to_peak', 'unit': 'unit',
+    'from_window_cycle_index': 'from_window_cycle_index', 'to_window_cycle_index': 'to_window_cycle_index',
+    'mean_change_percent': 'mean_change_percent',
+    'amplitude_change_percent': 'amplitude_change_percent',
+    'phase_rms_percent_of_amplitude': 'phase_rms_percent_of_amplitude',
+    'phase_fraction': 'phase_fraction', 'physical_time_s': 'physical_time_s', 'value': 'value',
+    'net_inward_flow_kg_s': 'net_inward_flow_kg_s', 'net_flow_percent_of_inlet': 'net_flow_percent_of_inlet',
+    'integrated_net_inward_mass_kg': 'integrated_net_inward_mass_kg',
+    'integrated_net_inward_mass_kg': 'integrated_net_inward_mass_kg',
+    'domain_mass_change_kg': 'domain_mass_change_kg',
+    'integral_mass_defect_kg': 'integral_mass_defect_kg',
+    'integral_mass_defect_percent_of_inlet_mass': 'integral_mass_defect_percent_of_inlet_mass',
+    'time_samples': 'time_samples', 'sampled_yplus_min': 'sampled_yplus_min',
+    'sampled_yplus_max': 'sampled_yplus_max',
+    'face_count_fraction_below_one_at_all_samples': 'face_count_fraction_below_one_at_all_samples',
+    'reference_face_index': 'reference_face_index', 'reference_y_m': 'reference_y_m',
+    'time_mean_static_pressure_Pa': 'time_mean_static_pressure_Pa',
+    'sampled_static_pressure_min_Pa': 'sampled_static_pressure_min_Pa',
+    'sampled_static_pressure_max_Pa': 'sampled_static_pressure_max_Pa',
+    'time_mean_yplus': 'time_mean_yplus', 'zone': 'zone', 'field': 'field',
+    'maximum_absolute_difference': 'maximum_absolute_difference',
+    'absolute_rms_difference': 'absolute_rms_difference',
+    'relative_rms_percent': 'relative_rms_percent',
+    'maximum_geometric_mapping_error_m': 'maximum_geometric_mapping_error_m',
+    'mean_ITER30': 'mean_ITER30', 'mean_ITER60': 'mean_ITER60',
+    'mean_difference_percent': 'mean_difference_percent',
+    'amplitude_difference_percent': 'amplitude_difference_percent',
+    'phase_rms_percent_of_amplitude': 'phase_rms_percent_of_amplitude',
+    'from_run': 'from_run', 'to_run': 'to_run', 'comparison': 'comparison',
+    'temporal_mean_difference_percent': 'temporal_mean_difference_percent',
+    'inner_iteration_mean_difference_percent': 'inner_iteration_mean_difference_percent',
+    'temporal_mean_below_iteration_difference': 'temporal_mean_below_iteration_difference',
+    'maximum_cycle_mean_change_percent': 'maximum_cycle_mean_change_percent',
+    'maximum_cycle_amplitude_change_percent': 'maximum_cycle_amplitude_change_percent',
+    'inner_iteration_amplitude_difference_percent': 'inner_iteration_amplitude_difference_percent',
+    'inner_iteration_phase_rms_percent_of_amplitude': 'inner_iteration_phase_rms_percent_of_amplitude',
+    'temporal_mean_below_cycle_variability': 'temporal_mean_below_cycle_variability',
+    'temporal_amplitude_below_iteration_difference': 'temporal_amplitude_below_iteration_difference',
+    'metric': 'metric', 'native_field': 'native_field', 'active_cells': 'active_cells',
+    'median': 'median', 'condition': 'condition', 'threshold': 'threshold', 'percent': 'percent',
 }
-DROP = {'nota', 'metodo', 'accumulo_dominio', 'evidenza', 'fonte', 'file'}
+DROP = {'note', 'method', 'domain_storage', 'evidence', 'source', 'file'}
 OUTPUTS, SOURCES = [], {}
 
 
@@ -143,9 +142,9 @@ def export_table(src, destination):
             if key in DROP:
                 continue
             new_key = HEADERS.get(key, key)
-            if key == 'unita' and monitor in MONITORS:
+            if key == 'unit' and monitor in MONITORS:
                 value = MONITORS[monitor][1]
-            elif key in {'monitor', 'wall', 'zona', 'zone', 'mesh'}:
+            elif key in {'monitor', 'wall', 'zone', 'zone', 'mesh'}:
                 value = label(value)
             translated[new_key] = value
         result.append(translated)
@@ -178,7 +177,7 @@ def check_native_statistics(analysis, progress):
     checked = 0
     for native_name in MONITORS:
         pieces = []
-        for record in analysis['sorgenti']:
+        for record in analysis['sources']:
             path = project_path(record['file'])
             with path.open(encoding='utf-8', errors='replace') as stream:
                 if next(stream, '').strip() != '"' + native_name + '-rfile"':
@@ -201,16 +200,16 @@ def check_native_statistics(analysis, progress):
             assert values[index, 0] == values[index + 1, 0]
             assert np.isclose(values[index, 1], values[index + 1, 1], rtol=1e-10, atol=1e-12)
         values = np.delete(values, duplicates, axis=0)
-        start, end = analysis['finestra_s']
+        start, end = analysis['window_s']
         tt, vv = interval(values[:, 2], values[:, 1], start, end)
         mean = float(np.trapezoid(vv, tt) / (end - start))
         amplitudes = []
-        for cycle in range(analysis['cicli']):
+        for cycle in range(analysis['cycles']):
             _, vv = interval(values[:, 2], values[:, 1], start + cycle*T, start + (cycle+1)*T)
             amplitudes.append(float(np.ptp(vv)))
-        saved = next(row for row in analysis['statistiche'] if row['monitor'] == native_name)
-        assert math.isclose(mean, saved['media'], rel_tol=1e-11, abs_tol=1e-10)
-        assert math.isclose(float(np.mean(amplitudes)), saved['ampiezza_picco_picco_media_cicli'], rel_tol=1e-10, abs_tol=1e-10)
+        saved = next(row for row in analysis['statistics'] if row['monitor'] == native_name)
+        assert math.isclose(mean, saved['mean'], rel_tol=1e-11, abs_tol=1e-10)
+        assert math.isclose(float(np.mean(amplitudes)), saved['mean_cycle_peak_to_peak'], rel_tol=1e-10, abs_tol=1e-10)
         checked += 1
     return checked
 
@@ -224,30 +223,30 @@ def export_runs():
         progress = load(ROOT / 'runs' / group / run / 'progress.json')
         analysis = load(directory / 'analysis.json')
         assert check_native_statistics(analysis, progress) == 4
-        duration = progress['tempo_corrente_s'] - progress['tempo_iniziale_s']
-        steps = progress['passi_completati']
-        assert math.isclose(duration, steps * progress['dt_s'], abs_tol=1e-12)
-        periods = int(round(progress['tempo_corrente_s'] / T)) if systematic else None
+        duration = progress['current_time_s'] - progress['initial_time_s']
+        steps = progress['completed_steps']
+        assert math.isclose(duration, steps * progress['timestep_s'], abs_tol=1e-12)
+        periods = int(round(progress['current_time_s'] / T)) if systematic else None
         if systematic:
             assert periods == {'M1': 35, 'M2': 40, 'M3': 35}[run]
-        resources = progress.get('segmenti_risorse', [])
+        resources = progress.get('resource_segments', [])
         configured = progress.get('config', {}).get('fluent', {}).get('processor_count')
-        initial_mpi = resources[0]['processi'] if resources else configured
-        final_mpi = resources[-1]['processi'] if resources else configured
+        initial_mpi = resources[0]['mpi_processes'] if resources else configured
+        final_mpi = resources[-1]['mpi_processes'] if resources else configured
         if not initial_mpi or not final_mpi:
             raise ValueError('Missing recorded MPI count for ' + run)
-        change_step = resources[1]['passi_iniziali'] if len(resources) > 1 else None
+        change_step = resources[1]['initial_steps'] if len(resources) > 1 else None
         row = dict(run_id=analysis['id'], dataset=group,
-                   active_cells=progress['celle_attive'], timestep_s=progress['dt_s'],
-                   inner_iterations=progress['iterazioni_per_passo'],
+                   active_cells=progress['active_cells'], timestep_s=progress['timestep_s'],
+                   inner_iterations=progress['inner_iterations_per_step'],
                    mpi_processes_initial_segment=initial_mpi,
                    mpi_processes_final_segment=final_mpi,
                    mpi_change_after_accepted_step=change_step,
-                   accepted_steps=steps, final_time_s=progress['tempo_corrente_s'],
+                   accepted_steps=steps, final_time_s=progress['current_time_s'],
                    integration_duration_s=duration, periods_from_hybrid=periods,
-                   statistics_start_s=analysis['finestra_s'][0], statistics_end_s=analysis['finestra_s'][1],
-                   statistics_periods=analysis['cicli'],
-                   operational_monitor_checks_passed=analysis['periodicita_monitor_entro_criteri_proposti'])
+                   statistics_start_s=analysis['window_s'][0], statistics_end_s=analysis['window_s'][1],
+                   statistics_periods=analysis['cycles'],
+                   operational_monitor_checks_passed=analysis['monitor_periodicity_within_proposed_criteria'])
         summaries.append(row)
         prefix = group + '/' + run + '/'
         tables = {'statistics_window.csv': 'window_statistics.csv', 'statistics_cycles.csv': 'cycle_statistics.csv',
@@ -258,19 +257,19 @@ def export_runs():
             if (directory / name).is_file():
                 export_table(directory / name, prefix + target)
         record = dict(schema_version=1, **row,
-                      checks=dict(cycle_means=analysis['esiti']['medie'],
-                                  cycle_amplitudes=analysis['esiti']['ampiezze'],
-                                  phase_waveforms=analysis['esiti']['fase'],
-                                  boundary_mass_flux=analysis['esiti']['portate']),
+                      checks=dict(cycle_means=analysis['checks']['means'],
+                                  cycle_amplitudes=analysis['checks']['amplitudes'],
+                                  phase_waveforms=analysis['checks']['phase'],
+                                  boundary_mass_flux=analysis['checks']['mass_flows']),
                       diagnostic_limits=dict(mean_change_percent=0.5, amplitude_change_percent=5,
                                              phase_rms_percent_of_amplitude=10, boundary_mass_flux_percent=0.5),
                       reference_depth_m=1, physical_validation=False,
                       grid_independence_established=False, timestep_independence_established=False,
                       native_monitor_statistics_recomputed=True)
         residuals = load(directory / 'residuals_summary.json')
-        record['residual_history'] = dict(steps_available=residuals['passi'],
-                                         minimum_inner_iterations=residuals['iterazioni_min'],
-                                         maximum_inner_iterations=residuals['iterazioni_max'])
+        record['residual_history'] = dict(steps_available=residuals['steps'],
+                                         minimum_inner_iterations=residuals['minimum_inner_iterations'],
+                                         maximum_inner_iterations=residuals['maximum_inner_iterations'])
         assessment = directory / 'asymptotic_assessment' / 'assessment.json'
         if assessment.is_file():
             saved = load(assessment)
@@ -297,35 +296,35 @@ def export_quality():
         saved = read_csv(directory / 'statistics_quality.csv')
         archive = np.load(source(directory / 'quality_cells.npz'))
         for row in saved:
-            zone_index = 0 if 'statore' in row['zona'] else 1
-            array = archive[f'zone{zone_index}_{row["metrica"]}']
-            assert len(array) == int(row['celle']) and np.isfinite(array).all()
-            checks = dict(minimo=np.min(array), massimo=np.max(array), mediana=np.median(array),
+            zone_index = 0 if 'statore' in row['zone'] else 1
+            array = archive[f'zone{zone_index}_{row["metric"]}']
+            assert len(array) == int(row['active_cells']) and np.isfinite(array).all()
+            checks = dict(minimum=np.min(array), maximum=np.max(array), median=np.median(array),
                           q01=np.quantile(array, .01), q05=np.quantile(array, .05),
                           q95=np.quantile(array, .95), q99=np.quantile(array, .99))
             assert all(math.isclose(float(value), float(row[key]), rel_tol=1e-12, abs_tol=1e-20)
-                       for key, value in checks.items()), (mesh, row['metrica'])
-            if row['metrica'] == 'cell_volume_m3':
+                       for key, value in checks.items()), (mesh, row['metric'])
+            if row['metric'] == 'cell_volume_m3':
                 assert np.all(array > 0)
             conditions = {'orthogonal_quality': [('<', .01), ('<', .05), ('<', .1)],
                           'aspect_ratio': [('>', 100)], 'equiangle_skewness': [('>', .9)]}
-            for condition, threshold in conditions.get(row['metrica'], []):
+            for condition, threshold in conditions.get(row['metric'], []):
                 count = int(np.count_nonzero(array < threshold if condition == '<' else array > threshold))
                 thresholds.append(dict(mesh='historical_baseline' if mesh == 'baseline' else mesh,
-                                       zone='stator' if zone_index == 0 else 'rotor', metric=row['metrica'],
+                                       zone='stator' if zone_index == 0 else 'rotor', metric=row['metric'],
                                        condition=condition, threshold=threshold, active_cells=count,
                                        percent_of_zone_cells=100*count/len(array)))
         export_table(directory / 'statistics_quality.csv', 'mesh_quality/' + mesh + '_zone_quantiles.csv')
         def metric(name, key):
-            values = [float(row[key]) for row in saved if row['metrica'] == name]
-            return min(values) if key == 'minimo' else max(values)
-        cells = sum(int(row['celle']) for row in saved if row['metrica'] == 'orthogonal_quality')
+            values = [float(row[key]) for row in saved if row['metric'] == name]
+            return min(values) if key == 'minimum' else max(values)
+        cells = sum(int(row['active_cells']) for row in saved if row['metric'] == 'orthogonal_quality')
         assert cells == {'baseline': 289671, 'M1': 54287, 'M2': 104831, 'M3': 196569}[mesh]
         extrema.append(dict(mesh='historical_baseline' if mesh == 'baseline' else mesh,
-                            active_cells=cells, minimum_orthogonal_quality=metric('orthogonal_quality', 'minimo'),
-                            maximum_aspect_ratio=metric('aspect_ratio', 'massimo'),
-                            maximum_equiangle_skewness=metric('equiangle_skewness', 'massimo'),
-                            minimum_cell_volume_m3=metric('cell_volume_m3', 'minimo'),
+                            active_cells=cells, minimum_orthogonal_quality=metric('orthogonal_quality', 'minimum'),
+                            maximum_aspect_ratio=metric('aspect_ratio', 'maximum'),
+                            maximum_equiangle_skewness=metric('equiangle_skewness', 'maximum'),
+                            minimum_cell_volume_m3=metric('cell_volume_m3', 'minimum'),
                             all_cell_volumes_positive=True))
     write_csv('mesh_quality/summary.csv', extrema)
     write_csv('mesh_quality/diagnostic_threshold_counts.csv', thresholds)
@@ -336,7 +335,7 @@ def export_sensitivity():
     iteration = load(base / 'inner_iterations' / 'assessment.json')
     export_table(base / 'inner_iterations' / 'comparison_ITER30_ITER60.csv', 'sensitivity/inner_iteration_comparison.csv')
     field_tables = [p for p in (base / 'inner_iterations').glob('*.csv')
-                    if read_csv(p) and 'rms_relativo_percento' in read_csv(p)[0]]
+                    if read_csv(p) and 'relative_rms_percent' in read_csv(p)[0]]
     assert len(field_tables) == 1
     export_table(field_tables[0], 'sensitivity/inner_iteration_phase_fields.csv')
     time = load(base / 'timestep' / 'assessment.json')
@@ -344,27 +343,27 @@ def export_sensitivity():
     if time_csv is None:
         time_csv = base / 'timestep' / 'comparisons_temporal.csv'
     if not time_csv.is_file():
-        candidates = [p for p in (base / 'timestep').glob('*.csv') if read_csv(p) and 'da_prova' in read_csv(p)[0]]
+        candidates = [p for p in (base / 'timestep').glob('*.csv') if read_csv(p) and 'from_run' in read_csv(p)[0]]
         time_csv = max(candidates, key=lambda p: len(read_csv(p)))
     export_table(time_csv, 'sensitivity/timestep_comparison.csv')
     error_tables = [p for p in (base / 'timestep').glob('*.csv')
-                    if read_csv(p) and 'sensibilita_iterativa_media_percento' in read_csv(p)[0]]
+                    if read_csv(p) and 'inner_iteration_mean_difference_percent' in read_csv(p)[0]]
     assert len(error_tables) == 1
     export_table(error_tables[0], 'sensitivity/timestep_iteration_error_comparison.csv')
     grid = load(base / 'grid' / 'assessment.json')
     for filename in ['mesh_pair_comparisons.csv', 'recomputed_monitor_statistics.csv',
                      'phase_profiles_with_cycle_range.csv', 'three_mesh_trends.csv']:
         export_table(base / 'grid' / filename, 'sensitivity/grid_' + filename)
-    decision = time['decisione']
+    decision = time['decision']
     write_json('sensitivity/assessment.json', dict(
         schema_version=1,
-        inner_iterations=dict(within_recorded_diagnostic_limits=iteration['entro_criteri'],
-                              adopted_iterations=iteration['iterazioni_temporali_scelte'],
+        inner_iterations=dict(within_recorded_diagnostic_limits=iteration['within_criteria'],
+                              adopted_iterations=iteration['selected_temporal_iterations'],
                               mean_difference_limit_percent=0.1, amplitude_difference_limit_percent=2,
                               phase_rms_limit_percent_of_amplitude=2,
-                              applicable_mesh='historical_adapted_mesh'),
-        timestep=dict(T200_T400_within_recorded_limits=decision['T200_T400_entro_criteri'],
-                      adopted_systematic_campaign_timestep_s=decision['timestep_spaziale_s'],
+                              applicable_mesh='historical_baseline_mesh'),
+        timestep=dict(T200_T400_within_recorded_limits=decision['T200_T400_within_criteria'],
+                      adopted_systematic_campaign_timestep_s=decision['spatial_study_timestep_s'],
                       mean_difference_limit_percent=0.1, amplitude_difference_limit_percent=2,
                       phase_rms_limit_percent_of_amplitude=2, independence_established=False),
         grid=dict(fine_pair_maximum_mean_difference_percent=grid['fine_pair_max_mean_difference_percent'],

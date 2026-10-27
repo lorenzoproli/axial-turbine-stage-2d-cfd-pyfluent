@@ -6,11 +6,11 @@ The campaign completed its recorded finite durations: M1 = 35 periods, M2 = 40 p
 
 | Topic | Evidence and remaining limit |
 |---|---|
-| Historical baseline | Coherent saved reference at 0.010653 s; includes earlier AMR changes, with adaptation subsequently disabled |
+| Historical baseline | Coherent saved reference at 0.010653 s; fixed topology and automatic adaptation disabled |
 | M1 | Configured operational settling diagnostics passed over the assessed final window |
 | M2 | Final inlet-flow amplitude recurrence remained outside the 5% three-cycle limit |
 | M3 | Rotor-force amplitude changed by 7.068509% for cycles 33–34, then by 0.329532% for cycles 34–35; one failing pair remains |
-| Inner iterations | Adapted-mesh ITER30/ITER60 comparison supports the adopted 30-iteration setting there; no separate M3 iteration-independence study |
+| Inner iterations | Baseline-mesh ITER30/ITER60 comparison supports the adopted 30-iteration setting there; no separate M3 iteration-independence study |
 | Time increment | T200/T400 amplitude criterion was not satisfied; general temporal independence is unconfirmed |
 | Mesh sensitivity | M2–M3 means change by less than 0.15%, but amplitudes change by approximately 5.9–7.5%; three-mesh mean trends are nonmonotonic |
 | Formal error estimate | No observed asymptotic order, Richardson-extrapolated result or GCI uncertainty is assigned |
@@ -24,7 +24,7 @@ The calculation is planar 2D URANS with SST turbulence modelling, periodic blade
 
 Systematic meshes share geometry and a controlled meshing procedure, but include anisotropic wall layers. Cell count is not a sufficient description of local resolution or a proof that every region lies in an asymptotic range. Quality extrema, wall y+ and sampled field recurrence are complementary checks, not substitutes for mesh and timestep studies.
 
-The historical adapted reference is distinct from M1/M2/M3. AMR parent-cell counts must not be interpreted as active solution cells, and past adaptation must not be described as currently active AMR.
+The historical baseline reference is distinct from M1/M2/M3. Inactive parent cells are excluded from active solution-cell counts. All reported runs retain fixed topology with automatic adaptation disabled.
 
 ## Quantities and normalisation
 

@@ -35,12 +35,10 @@ pillow==11.3.0
 platformdirs==4.13.0
 protobuf==7.36.2
 pyparsing==3.3.3
-pypdf==6.10.0
 python-dateutil==3.0.0
 pytz==2026.5
 pywin32==312
 PyYAML==6.0.3
-reportlab==4.4.9
 requests==2.34.2
 scipy==1.16.3
 scooby==0.12.0

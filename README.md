@@ -4,11 +4,11 @@
 
 A configuration-driven workflow for a translating rotor, a stationary blade row and their unsteady interaction. The project combines native Fluent restart checks, systematic mesh generation, cycle-resolved numerical assessment and fixed-scale flow visualisation.
 
-The main result is a traceable numerical study: the final means are relatively insensitive to the last mesh refinement, while oscillation amplitudes and periodic settling remain unresolved. Cycle means, oscillation amplitudes and phase recurrence are assessed separately.
+Across M2 and M3, the monitored cycle means differ by less than 0.15%, while peak-to-peak amplitudes differ by approximately 5.9-7.5%. The study combines these results with mass-conservation checks, blade-pressure distributions, wall resolution and phase-resolved flow visualisation. Numerical limitations are documented alongside the results.
 
 ## Start here
 
-- [Technical report and editable source](docs/report/)
+- [Technical report](docs/report/axial_turbine_stage_2d_report.pdf)
 - [Methodology and numerical conventions](docs/methodology.md)
 - [Reproduction instructions](docs/reproduction.md)
 - [Results and accepted run summaries](results/)
@@ -21,17 +21,17 @@ Three datasets are kept separate:
 
 | Dataset | Purpose | Mesh and initial field |
 |---|---|---|
-| Historical baseline | Preserve the original manually developed setup and saved solution | Historical adapted mesh; coherent case/data at 0.010653 s |
-| Adapted-mesh reproduction | Examine restart, inner-iteration and timestep sensitivity | The same adapted topology held fixed; common native checkpoint |
+| Historical baseline | Preserve the original manually developed setup and saved solution | Historical baseline mesh; coherent case/data at 0.010653 s |
+| Baseline-mesh reproduction | Examine restart, inner-iteration and timestep sensitivity | The same baseline topology held fixed; common native checkpoint |
 | Systematic mesh campaign | Examine sensitivity to independently controlled mesh resolution | M1/M2/M3 from the same geometry; original rotor position restored before fresh Hybrid Initialization |
 
-The initial 73,167-cell mesh and the subsequently adapted mesh are not labelled as successive levels of the systematic family. Automatic adaptation was disabled in the verified final baseline and the automated calculations.
+The baseline and the systematically generated M1/M2/M3 meshes are separate datasets. All reported comparisons retain fixed topology, with automatic mesh adaptation disabled.
 
 ## Recorded campaign
 
 | Run | Active cells | Time increment | Inner iterations | Simulated duration | Final interpretation |
 |---|---:|---:|---:|---|---|
-| ITER30 / ITER60 | 289,671 | 3.0e-6 s | 30 / 60 | 596 steps each from the common checkpoint | Iteration sensitivity assessed on the adapted mesh |
+| ITER30 / ITER60 | 289,671 | 3.0e-6 s | 30 / 60 | 596 steps each from the common checkpoint | Iteration sensitivity assessed on the baseline mesh |
 | T100 | 289,671 | 2.97583785e-6 s | 30 | 600 steps from the common checkpoint | Temporal sensitivity dataset |
 | T200 | 289,671 | 1.487918925e-6 s | 30 | 1,200 steps from the common checkpoint | Temporal sensitivity dataset |
 | T400 | 289,671 | 7.439594625e-7 s | 30 | 2,400 steps from the common checkpoint | Temporal independence not established |
@@ -41,7 +41,7 @@ The initial 73,167-cell mesh and the subsequently adapted mesh are not labelled 
 
 The systematic mesh campaign used **24 MPI processes**, planar 2D and double precision. ITER30 initially used 8 processes during its first 240 settling steps and continued with 24; this distinction is recorded in the report. The pitch is 0.04463756775 m, rotor mesh velocity is -150 m/s in Y, and the blade-passing period is `T = 2.97583785e-4 s`. Systematic runs therefore use 400 steps per period. Reference depth is 1 m.
 
-The historical baseline contains 361,839 stored cells: 289,671 active cells and 72,168 inactive AMR parents. Stored and active cell counts describe different quantities.
+The historical baseline contains 361,839 stored cells: 289,671 active cells and 72,168 inactive parent cells. Stored and active cell counts describe different quantities.
 
 ### What the comparisons show
 
@@ -70,7 +70,7 @@ Accepted monitor segments and phase-matched exports
 Cycle statistics, conservation and numerical sensitivity
               |
               v
-Figures, fixed-scale animation and technical report
+Figures, fixed-scale animation and numerical tables
 ```
 
 ## Repository layout
@@ -80,22 +80,22 @@ config/       Recorded numerical, rendering and campaign-state configuration
 geometry/     Geometry definitions, meshing inputs and attributed SU2 reference
 workflow/     Python entry points and supporting modules
 results/      Selected numerical evidence, figures and movies
-docs/         Method, reproduction guide, limitations and editable report
+docs/         Method, reproduction guide, limitations and final PDF report
 tests/        Offline portability, restart-analysis and packaging checks
 tools/        Verified export of English numerical tables
 inputs/       Local native input data; excluded from Git
 runs/         Local solver histories, checkpoints and field exports; excluded from Git
 ```
 
-The lightweight repository does not include the Python environment, commercial applications, complete Workbench databases or large Fluent case/data files. Native data are distributed as separate release assets. A clone supports inspection of the published evidence; native analysis regeneration requires those assets, and new numerical work additionally requires ANSYS tools and licences.
+The lightweight repository does not include the Python environment, commercial applications, complete Workbench databases or large Fluent case/data files. Native data are packaged as separate versioned assets. A clone supports inspection of the published evidence; native analysis regeneration requires those assets, and new numerical work additionally requires ANSYS tools and licences.
 
 ## Download and reuse
 
-Native datasets are distributed separately from the lightweight source tree. See [Releases](https://github.com/lorenzoproli/axial-turbine-stage-2d-cfd-pyfluent/releases) for available downloads; the expected asset names and checksums are listed in [config/release_assets.json](config/release_assets.json).
+Native datasets are distributed separately from the lightweight source tree. The v1.1.0 native assets are prepared but are not yet published. Their expected names and checksums are listed in [config/release_assets.json](config/release_assets.json); download links become active only after the corresponding release is published.
 
 | Download | Purpose |
 |---|---|
-| Source archive or Git clone | Workflow, configuration, geometry, selected tables/figures/movie and report |
+| Source archive or Git clone | Workflow, configuration, geometry, selected tables/figures/movie and final PDF report |
 | Native inputs (about 340 MB) | Baseline, common checkpoint, three meshes, original-position Hybrid t=0 pairs and meshing projects |
 | Native results (about 881 MB) | Accepted monitors, final checkpoints, exported fields and native analysis evidence |
 
@@ -114,14 +114,13 @@ py -3.12 -m venv .venv
 
 The verifier checks the curated files; add `--native` to verify the separate native case/data collection. `status` reads saved native records or the published run summary; it does not measure live CPU usage or start Fluent. Missing local native data must be supplied before the corresponding analyses can be regenerated.
 
-Example analysis and report commands:
+Example analysis command:
 
 ```powershell
 .\.venv\Scripts\python.exe workflow\cfd.py analyse --id M3_HYBRID35
-.\.venv\Scripts\python.exe workflow\cfd.py report
 ```
 
-Analysis requires the accepted native monitor segments and relevant exported samples. PDF compilation requires a LaTeX installation; rendering PDF pages additionally requires Poppler. See [the reproduction guide](docs/reproduction.md) for data requirements and scope.
+Analysis requires the accepted native monitor segments and relevant exported samples. The final PDF report documents the study; document preparation is separate from the CFD workflow. See [the reproduction guide](docs/reproduction.md) for data requirements and scope.
 
 The historical numerical campaign is closed. [config/campaign_state.json](config/campaign_state.json) protects its results and must be retained. New calculations use an independent work copy:
 

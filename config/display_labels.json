@@ -1,0 +1,14 @@
+{
+  "labels": {
+    "forza_y_rotore": "Rotor tangential force",
+    "mdot_inlet": "Inlet mass flow",
+    "mdot_outlet": "Outlet mass flow",
+    "pt_outlet": "Outlet total pressure",
+    "wall_statore": "Stator blade",
+    "wall_rotore": "Rotor blade",
+    "baseline_adattata": "Historical baseline mesh",
+    "_setup_verificato": " (verified setup)",
+    "statore": "stator",
+    "rotore": "rotor"
+  }
+}

@@ -1,4 +1,5 @@
 """Short isolated t=0/moving/restart/Playback preflight for native Mach stream."""
+from data_schema import csv, json
 from common import *
 from native_mach_stream import MachStream, playback_export, configuration
 from native_animation import configure, periodic_settings
@@ -81,7 +82,7 @@ def preflight(session, checkpoint, run_id, directory, source_manifest):
     cells = int(session.fields.reduction.count(locations=FLUIDS))
     field_health = []
     cfg = configuration()
-    session.settings.solution.run_calculation.transient_controls.time_step_size = cfg['dt_s']
+    session.settings.solution.run_calculation.transient_controls.time_step_size = cfg['timestep_s']
     session.settings.solution.run_calculation.transient_controls.max_iter_per_time_step = 30
     for name in session.settings.solution.monitor.residual.equations.get_object_names():
         session.settings.solution.monitor.residual.equations[name].check_convergence = False
@@ -149,10 +150,10 @@ def preflight(session, checkpoint, run_id, directory, source_manifest):
     close_transcript(session)
     from residual_analysis import parse
     _, steps = parse(directory / 'fluent.trn', expected_iterations=30)
-    assert len(steps) == 30 and all((item['iterazioni_effettive'] == 30 for item in steps))
+    assert len(steps) == 30 and all((item['actual_inner_iterations'] == 30 for item in steps))
     for item in source_manifest:
         assert sha(project_path(item['file'])) == item['sha256']
-    result = dict(utc=now(), state='MACH_STREAM_T0_MOVING_RESTART_AND_PLAYBACK_VERIFIED', run_id=run_id, initial_native_time_s=0, initial_native_step=0, active_frame_steps=[0, 10, 20], physical_interval_s=10 * cfg['dt_s'], diagnostic_CFD_steps_advanced_including_repeated_branch=30, physical_setup_unchanged=True, AMR_active=False, source_manifest=source_manifest, checkpoint10_manifest=checkpoint_manifest, unchanged_unset_reference_values=[name for name, value in setup.get('reference_values', {}).items() if isinstance(value, float) and np.isnan(value)], active_cells=cells, positive_finite_field_health=field_health, current_time_s=float(session.scheme.eval("(rpgetvar 'flow-time)")), source_originals_unchanged=True, nodal_Mach_change_max=changed, warm_moving_frame_pixel_identical_to_rebuilt_scene=True, restart_reports_match_at_step10_and20=True, BDF_history_preserved=history, rollback_preserves_superseded_PNGs=True, duplicate_active_frames=False, video=video, frame_manifest_index=str(restarted.index_path), visual_review_pending=True, renderer_hashes={name: sha(CONFIG_DIR / name if name.endswith('.json') else Path(__file__).with_name(name)) for name in ['native_mach_stream.py', 'native_capture_mach_fast.py', 'verify_mach_stream.py', 'mach_stream_config.json']}, limitations='Short native acquisition/restart preflight on this mesh only; not flow convergence, full-transient range/coverage proof or a long-run performance guarantee. Main run must reload the untouched t=0 initialized checkpoint.')
+    result = dict(utc=now(), state='MACH_STREAM_T0_MOVING_RESTART_AND_PLAYBACK_VERIFIED', run_id=run_id, initial_native_time_s=0, initial_native_step=0, active_frame_steps=[0, 10, 20], physical_interval_s=10 * cfg['timestep_s'], diagnostic_CFD_steps_advanced_including_repeated_branch=30, physical_setup_unchanged=True, automatic_mesh_adaptation_active=False, source_manifest=source_manifest, checkpoint10_manifest=checkpoint_manifest, unchanged_unset_reference_values=[name for name, value in setup.get('reference_values', {}).items() if isinstance(value, float) and np.isnan(value)], active_cells=cells, positive_finite_field_health=field_health, current_time_s=float(session.scheme.eval("(rpgetvar 'flow-time)")), source_originals_unchanged=True, nodal_Mach_change_max=changed, warm_moving_frame_pixel_identical_to_rebuilt_scene=True, restart_reports_match_at_step10_and20=True, BDF_history_preserved=history, rollback_preserves_superseded_PNGs=True, duplicate_active_frames=False, video=video, frame_manifest_index=str(restarted.index_path), visual_review_pending=True, renderer_hashes={name: sha(CONFIG_DIR / name if name.endswith('.json') else Path(__file__).with_name(name)) for name in ['native_mach_stream.py', 'native_capture_mach_fast.py', 'verify_mach_stream.py', 'mach_stream_config.json']}, limitations='Short native acquisition/restart preflight on this mesh only; not flow convergence, full-transient range/coverage proof or a long-run performance guarantee. Main run must reload the untouched t=0 initialized checkpoint.')
     jwrite(directory / 'proof.json', result)
     print('MACH_STREAM_PREFLIGHT_VERIFIED', run_id, directory, flush=True)
     return result

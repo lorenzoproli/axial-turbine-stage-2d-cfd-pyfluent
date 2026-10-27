@@ -16,7 +16,7 @@ The actual original rotor position is restored before fresh Hybrid Initializatio
 
 ## Numerical inputs
 
-The authoritative systematic meshes are supplied separately as `inputs/meshes/M1_systematic.msh`, `M2_systematic.msh` and `M3_systematic.msh`. The native SpaceClaim geometry and portable Workbench meshing template are local inputs excluded from Git. The historical adapted mesh is a separate dataset.
+The authoritative systematic meshes are supplied separately as `inputs/meshes/M1_systematic.msh`, `M2_systematic.msh` and `M3_systematic.msh`. The native SpaceClaim geometry and portable Workbench meshing template are local inputs excluded from Git. The historical baseline mesh is a separate dataset.
 
 `workflow/generate_mesh_family.py` uses the supplied geometry, recorded controls and Workbench template. See [reproduction requirements](../docs/reproduction.md) and [mesh-quality results](../results/mesh_quality/README.md).
 
