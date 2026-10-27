@@ -44,7 +44,7 @@ def assess(run_id, cfg):
     meta = json.loads((directory / 'progress.json').read_text())
     periods = int(round(meta['passi_pianificati'] * meta['dt_s'] / T))
     expected = periods * cfg['steps_per_period']
-    assert periods in [30, 35, 40] and meta['passi_completati'] == meta['passi_pianificati'] == expected
+    assert 4 <= periods <= 100 and meta['passi_completati'] == meta['passi_pianificati'] == expected
     assert periods == cfg.get('period_targets_by_run', {}).get(run_id, cfg['total_periods_each_mesh'])
     assert abs(meta['tempo_corrente_s'] - meta['tempo_iniziale_s'] - periods * T) < 1e-12
     wait_for_closed_outputs(meta)

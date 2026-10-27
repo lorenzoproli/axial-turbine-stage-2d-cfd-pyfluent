@@ -11,7 +11,8 @@ The project separates its software licence from its publication-content licence.
 | SU2 reference configurations and mesh in `geometry/reference/` | Retained upstream terms and [LGPL 2.1 text](../geometry/reference/COPYING.LGPL-2.1); see the [source record](../geometry/reference/SOURCE.md) |
 | SU2-derived `geometry/axial_stage_surfaces.step` and underlying source geometry represented in figures/video | Outside the new MIT/CC BY grants; source attribution and applicable upstream rights are retained |
 | Third-party licence texts and notices | Their own terms; do not replace the original text with the project licence |
-| Separately maintained native `inputs/`, `runs/`, Workbench projects and commercial applications | Not included in the lightweight Git licence grant; preserve applicable source and vendor terms |
+| Versioned native release assets | Original simulation outputs/documentation: CC BY 4.0 within the author's rights; SU2-derived geometry and third-party rights remain separate. See NATIVE_DATA_LICENSE.md inside each asset. |
+| Native material outside the versioned assets; commercial applications | Outside the release-content grant; preserve applicable source and vendor terms |
 
 An individual file or upstream notice takes precedence over the general category. These licences cover different contributions; they are not a blanket dual-licensing option for the entire repository.
 

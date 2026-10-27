@@ -10,9 +10,14 @@
     "sha256": "c653f4b35c01c8e1305975dfd23e93cabb3236bcf372622c366406939b33fcdf"
   },
   {
+    "path": "CHANGELOG.md",
+    "bytes": 816,
+    "sha256": "e52965adcb88ea1ef445242b2a238d998610be6217995f4de258ece79badf8e4"
+  },
+  {
     "path": "CITATION.cff",
-    "bytes": 825,
-    "sha256": "0c60bb1fd84f46ecb0b9598422277b6b5e3501412273ce5ee3a3f2cf49c9d59b"
+    "bytes": 868,
+    "sha256": "81a07214cce9e4011860232b42bc1a267c7e037f94e95df39657fb4d562b3dd8"
   },
   {
     "path": "config/campaign_state.json",
@@ -36,8 +41,8 @@
   },
   {
     "path": "config/native_data_index.json",
-    "bytes": 228719,
-    "sha256": "6ffceb80fd408acd594b1c9e143bf46ceae764457d63d817be4af27d0dfcf98d"
+    "bytes": 228774,
+    "sha256": "89eff4576eca84e2d4efdcce71e9a61d9618ea51f37f18279a254b55cce4e72e"
   },
   {
     "path": "config/path_aliases.json",
@@ -46,8 +51,13 @@
   },
   {
     "path": "config/README.md",
-    "bytes": 1335,
-    "sha256": "7bff1892ee7f7566d6cc91ad7ada847dac8ef2bf6ee5ef4602bfabc5e3fbb607"
+    "bytes": 1654,
+    "sha256": "dd4be65c79766b5f39f97d2d82effdd5b7975f4d64e2079f8ee34d957aae8282"
+  },
+  {
+    "path": "config/release_assets.json",
+    "bytes": 890,
+    "sha256": "e47e68d657918ed946714e3100f6e7bf2ae8d71b111ffd794f13bc2db41f5050"
   },
   {
     "path": "config/workflow_config.json",
@@ -56,8 +66,8 @@
   },
   {
     "path": "docs/licensing.md",
-    "bytes": 4530,
-    "sha256": "a428240bdda657a5d22d391f54ea5d54f04fca7428fbca6ea6e2627f79df73b4"
+    "bytes": 4715,
+    "sha256": "ed9385816083b34d8592f63574f92c3f32f81f1a8f7166f3da37226c3111de37"
   },
   {
     "path": "docs/limitations.md",
@@ -71,13 +81,18 @@
   },
   {
     "path": "docs/README.md",
-    "bytes": 1558,
-    "sha256": "f44d49e4e01bb55bb2423c68add77aa9a49ba778f3882fa5b69f592284bbe82b"
+    "bytes": 1701,
+    "sha256": "5fbc1ab1d64b9c53dbd0a5c1bb8b1a1a97f871dd97fd80a5f57dd19d6bf1eb64"
   },
   {
     "path": "docs/references.md",
     "bytes": 2767,
     "sha256": "9a778fdf3259c9d303fe6b3c7bc6fe69ea28d4b347eb10908d6a6c126cb37cf8"
+  },
+  {
+    "path": "docs/release_verification.md",
+    "bytes": 2046,
+    "sha256": "c8085f389fdf8d0906eeb9f0b698d50e90a433b6d8ae52f2b9932581f629d0f4"
   },
   {
     "path": "docs/report/axial_turbine_stage_2d_report.pdf",
@@ -201,8 +216,8 @@
   },
   {
     "path": "docs/reproduction.md",
-    "bytes": 7417,
-    "sha256": "433974ffeb41027551fe1f30cd6431c35faea7fde00817da65fbd22c6efcae1c"
+    "bytes": 13615,
+    "sha256": "c11ec5506a6c3d41f64c6e1b4cd28285022d87ff5ab0f29c23f402eaf0f5aa02"
   },
   {
     "path": "geometry/axial_stage_surfaces.step",
@@ -281,13 +296,13 @@
   },
   {
     "path": "NOTICE.md",
-    "bytes": 3481,
-    "sha256": "587c3e2433d12956e910f9a2a89f58490bb61b1c3735b0f63da92cc8ab9ff0d1"
+    "bytes": 3698,
+    "sha256": "fe836b3e530c068cb95117ba62dba8b591bdc6a85b1e4b5d347d70930cc02ef2"
   },
   {
     "path": "README.md",
-    "bytes": 8897,
-    "sha256": "4e91c6bdce8c7647f5a792ea244536545a20480f79c2ed63c21d96a25a923e4f"
+    "bytes": 10372,
+    "sha256": "792bc0a3560a24c842811185ec493e3828dd22ba5fbae578e7cfd14d45fe15b0"
   },
   {
     "path": "requirements-lock.txt",
@@ -870,6 +885,11 @@
     "sha256": "855d655e4fa35a717e593f63db8e7696eef0db8ffba034b31420fb1f64d17bc4"
   },
   {
+    "path": "tests/test_reuse_delivery.py",
+    "bytes": 7462,
+    "sha256": "76f965edaa4429b3823a978f1dddbb677c41389b5fabc322b603c4a52264afa6"
+  },
+  {
     "path": "tests/test_workflow_portability.py",
     "bytes": 5226,
     "sha256": "6867445b4eadebdc3e43fac67c16e945bb5f47cf079e983d3760a4417ffb77ae"
@@ -881,8 +901,8 @@
   },
   {
     "path": "workflow/assess_hybrid35.py",
-    "bytes": 9115,
-    "sha256": "8e71da997742aac0aa9ce096efa19f3dd001fc6565f5a45dd8ee446ffb117d77"
+    "bytes": 9111,
+    "sha256": "316c9c775338d92cb28e1cc4f5319c5879a47bc21b0eb469090d692aa33aa52d"
   },
   {
     "path": "workflow/audit_verify.py",
@@ -891,13 +911,13 @@
   },
   {
     "path": "workflow/campaign_v2.py",
-    "bytes": 20188,
-    "sha256": "c8d9f1cae00480136d043d6a58483324e42fd7e20bb24db535a3b30bab9fb521"
+    "bytes": 20316,
+    "sha256": "980768c1b6bfad34a69deda9dc6c16d0a9bde81968bd8d20641d8047729964ba"
   },
   {
     "path": "workflow/cfd.py",
-    "bytes": 7302,
-    "sha256": "eb6125b2e1ee19ca0be1e5633fc066fba06652bc57ca96fd47b8a0f95f6ff421"
+    "bytes": 7706,
+    "sha256": "538f00a95a7628cdab9d2af4636d7811b191f6a66269f203eb75952fa635f75f"
   },
   {
     "path": "workflow/common.py",
@@ -916,8 +936,13 @@
   },
   {
     "path": "workflow/compile_report.py",
-    "bytes": 3303,
-    "sha256": "857e173d0e84cd49dedc72484aa6143916a92485785534e28c5b6b1e35991c26"
+    "bytes": 3281,
+    "sha256": "1f67102b733c4ce3ad4bb75e6b35c3cbf6a5feafe14ee38dcaab40f56c8ff994"
+  },
+  {
+    "path": "workflow/create_study.py",
+    "bytes": 7073,
+    "sha256": "13141da977bf8d3aa9766db6fd8adb930aaccffb70c38fab4b8b8f856a22d529"
   },
   {
     "path": "workflow/english_labels.py",
@@ -966,8 +991,13 @@
   },
   {
     "path": "workflow/native_capture_mach_fast.py",
-    "bytes": 6705,
-    "sha256": "4ad952ba92e220efd3f4aa78e77b9ac1e7e3a59859113b083ecffae99cf933cc"
+    "bytes": 6704,
+    "sha256": "1f412620786277cb1d97441acbd1c96f7c6b93ae61b17b22e9dfd238a8a263d3"
+  },
+  {
+    "path": "workflow/native_data.py",
+    "bytes": 4232,
+    "sha256": "5c6fdcc63b9a0fb283ceb580c38d7e0a410836711e7db42020359fc3113f686e"
   },
   {
     "path": "workflow/native_mach_stream.py",
@@ -976,8 +1006,8 @@
   },
   {
     "path": "workflow/package_project.py",
-    "bytes": 3186,
-    "sha256": "a01497efb0f9288159e2c1a7beb8d0c680ddc84cbd1aa8f6dea49ce09c5a52e0"
+    "bytes": 3201,
+    "sha256": "6ce08541a9a83cf0fbd21abeb06ed9186570ead0d05871c6614eb1dd020d89cb"
   },
   {
     "path": "workflow/periodicity_diagnostic.py",
@@ -986,8 +1016,8 @@
   },
   {
     "path": "workflow/pipeline.py",
-    "bytes": 5459,
-    "sha256": "f8e37124a278c5d4d902b521f7ed0ece33782e9f94894680ee9edb8229e7d924"
+    "bytes": 5453,
+    "sha256": "b19be94905236b73e80f737eb6af0c31a4cce8537fe0cdaba894c0a88b44d874"
   },
   {
     "path": "workflow/plot_histories.py",
@@ -1011,8 +1041,8 @@
   },
   {
     "path": "workflow/README.md",
-    "bytes": 2375,
-    "sha256": "de17a5bc10a79b8dbfbc302876451f395a2eb2b10a724774eda7808366b8005e"
+    "bytes": 2981,
+    "sha256": "18d04292190b0f9241cdb1ca59b0a1317672045f825c3bad0411098dc6736b2c"
   },
   {
     "path": "workflow/registry.py",
@@ -1036,8 +1066,8 @@
   },
   {
     "path": "workflow/run_hybrid35_campaign.py",
-    "bytes": 11449,
-    "sha256": "10311e275be51a436e2c48e09c323949afa2bcde5de90a4db17c0f6e82f6af53"
+    "bytes": 11493,
+    "sha256": "40d69da190bd83ee72b7319e9adbd26b2d1143cb443f5c31263989867b021c1c"
   },
   {
     "path": "workflow/smoke_test.py",

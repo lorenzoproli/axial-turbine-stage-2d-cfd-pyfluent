@@ -80,7 +80,7 @@ def render_snapshot(p, outdir, tag):
                 ax.add_collection(LineCollection(line, colors='#202020', linewidths=0.35))
         ax.set(xlim=(0.005, 0.402), ylim=(-0.095, 0.095), xlabel='Axial X [m]', ylabel='Tangential Y [m]')
         ax.set_aspect('equal')
-        ax.set_title(label + ' — mesh adattata mantenuta fissa', loc='left', fontsize=12)
+        ax.set_title(label + ' â€” fixed adapted mesh', loc='left', fontsize=12)
         ax.text(0.99, 1.035, f'Solution time: {t:.9f} s', transform=ax.transAxes, ha='right', va='bottom', fontsize=11, fontfamily='monospace')
         ax.text(0.015, 0.02, 'Stationary stator  |  Rotor Vy = -150 m/s  |  Periodic pitch: 0.04463756775 m', transform=ax.transAxes, fontsize=8, color='black', bbox={'facecolor': 'white', 'alpha': 0.85, 'edgecolor': 'none'})
         fig.colorbar(artist, ax=ax, shrink=0.85, label=label)

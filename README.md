@@ -13,6 +13,7 @@ The main result is a traceable numerical study: the final means are relatively i
 - [Reproduction instructions](docs/reproduction.md)
 - [Results and accepted run summaries](results/)
 - [Limitations and interpretation](docs/limitations.md)
+- [Release verification](docs/release_verification.md)
 - [References](docs/references.md) and [third-party notices](NOTICE.md)
 
 ## Study design
@@ -87,7 +88,19 @@ inputs/       Local native input data; excluded from Git
 runs/         Local solver histories, checkpoints and field exports; excluded from Git
 ```
 
-The lightweight repository does not include the Python environment, commercial applications, complete Workbench databases or large Fluent case/data files. Native data are maintained separately. A clone supports inspection of the published evidence; full numerical reproduction additionally requires the appropriate native input collection, ANSYS tools and licences.
+The lightweight repository does not include the Python environment, commercial applications, complete Workbench databases or large Fluent case/data files. Native data are distributed as separate release assets. A clone supports inspection of the published evidence; native analysis regeneration requires those assets, and new numerical work additionally requires ANSYS tools and licences.
+
+## Download and reuse
+
+The [v1.1.0 release](https://github.com/lorenzoproli/axial-turbine-stage-2d-cfd-pyfluent/releases/tag/v1.1.0) separates the lightweight source tree from two native-data assets:
+
+| Download | Purpose |
+|---|---|
+| Source archive or Git clone | Workflow, configuration, geometry, selected tables/figures/movie and report |
+| Native inputs (about 340 MB) | Baseline, common checkpoint, three meshes, original-position Hybrid t=0 pairs and meshing projects |
+| Native results (about 881 MB) | Accepted monitors, final checkpoints, exported fields and native analysis evidence |
+
+Install the inputs asset to prepare new calculations; install both native assets to regenerate the accepted analyses. Every file is indexed by size and SHA256. The installer preserves existing identical files and refuses different versions. See [data installation and new-study instructions](docs/reproduction.md).
 
 ## Installation and offline inspection
 
@@ -111,7 +124,14 @@ Example analysis and report commands:
 
 Analysis requires the accepted native monitor segments and relevant exported samples. PDF compilation requires a LaTeX installation; rendered review also requires Poppler. See [the reproduction guide](docs/reproduction.md) for data requirements and scope.
 
-The numerical campaign is closed. [config/campaign_state.json](config/campaign_state.json) is an execution guard and must be retained. The inspection and report commands do not reopen the campaign. No unattended new calculation or automatic extension is part of this delivery.
+The historical numerical campaign is closed. [config/campaign_state.json](config/campaign_state.json) protects its results and must be retained. New calculations use an independent work copy:
+
+~~~powershell
+.\.venv\Scripts\python.exe workflow\create_study.py --mesh M1 --name my-m1 --periods 35
+.\.venv\Scripts\python.exe workflow\create_study.py --mesh M1 --name my-m1 --periods 35 --prepare
+~~~
+
+The first command checks inputs without writing or launching anything; the second prepares the isolated work copy. The reproduction guide gives the explicit solver and restart commands. New studies use 24 MPI processes, reload the verified Hybrid t=0 state and disable expensive image capture by default. No automatic extension is configured.
 
 ## Flow visualisation
 

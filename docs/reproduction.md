@@ -2,7 +2,7 @@
 
 ## What is supplied
 
-The repository contains the Python workflow, recorded configurations, reference geometry material, selected numerical evidence, figures, the selected Mach movie and an editable report. Complete native Fluent/Workbench input and result collections are maintained separately because of their size and software-specific dependencies.
+The repository contains the Python workflow, recorded configurations, reference geometry material, selected numerical evidence, figures, the selected Mach movie and an editable report. Native Fluent/Workbench inputs and results are distributed as separate versioned release assets because of their size and software-specific dependencies.
 
 The following operations have different requirements:
 
@@ -44,19 +44,28 @@ The Python environment and commercial applications are not redistributed. A vali
 
 The integrity command checks the complete selected-file inventory, reviewed report source/PDF, numerical-table hashes and movie hash. Add `--native` to verify the separately supplied native case/data collection. With local native data, status values come from saved records. In a source-only clone, status reads the published eight-run summary. They do not establish that a solver process is currently running or that the recorded MPI count is a live process measurement.
 
-## Supply native inputs
+## Install the native-data assets
 
-Populate the ignored local `inputs/` and `runs/` directories using the collection mapped by the current configuration and data indices. Preserve coherent case/data pairs, accepted segment bounds, wall exports, phase samples and SHA256 associations. The directory containing a run is a dependency unit, not a collection of interchangeable files.
+Download the two assets from the [v1.1.0 release](https://github.com/lorenzoproli/axial-turbine-stage-2d-cfd-pyfluent/releases/tag/v1.1.0). Keep the ZIPs outside the repository. The exact names, sizes and SHA256 values are in [config/release_assets.json](../config/release_assets.json).
 
-The native collection must provide, as applicable:
+- Native inputs: 100 files, about 340 MB compressed. Required to prepare a new single-mesh study, reopen the baseline or regenerate the mesh family.
+- Native results: 954 files, about 881 MB compressed. Add these to regenerate accepted analyses and inspect final native fields.
 
-1. The unchanged historical reference case/data at 0.010653 s and its initial-position geometry reference.
-2. The common checkpoint and final accepted ITER30, ITER60, T100, T200 and T400 records.
-3. Authoritative M1/M2/M3 meshes, original-position Hybrid initial states and final accepted case/data.
-4. Native monitor segments with their exact accepted ranges and exported statistical/phase samples.
-5. Wall, quality and rendering data required by the specific regeneration operation.
+In the following example, replace the archive paths with the actual download locations:
 
-Complete Workbench projects must retain their project file and associated directory together. Absolute external CAD references need a verified portable copy; editing binary project files as text is not a portability method.
+~~~powershell
+.\.venv\Scripts\python.exe workflow\native_data.py --kind inputs --archive ..\axial-turbine-stage-2d-cfd-v1.1.0-native-inputs.zip
+.\.venv\Scripts\python.exe workflow\native_data.py --kind results --archive ..\axial-turbine-stage-2d-cfd-v1.1.0-native-results.zip
+.\.venv\Scripts\python.exe workflow\verify_project.py --native
+~~~
+
+The installer verifies the complete ZIP and every payload against the versioned index before extraction. It rejects unexpected members, path traversal, changed payloads and existing different files. Identical installed files are reused. Add --check-only to inspect an archive without extracting it. Both assets together restore all 1,054 indexed native files; the verifier also opens the 18 baseline/final HDF5 case/data files.
+
+The collection contains coherent checkpoints, accepted monitor ranges, phase and wall exports, quality arrays and the portable Workbench projects. Historical solver logs retain their original paths for provenance; the workflow resolves operational paths through the current relative mapping. No differently timed checkpoint is substituted under a missing filename.
+
+The dense 1,201-PNG Mach sequence is not included in these numerical assets. The verified MP4 and frame-checksum index are supplied in the source tree. Re-encoding that exact movie needs the separately archived PNGs; a final checkpoint cannot reconstruct a transient sequence.
+
+Complete Workbench projects retain their project file and associated directory together. For remeshing, see the independent meshing route below.
 
 ## Regenerate analyses
 
@@ -70,7 +79,7 @@ Other accepted identifiers are `ITER30`, `ITER60`, `T100`, `T200`, `T400`, `M1_H
 
 Analysis writes derived outputs under `runs/analysis/` and figure outputs under `results/figures/`. Use a separate work copy when reproducing a published result. The legacy ITER30 analysis automatically joins its original and 24-process restart monitors at the recorded accepted boundary. Confirm the source segment boundaries before comparing a regenerated table with the report; accepted restart segments and final statistical windows are essential inputs.
 
-Full native-data regeneration from a clone alone has not been demonstrated. The separately maintained data and ANSYS dependencies must first be restored and verified. Archived dense animation frames are required for re-encoding the delivered movie; a final checkpoint alone cannot reconstruct a transient sequence.
+The source-only clone has no native histories. Install both assets before regeneration. Offline analysis does not require an ANSYS licence; numerical calculation does.
 
 ## Offline verification coverage
 
@@ -98,3 +107,54 @@ The report compiler requires `pdflatex`; PDF page rendering requires Poppler's `
 `config/campaign_state.json` records a closed campaign and guards numerical launches. It is part of the execution policy and must not be removed during packaging or cleanup. The delivered dataset ends at M1 = 35T, M2 = 40T and M3 = 35T; no automatic extension is scheduled.
 
 Any future numerical continuation requires a separately defined study and a verified native restart. Retain the existing physical clock, rotor coordinates and second-order time-history arrays. Fresh initialization is a different experiment, requiring restored initial rotor geometry and a separate output directory. Do not merge such a new history into an existing accepted run.
+
+## Prepare and execute an independent study
+
+The historical campaign remains closed. Do not delete its state guard or overwrite its results. Use the following commands from the source root after installing the inputs asset:
+
+~~~powershell
+# Read-only preflight; verifies the selected native inputs.
+.\.venv\Scripts\python.exe workflow\create_study.py --mesh M1 --name my-m1 --periods 35
+
+# Create an independent work copy; this still starts no solver.
+.\.venv\Scripts\python.exe workflow\create_study.py --mesh M1 --name my-m1 --periods 35 --prepare
+
+# Check the prepared workspace.
+.\.venv\Scripts\python.exe runs\new_studies\my-m1\workflow\run_hybrid35_campaign.py --check-inputs
+
+# Explicitly start exactly one calculation.
+.\.venv\Scripts\python.exe runs\new_studies\my-m1\workflow\run_hybrid35_campaign.py --only M1_HYBRID35
+~~~
+
+Use M2/M3 and a different study name for the other meshes. Durations of 4 to 100 complete periods are accepted; the last three periods are analysed. A short run is a technical trial and does not establish settled statistics. The default is 35 periods. The recorded M2 comparison used 40.
+
+The new workspace is under runs/new_studies/NAME and contains private copies of its required inputs, code and configuration. It reloads the exact verified original-position Hybrid case/data at t=0; Hybrid is not applied a second time, no historical developed field is interpolated, and the rotor clock/geometry are not reset independently. The saved initialization receipt records how the supplied field was obtained.
+
+The default configuration uses Fluent 2024 R2, planar double precision, 24 MPI processes, T/400 and 30 inner iterations. A valid licence with 24-process entitlement and sufficient hardware is required. The controller rejects another active 2D double-precision Fluent solver. It processes only the selected mesh and never starts the next mesh or extends the run automatically.
+
+Default output includes per-step numerical monitors, health checks, periodic coherent case/data checkpoints and four phase samples per period over the final three periods. Native image capture is disabled to avoid imposing its cost on numerical reproduction. Rendering modules and the original capture settings are retained for a separately configured, visually verified rendering run.
+
+For a controlled stop, place STOP_AFTER_BATCH.txt under the prepared workspace's runs/adapted_mesh directory. Remove it only when ready to resume. Reissue the same --only command to resume a stopped/interrupted run; checkpoint hashes, time and moving geometry are verified before advancing, and monitor segments remain separate. Completed runs are preserved. A power-loss recovery requires a saved checkpoint and a restartable state; inspect progress.json before resuming rather than changing its step count manually.
+
+For new adapted-mesh timestep/iteration comparisons, use a separate work copy and the supplied common checkpoint with the recorded workflow_config.json. The independent helper currently targets the systematic M1/M2/M3 family; it does not automatically launch the adapted-mesh comparison campaign.
+
+## Recreate the mesh family
+
+The inputs asset includes inputs/workbench/mesh_family_template.wbpz. The recorded STEP, sizing controls and Meshing template are in geometry/. To prepare a new Workbench journal without running Meshing:
+
+~~~powershell
+.\.venv\Scripts\python.exe workflow\generate_mesh_family.py --output runs\new_mesh_family
+~~~
+
+The journal is written into that new directory. The historical execute shortcut remains guarded; run the prepared journal explicitly through Workbench/Meshing 2024 R2 in a separate session if remeshing is required. This starts a new commercial meshing operation, not an offline analysis. Recheck named zones, cell counts, wall layers, quality, periodicity and the interface before substituting a generated mesh into a new simulation. The supplied raw meshes and initialized cases allow reuse without remeshing.
+
+## Verification boundary and troubleshooting
+
+- A source-only clone supports integrity, saved status, tests and report inspection.
+- With both assets installed, the documented native-analysis path has been checked in a clean restored work copy.
+- The independent preparation/preflight route is covered by offline acceptance tests and real-input checks. No new CFD calculation is launched as part of a release audit; a fresh end-to-end solver run of the new wrapper is not claimed.
+- A missing archive or input is reported explicitly. Do not rename another checkpoint to satisfy it.
+- Import errors: use the same Python executable used for installation, then run python -m pip check.
+- Fluent launch/licence errors: confirm the installed 24.2 executable and 24-process entitlement. Do not connect to or stop another person's session.
+- Report tools: call workflow/compile_report.py --compiler PATH --pdftoppm PATH --render, or forward these options through workflow/cfd.py report. Explicit paths support tools installed outside PATH.
+- Cross-platform solver execution and other Fluent versions are not verified. The recorded setup and full lock file target Windows/Python 3.12.

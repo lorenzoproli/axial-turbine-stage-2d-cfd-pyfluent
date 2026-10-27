@@ -142,7 +142,7 @@ def main(selected_id):
                              graphics=run_config.get('native_animation_enabled', True))
             target, metadata = resume(session, selected_id)
         else:
-            session = launch(ROOT / 'runs/launcher' / (selected_id + '_' + datetime.now().strftime('%Y%m%d_%H%M%S_%f')), graphics=True)
+            session = launch(ROOT / 'runs/launcher' / (selected_id + '_' + datetime.now().strftime('%Y%m%d_%H%M%S_%f')), graphics=run_config.get('native_animation_enabled', True))
             prepared = prepared_initial_checkpoint(run_config)
             checkpoint, evidence = prepared if prepared is not None else initialise(session, run_config, CFG)
             if run_config.get('native_mach_stream_configuration'):

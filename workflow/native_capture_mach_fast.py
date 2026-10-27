@@ -1,8 +1,8 @@
-"""Mach-only persistent native scene, pending moving-solver preflight.
+"""Persistent native Mach scene with per-frame geometry and time checks.
 
 Reset after every case/data reload. A saved view reduces repeated camera calls;
 every frame refreshes the actual contour and validates the colour-bar geometry.
-This candidate is deliberately separate from the verified production renderer.
+The production stream performs separate moving-field and restart preflight.
 """
 from common import *
 from native_animation import configure, periodic_settings

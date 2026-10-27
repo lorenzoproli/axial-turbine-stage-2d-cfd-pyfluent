@@ -1,0 +1,21 @@
+{
+  "version": "v1.1.0",
+  "assets": {
+    "inputs": {
+      "file": "axial-turbine-stage-2d-cfd-v1.1.0-native-inputs.zip",
+      "bytes": 339745334,
+      "sha256": "2ef0b22c033201645eb5b20ad8ad45663ccba350639f2603caad96d9a6a8ec5f",
+      "files": 100,
+      "uncompressed_bytes": 353423483,
+      "url": "https://github.com/lorenzoproli/axial-turbine-stage-2d-cfd-pyfluent/releases/download/v1.1.0/axial-turbine-stage-2d-cfd-v1.1.0-native-inputs.zip"
+    },
+    "results": {
+      "file": "axial-turbine-stage-2d-cfd-v1.1.0-native-results.zip",
+      "bytes": 880789692,
+      "sha256": "57f184f6f71a213a8ac8085812636eb74732ca9abbf66d8b772188a8bd530f47",
+      "files": 954,
+      "uncompressed_bytes": 1070024269,
+      "url": "https://github.com/lorenzoproli/axial-turbine-stage-2d-cfd-pyfluent/releases/download/v1.1.0/axial-turbine-stage-2d-cfd-v1.1.0-native-results.zip"
+    }
+  }
+}

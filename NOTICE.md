@@ -22,7 +22,7 @@ The original reference configurations, mesh, author headers and [upstream LGPL 2
 
 ANSYS Fluent, Workbench, Meshing and related applications are not redistributed or relicensed. Their names and interfaces identify the tools used. A valid, separately obtained ANSYS installation and licence remain necessary for native execution. No ANSYS software, trademark or vendor-documentation rights are granted by this repository.
 
-Large native collections in local `inputs/` and `runs/`, complete Workbench projects and installed environments are not part of the lightweight Git distribution and are not automatically licensed by the two new files. Separately supplied collections must retain their own provenance and applicable terms.
+Large native collections in local `inputs/` and `runs/`, complete Workbench projects and installed environments are not part of the lightweight Git distribution and are not automatically licensed by the two new files. The versioned native release assets include an explicit NATIVE_DATA_LICENSE.md: original simulation-output contributions are supplied under CC BY 4.0 within the author\'s rights, with SU2-derived geometry and other third-party rights retained. Other separate collections keep their own applicable terms.
 
 ## Python and encoding dependencies
 

@@ -20,7 +20,7 @@ def compile_report(compiler=None,pdftoppm=None,render=False):
     build_root=ROOT/'.build/report';build_root.mkdir(parents=True,exist_ok=True)
     directory=Path(tempfile.mkdtemp(prefix='build_',dir=build_root))
     for index in range(3):
-        command=[executable,'--disable-installer','-interaction=nonstopmode','-halt-on-error','-file-line-error',
+        command=[executable,'-interaction=nonstopmode','-halt-on-error','-file-line-error',
                  '-jobname=axial_turbine_stage_2d_report',f'-output-directory={directory}','main.tex']
         result=subprocess.run(command,cwd=PROJECT,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=240)
         (directory/f'pass_{index+1}.txt').write_text(result.stdout+'\n'+result.stderr,encoding='utf-8')

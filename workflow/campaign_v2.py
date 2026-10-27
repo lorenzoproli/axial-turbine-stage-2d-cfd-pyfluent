@@ -54,8 +54,9 @@ def prepare(s, run_cfg):
         meta['native_mach_stream_settings'] = json.loads(path.read_text())
     jwrite(target / 'progress.json', meta)
     jwrite(target / 'setup_effettivo.json', s.settings.get_state())
-    revision = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, capture_output=True, text=True)
-    meta['git_revision'] = revision.stdout.strip() if revision.returncode == 0 else None
+    git_executable = shutil.which('git')
+    revision = subprocess.run([git_executable, 'rev-parse', 'HEAD'], cwd=ROOT, capture_output=True, text=True) if git_executable else None
+    meta['git_revision'] = revision.stdout.strip() if revision is not None and revision.returncode == 0 else None
     meta['code_manifest'] = [dict(file=str(p.relative_to(ROOT)), sha256=sha(p)) for p in sorted(Path(__file__).parent.glob('*.py'))]
     meta['initial_checkpoint_relative'] = str(checkpoint.relative_to(ROOT))
     meta['passo_globale_iniziale'] = int(s.scheme.eval("(rpgetvar 'time-step)"))
@@ -228,7 +229,7 @@ def resume(s, run_id):
     ensure_campaign_open()
     target = case_directory(run_id)
     meta = json.loads((target / 'progress.json').read_text())
-    restartable = ['fallita', 'arrestata_con_checkpoint', 'interrotta_checkpoint_disponibile', 'ready_for_extension', 'pronta_estensione_autorizzata']
+    restartable = ['fallita', 'arrestata_con_checkpoint', 'interrotta_checkpoint_disponibile', 'in_corso_24_processi', 'ready_for_extension', 'pronta_estensione_autorizzata']
     if meta['stato'] not in restartable:
         raise RuntimeError('The saved run is not in a restartable state.')
     candidates = meta.get('manifest_finale') if meta['stato'] in ['arrestata_con_checkpoint', 'ready_for_extension', 'pronta_estensione_autorizzata'] else meta.get('ultimo_checkpoint')

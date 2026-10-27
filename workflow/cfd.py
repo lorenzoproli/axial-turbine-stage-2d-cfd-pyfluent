@@ -7,7 +7,12 @@ def ensure_campaign_open():
     """Reject solver launches before importing PyFluent, including python -O."""
     closure = project_path('PROJECT_CLOSURE.json')
     campaign = CONFIG_DIR / 'hybrid35_campaign_config.json'
-    closed = closure.exists()
+    closed = False
+    if closure.exists():
+        state = json.loads(closure.read_text(encoding='utf-8-sig'))
+        # Older receipts without explicit permission remain closed.
+        closed = (state.get('campaign_closed', True)
+                  or state.get('solver_launches_enabled') is not True)
     if campaign.exists():
         settings = json.loads(campaign.read_text(encoding='utf-8-sig'))
         closed = closed or settings.get('campaign_closed', False)
@@ -89,7 +94,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('action', choices=['status', 'run', 'resume', 'analyse', 'report', 'quality-figures'])
     parser.add_argument('--id', help='Run identifier recorded in the campaign configuration')
-    args = parser.parse_args()
+    args, extra = parser.parse_known_args()
+    if extra and args.action != 'report':
+        parser.error('Unrecognised arguments: ' + ' '.join(extra))
     if args.action == 'status':
         print(json.dumps(status(), ensure_ascii=False, indent=2))
         return
@@ -121,7 +128,7 @@ def main():
             phase_waveforms=checks['fase'], boundary_mass_flux=checks['portate']), indent=2))
         return
     script = 'compile_report.py' if args.action == 'report' else 'plot_mesh_quality.py'
-    subprocess.run([sys.executable, str(Path(__file__).with_name(script))], check=True)
+    subprocess.run([sys.executable, str(Path(__file__).with_name(script)), *extra], check=True)
 
 
 if __name__ == '__main__':

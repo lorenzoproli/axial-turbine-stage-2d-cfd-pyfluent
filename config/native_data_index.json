@@ -1,5 +1,5 @@
 {
-  "scope": "Separate local native data collection; excluded from Git",
+  "scope": "Versioned native release inputs/results, distributed separately from Git; payloads retain their original SHA256",
   "files": [
     {
       "path": "inputs/baseline/audit/audit_pyfluent.trn",
