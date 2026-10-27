@@ -1,11 +1,11 @@
 # Changelog
 
-## v1.1.0 - 2026-10-27
+## v1.1.0
 
-- Versioned native inputs/results assets with per-file size/SHA256 verification and a non-overwriting installer.
-- Independent single-mesh study preparation from verified original-position Hybrid t=0 checkpoints; historical results remain closed.
-- Explicit new-study launch/restart instructions and rendering defaults that avoid unnecessary image-acquisition overhead.
-- Git-optional run metadata, portable report compilation and forwarded report-tool options.
-- Reuse acceptance tests and expanded installation, licensing and troubleshooting documentation.
+- Separate native inputs/results datasets with a checksum-based installer.
+- Independent single-mesh workspaces using the original-position Hybrid t=0 checkpoints.
+- Single-mesh execution and checkpoint restart, with numerical sampling enabled and native image capture optional.
+- Git-optional run metadata and configurable LaTeX/Poppler executable paths.
+- Installation, data-layout, execution and licensing instructions.
 
-The numerical dataset, figures, selected Mach movie and reviewed report are unchanged. M1/M2/M3 retain their recorded 35/40/35-period results. This release does not add numerical convergence claims or new calculations.
+The recorded M1/M2/M3 campaign covers 35, 40 and 35 blade-passing periods, respectively.

@@ -33,13 +33,11 @@ def compile_report(compiler=None,pdftoppm=None,render=False):
     target=PROJECT/source.name;shutil.copy2(source,target)
     record=dict(language='English',author=reader.metadata.author,pages=len(reader.pages),
                 PDF=dict(path=target.relative_to(ROOT).as_posix(),bytes=target.stat().st_size,sha256=sha(target)),
-                source=dict(path='docs/report/main.tex',sha256=sha(PROJECT/'main.tex')),
-                compiler_warnings=warnings,visual_review='PENDING')
+                source=dict(path='docs/report/main.tex',sha256=sha(PROJECT/'main.tex')))
     if render:
         renderer=tool(pdftoppm,'pdftoppm');qa=ROOT/'.build/report_review'/sha(target)[:12];qa.mkdir(parents=True,exist_ok=True)
         subprocess.run([renderer,'-r','110','-png',str(target),str(qa/'page')],check=True,timeout=240)
         if len(list(qa.glob('page-*.png')))!=len(reader.pages):raise RuntimeError('Incomplete PDF rendering')
-        record['rendered_pages']=len(reader.pages)
         print('Rendered pages: '+str(qa),flush=True)
     (PROJECT/'manifest.json').write_text(json.dumps(record,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(record,indent=2),flush=True)

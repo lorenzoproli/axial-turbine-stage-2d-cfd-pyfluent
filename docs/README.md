@@ -10,7 +10,6 @@ The documentation explains the completed numerical study, how its evidence is or
 | [Reproduction](reproduction.md) | Environment, commands, release assets, verified installation and independent-study commands |
 | [Limitations](limitations.md) | Interpretation of the numerical and visual results; claims not supported by the data |
 | [References](references.md) | SU2 source provenance and official solver/numerical-method references |
-| [Release verification](release_verification.md) | Installation, restored-data analysis and independent-study test coverage |
 | [Licensing](licensing.md) | MIT software scope, CC BY publication content and third-party exclusions |
 
 The report and repository describe the historical baseline, fixed adapted-mesh comparisons and systematic mesh family as separate datasets. Figures are in English and are associated with recorded solution times and run identifiers. Native checkpoint and monitor data are held separately from the lightweight repository.

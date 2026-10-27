@@ -13,7 +13,6 @@ The main result is a traceable numerical study: the final means are relatively i
 - [Reproduction instructions](docs/reproduction.md)
 - [Results and accepted run summaries](results/)
 - [Limitations and interpretation](docs/limitations.md)
-- [Release verification](docs/release_verification.md)
 - [References](docs/references.md) and [third-party notices](NOTICE.md)
 
 ## Study design
@@ -92,7 +91,7 @@ The lightweight repository does not include the Python environment, commercial a
 
 ## Download and reuse
 
-The [v1.1.0 release](https://github.com/lorenzoproli/axial-turbine-stage-2d-cfd-pyfluent/releases/tag/v1.1.0) separates the lightweight source tree from two native-data assets:
+Native datasets are distributed separately from the lightweight source tree. See [Releases](https://github.com/lorenzoproli/axial-turbine-stage-2d-cfd-pyfluent/releases) for available downloads; the expected asset names and checksums are listed in [config/release_assets.json](config/release_assets.json).
 
 | Download | Purpose |
 |---|---|
@@ -122,7 +121,7 @@ Example analysis and report commands:
 .\.venv\Scripts\python.exe workflow\cfd.py report
 ```
 
-Analysis requires the accepted native monitor segments and relevant exported samples. PDF compilation requires a LaTeX installation; rendered review also requires Poppler. See [the reproduction guide](docs/reproduction.md) for data requirements and scope.
+Analysis requires the accepted native monitor segments and relevant exported samples. PDF compilation requires a LaTeX installation; rendering PDF pages additionally requires Poppler. See [the reproduction guide](docs/reproduction.md) for data requirements and scope.
 
 The historical numerical campaign is closed. [config/campaign_state.json](config/campaign_state.json) protects its results and must be retained. New calculations use an independent work copy:
 

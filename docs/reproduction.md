@@ -33,7 +33,7 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-lock.txt
 ```
 
-The Python environment and commercial applications are not redistributed. A valid Fluent licence with the necessary parallel entitlement is required for native computation. The direct requirements retain the numerical package versions used by the workflow. `requirements-lock.txt` records the isolated Windows environment tested for the supplied offline analyses. Compatibility with other releases has not been established.
+The Python environment and commercial applications are not redistributed. A valid Fluent licence with the necessary parallel entitlement is required for native computation. The direct requirements retain the numerical package versions used by the workflow. `requirements-lock.txt` records the Windows/Python 3.12 environment used by the project. Other software versions can require changes to the API calls or dependencies.
 
 ## Inspect without starting the solver
 
@@ -42,11 +42,11 @@ The Python environment and commercial applications are not redistributed. A vali
 .\.venv\Scripts\python.exe workflow\cfd.py status
 ```
 
-The integrity command checks the complete selected-file inventory, reviewed report source/PDF, numerical-table hashes and movie hash. Add `--native` to verify the separately supplied native case/data collection. With local native data, status values come from saved records. In a source-only clone, status reads the published eight-run summary. They do not establish that a solver process is currently running or that the recorded MPI count is a live process measurement.
+The integrity command checks the complete selected-file inventory, report source/PDF, numerical-table hashes and movie hash. Add `--native` to verify the separately supplied native case/data collection. With local native data, status values come from saved records. In a source-only clone, status reads the published eight-run summary. They do not establish that a solver process is currently running or that the recorded MPI count is a live process measurement.
 
 ## Install the native-data assets
 
-Download the two assets from the [v1.1.0 release](https://github.com/lorenzoproli/axial-turbine-stage-2d-cfd-pyfluent/releases/tag/v1.1.0). Keep the ZIPs outside the repository. The exact names, sizes and SHA256 values are in [config/release_assets.json](../config/release_assets.json).
+Download the native inputs and results matching the source version from [Releases](https://github.com/lorenzoproli/axial-turbine-stage-2d-cfd-pyfluent/releases). Keep the ZIPs outside the repository. The exact names, sizes and SHA256 values are in [config/release_assets.json](../config/release_assets.json).
 
 - Native inputs: 100 files, about 340 MB compressed. Required to prepare a new single-mesh study, reopen the baseline or regenerate the mesh family.
 - Native results: 954 files, about 881 MB compressed. Add these to regenerate accepted analyses and inspect final native fields.
@@ -81,16 +81,15 @@ Analysis writes derived outputs under `runs/analysis/` and figure outputs under 
 
 The source-only clone has no native histories. Install both assets before regeneration. Offline analysis does not require an ANSYS licence; numerical calculation does.
 
-## Offline verification coverage
+## Export numerical tables
 
-```powershell
-.\.venv\Scripts\python.exe -B -m unittest discover -s tests -v
+After installing both native datasets, run:
+
+~~~powershell
 .\.venv\Scripts\python.exe -B tools\export_results.py
-```
+~~~
 
-Tests distinguish source-only checks from checks requiring the separate native collection. Missing native-data tests are explicitly skipped, not counted as numerical verification. The exporter checks 32 monitor means/amplitudes and four per-cell mesh-quality collections. Its output is English CSV/JSON, without starting Fluent.
-
-The eight documented monitor-analysis commands have been exercised on an isolated copy of the accepted text monitors. This verifies analysis/restart handling; it does not repeat the commercial solver campaign or establish numerical independence.
+The exporter reads the accepted monitor histories, mesh-quality arrays and saved sensitivity records, and writes the English CSV/JSON tables in results/. Use a separate work copy for regenerated outputs.
 
 ## Rebuild the report
 
@@ -100,7 +99,7 @@ The manuscript is a self-contained LaTeX project under `docs/report/`.
 .\.venv\Scripts\python.exe workflow\cfd.py report
 ```
 
-The report compiler requires `pdflatex`; PDF page rendering requires Poppler's `pdftoppm`. Install these tools separately and make them available through the configured executable paths or `PATH`. Compilation starts no solver. Review the rendered pages after changes, including equations, tables, figure labels, captions and page breaks. Successful LaTeX compilation alone does not certify numerical content or visual quality.
+The report compiler requires `pdflatex`; PDF page rendering requires Poppler's `pdftoppm`. Install these tools separately and make them available through the configured executable paths or `PATH`. Compilation starts no solver. The --render option saves page previews under .build/report_review/. Tables, figures, captions and page breaks can then be inspected before using the rebuilt PDF.
 
 ## Campaign state and restarts
 
@@ -148,13 +147,13 @@ The inputs asset includes inputs/workbench/mesh_family_template.wbpz. The record
 
 The journal is written into that new directory. The historical execute shortcut remains guarded; run the prepared journal explicitly through Workbench/Meshing 2024 R2 in a separate session if remeshing is required. This starts a new commercial meshing operation, not an offline analysis. Recheck named zones, cell counts, wall layers, quality, periodicity and the interface before substituting a generated mesh into a new simulation. The supplied raw meshes and initialized cases allow reuse without remeshing.
 
-## Verification boundary and troubleshooting
+## Requirements and troubleshooting
 
 - A source-only clone supports integrity, saved status, tests and report inspection.
-- With both assets installed, the documented native-analysis path has been checked in a clean restored work copy.
-- The independent preparation/preflight route is covered by offline acceptance tests and real-input checks. No new CFD calculation is launched as part of a release audit; a fresh end-to-end solver run of the new wrapper is not claimed.
+- Both native assets are required to regenerate the accepted monitor, wall and field analyses.
+- The independent-study helper prepares the supplied systematic meshes. Timestep/iteration comparisons and native animation capture require their respective configurations, as described above.
 - A missing archive or input is reported explicitly. Do not rename another checkpoint to satisfy it.
 - Import errors: use the same Python executable used for installation, then run python -m pip check.
 - Fluent launch/licence errors: confirm the installed 24.2 executable and 24-process entitlement. Do not connect to or stop another person's session.
 - Report tools: call workflow/compile_report.py --compiler PATH --pdftoppm PATH --render, or forward these options through workflow/cfd.py report. Explicit paths support tools installed outside PATH.
-- Cross-platform solver execution and other Fluent versions are not verified. The recorded setup and full lock file target Windows/Python 3.12.
+- Native execution and the complete lock file target Windows/Python 3.12 and Fluent 2024 R2.

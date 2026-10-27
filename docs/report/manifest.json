@@ -10,40 +10,5 @@
   "source": {
     "path": "docs/report/main.tex",
     "sha256": "ed6c423a11226d4e8aed1fbe6e0e70a7709fd8d5dcfd1c8f16a9278c1d8cd466"
-  },
-  "compiler_warnings": [],
-  "visual_review": "PASSED",
-  "rendered_pages": 22,
-  "reviewed_page_numbers": [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    21,
-    22
-  ],
-  "visual_checks": [
-    "All 22 newly rendered pages inspected",
-    "Licensing notice and bibliography fit on page 22",
-    "All manuscript text remains black; no clipping or overlap found"
-  ],
-  "manuscript_text_colour": "black",
-  "nonblack_manuscript_text_operations": 0,
-  "original_content_licence": "CC-BY-4.0; third-party material retains its own terms"
+  }
 }

@@ -11,8 +11,8 @@
   },
   {
     "path": "CHANGELOG.md",
-    "bytes": 816,
-    "sha256": "e52965adcb88ea1ef445242b2a238d998610be6217995f4de258ece79badf8e4"
+    "bytes": 537,
+    "sha256": "6f8a81a11e3694daeba13e200f0430cf5eb4c1cb63c3dcc11a9517afdc9d5ff9"
   },
   {
     "path": "CITATION.cff",
@@ -81,18 +81,13 @@
   },
   {
     "path": "docs/README.md",
-    "bytes": 1701,
-    "sha256": "5fbc1ab1d64b9c53dbd0a5c1bb8b1a1a97f871dd97fd80a5f57dd19d6bf1eb64"
+    "bytes": 1574,
+    "sha256": "ea2461c764ce8554846d925210c355089e6dd8e6eeeb81d340f0604255a4e428"
   },
   {
     "path": "docs/references.md",
     "bytes": 2767,
     "sha256": "9a778fdf3259c9d303fe6b3c7bc6fe69ea28d4b347eb10908d6a6c126cb37cf8"
-  },
-  {
-    "path": "docs/release_verification.md",
-    "bytes": 2046,
-    "sha256": "c8085f389fdf8d0906eeb9f0b698d50e90a433b6d8ae52f2b9932581f629d0f4"
   },
   {
     "path": "docs/report/axial_turbine_stage_2d_report.pdf",
@@ -206,18 +201,18 @@
   },
   {
     "path": "docs/report/manifest.json",
-    "bytes": 1082,
-    "sha256": "ff8a343f03929b3d0342ddb447f44858b3cbb227707261d0cfcef5dfaa0456f7"
+    "bytes": 402,
+    "sha256": "e1a7de2d517592b76c606db54501d4893d29e807b671a458700c69f193a080d5"
   },
   {
     "path": "docs/report/README.md",
-    "bytes": 885,
-    "sha256": "e6562af4fe29bff04605d0d9eb62b8ffa9dc62b2b80093f5fd6c25882304bf3d"
+    "bytes": 925,
+    "sha256": "4b9ae2424e10b9d3d30479c3c924977053d3c1c557553da648399e420d5f2116"
   },
   {
     "path": "docs/reproduction.md",
-    "bytes": 13615,
-    "sha256": "c11ec5506a6c3d41f64c6e1b4cd28285022d87ff5ab0f29c23f402eaf0f5aa02"
+    "bytes": 13072,
+    "sha256": "e14acb7d056bf8b09076e0b67e00110db54cf67f4846beba05b11579060604c7"
   },
   {
     "path": "geometry/axial_stage_surfaces.step",
@@ -301,8 +296,8 @@
   },
   {
     "path": "README.md",
-    "bytes": 10372,
-    "sha256": "792bc0a3560a24c842811185ec493e3828dd22ba5fbae578e7cfd14d45fe15b0"
+    "bytes": 10458,
+    "sha256": "1b43c0a843f5daca4f3ccb82fab23c58b9864662ba92cc7de4c8400b05923d2b"
   },
   {
     "path": "requirements-lock.txt",
@@ -936,8 +931,8 @@
   },
   {
     "path": "workflow/compile_report.py",
-    "bytes": 3281,
-    "sha256": "1f67102b733c4ce3ad4bb75e6b35c3cbf6a5feafe14ee38dcaab40f56c8ff994"
+    "bytes": 3162,
+    "sha256": "9c71794274639ebf57e109c0c77550260cc939ebef0a835dede3fea3865734eb"
   },
   {
     "path": "workflow/create_study.py",
@@ -1111,8 +1106,8 @@
   },
   {
     "path": "workflow/verify_project.py",
-    "bytes": 4489,
-    "sha256": "dd99ba3b482e2c8d76291a38c91013295f6cc6275c0c6835f22bc5a525a2d51e"
+    "bytes": 4392,
+    "sha256": "dba14a7bed9b39a1c147b9de7c9d7b60a6006fb5ccdf6551384feca43336cc10"
   },
   {
     "path": "workflow/verify_restart_geometry.py",
